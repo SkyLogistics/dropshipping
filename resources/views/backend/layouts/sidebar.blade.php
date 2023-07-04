@@ -127,7 +127,7 @@
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
     </li>
-    
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -195,7 +195,7 @@
     <hr class="sidebar-divider d-none d-md-block">
      <!-- Heading -->
     <div class="sidebar-heading">
-        General Settings
+        Основные настройки
     </div>
     <li class="nav-item">
       <a class="nav-link" href="{{route('coupon.index')}}">
@@ -212,7 +212,7 @@
      <li class="nav-item">
         <a class="nav-link" href="{{route('settings')}}">
             <i class="fas fa-cog"></i>
-            <span>Settings</span></a>
+            <span>Настройки</span></a>
     </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
