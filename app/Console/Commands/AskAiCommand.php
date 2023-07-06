@@ -48,6 +48,7 @@ class AskAiCommand extends Command
             ) // default: HTTP client found using PSR-18 HTTP Client Discovery
             ->withHttpHeader('Authorization', 'Bearer ' . $yourApiKey)
             ->withHttpHeader('OpenAI-Organization', 'org-WYlAZmxU71900K2AUOdRsw3e')
+            ->withHttpHeader('Content-Type', 'application/json')
             ->withStreamHandler(fn(RequestInterface $request): ResponseInterface => $client->send($request, [
                 'stream' => true // Allows to provide a custom stream handler for the http client.
             ]))
