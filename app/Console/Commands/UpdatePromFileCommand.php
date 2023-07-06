@@ -6,7 +6,7 @@ use App\Models\OrigamiProducts;
 use App\Services\DropService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
-use PHPUnit\Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class UpdatePromFileCommand extends Command
 {
@@ -56,8 +56,6 @@ class UpdatePromFileCommand extends Command
 
         $data = $this->dropService->getRemoteData($url, $inputKey);
         $template = 'export-origami.xls';
-
-        //dd($data[0]);
 
         foreach ($data as $apiProduct) {
             $vendor = $apiProduct['vendor'];
