@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Services\DropService;
 use Illuminate\Console\Command;
 use OpenAI\Client;
-use OpenAI\Transporters\GuzzleTransporter;
 
 class AskAiCommand extends Command
 {
@@ -35,9 +34,8 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $transporter = new RequestTransporter('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');
-        $client = new Client($transporter);
-        $result = $client->completions()->create(
+        $openai = new \OpenAI('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');
+        $result = $openai->completions()->create(
             [
                 'model' => 'text-davinci-003',
                 'prompt' => 'PHP is',
