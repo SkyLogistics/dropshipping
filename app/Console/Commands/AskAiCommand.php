@@ -44,7 +44,7 @@ class AskAiCommand extends Command
             [
                 'model' => 'text-davinci-003',
                 'prompt' => 'PHP is',
-                'max_tokens' => '20',
+                'max_tokens' => 20,
             ]
         );
 
