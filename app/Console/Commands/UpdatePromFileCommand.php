@@ -21,7 +21,7 @@ class UpdatePromFileCommand extends Command
      *
      * @var string
      */
-    protected string $description = 'Update export xls file';
+    protected $description = 'Update export xls file';
 
     private DropService $dropService;
 
