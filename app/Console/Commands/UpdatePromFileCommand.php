@@ -129,7 +129,7 @@ class UpdatePromFileCommand extends Command
 
         $excelData = $this->dropService->getExcelData($data);
 
-        $spreadsheet = IOFactory::load(resource_path() . '/export_template/' . $template);
+        $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
         $spreadsheet->getActiveSheet()->fromArray(
             $excelData,
             null,
