@@ -107,7 +107,6 @@ class UpdatePromFileCommand extends Command
                 if (isset($apiProduct['promID'])) {
                     $promId = $apiProduct['promID'];
                 }
-                dd($apiProduct);
                 OrigamiProducts::query()
                     ->create(
                         [
