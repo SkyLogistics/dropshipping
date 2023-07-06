@@ -33,8 +33,7 @@ class DropService
         $products = OrigamiProducts::query()
             ->where('active', 1)
             ->where('provider', $provider)
-            ->get()
-            ->shuffle();
+            ->get();
 
 
         $column = 'vendorCode';
