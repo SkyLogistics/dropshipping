@@ -35,7 +35,6 @@ class DropService
             ->get()
             ->shuffle();
         foreach ($products as $row) {
-            dd($row);
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
             }
