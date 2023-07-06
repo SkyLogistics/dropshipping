@@ -34,6 +34,30 @@ class DropService
             ->where('provider', $provider)
             ->get()
             ->shuffle();
+
+
+        $column = 'vendorCode';
+        $priceColumn = 'price';
+        $table = 'origami_products';
+
+        $duplicates = DB::table('origami_products')
+            ->select($table.'.*')
+            ->join(
+                DB::raw('(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM '.$table.' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'),
+                function ($join) use ($column, $table) {
+                    $join->on($table.'.' . $column, '=', 'duplicates.' . $column);
+                }
+            )
+            ->orderBy($column)
+            ->shuffle()
+            ->get();
+
+        foreach ($duplicates as $duplicate) {
+            echo $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
+        }
+
+        dd($duplicates);
+
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
