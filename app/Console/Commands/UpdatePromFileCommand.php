@@ -104,6 +104,10 @@ class UpdatePromFileCommand extends Command
                 $oneProduct->save();
             } else {
                 try {
+                    $promId = 0;
+                    if ($apiProduct['promID']) {
+                        $promId = $apiProduct['promID'];
+                    }
                     OrigamiProducts::query()
                         ->create(
                             [
@@ -112,7 +116,7 @@ class UpdatePromFileCommand extends Command
                                 'imageUrl' => $apiProduct['imageUrl'],
                                 'nameUa' => str_replace(PHP_EOL, '', $apiProduct['nameUa']),
                                 'name' => '',
-                                'promID' => $apiProduct['promID'],
+                                'promID' => $promId,
                                 'description' => '',
                                 'description_ua' => '',
                                 'productType' => $apiProduct['productType'],
