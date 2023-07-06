@@ -43,13 +43,27 @@ class AskAiCommand extends Command
             ->withApiKey($yourApiKey)
             ->withOrganization('ArtNum') // default: null
             ->withBaseUri('openai.example.com/v1') // default: api.openai.com/v1
-            ->withHttpClient($client = new \GuzzleHttp\Client([])) // default: HTTP client found using PSR-18 HTTP Client Discovery
+            ->withHttpClient(
+                $client = new \GuzzleHttp\Client([])
+            ) // default: HTTP client found using PSR-18 HTTP Client Discovery
             ->withHttpHeader('X-My-Header', 'foo')
             ->withQueryParam('my-param', 'bar')
-            ->withStreamHandler(fn (RequestInterface $request): ResponseInterface => $client->send($request, [
+            ->withStreamHandler(fn(RequestInterface $request): ResponseInterface => $client->send($request, [
                 'stream' => true // Allows to provide a custom stream handler for the http client.
             ]))
             ->make();
+
+        $stream = $client->completions()->createStreamed(
+            [
+                'model' => 'text-davinci-003',
+                'prompt' => 'Php is ',
+                'max_tokens' => 10,
+            ]
+        );
+
+        foreach ($stream as $response) {
+            $this->info($response->choices[0]->text);
+        }
     }
 
     private function translateAi()
