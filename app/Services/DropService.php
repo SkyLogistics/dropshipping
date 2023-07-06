@@ -8,6 +8,7 @@ use App\Models\TmpAvizationSelected;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\DB;
 
 class DropService
 {
