@@ -36,13 +36,15 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $client = new Client('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');
+        $transporter = new RequestTransporter('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');
+        $client = new Client($transporter);
         $result = $client->completions()->create(
             [
                 'model' => 'text-davinci-003',
                 'prompt' => 'PHP is',
             ]
         );
+
         echo $result['choices'][0]['text'];
     }
 
