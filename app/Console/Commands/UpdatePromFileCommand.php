@@ -103,35 +103,31 @@ class UpdatePromFileCommand extends Command
                 }
                 $oneProduct->save();
             } else {
-                try {
-                    $promId = 0;
-                    if ($apiProduct['promID']) {
-                        $promId = $apiProduct['promID'];
-                    }
-                    OrigamiProducts::query()
-                        ->create(
-                            [
-                                'vendorCode' => trim($apiProduct['vendorCode']),
-                                'vendor' => trim($vendor),
-                                'imageUrl' => $apiProduct['imageUrl'],
-                                'nameUa' => str_replace(PHP_EOL, '', $apiProduct['nameUa']),
-                                'name' => '',
-                                'promID' => $promId,
-                                'description' => '',
-                                'description_ua' => '',
-                                'productType' => $apiProduct['productType'],
-                                'size' => $apiProduct['size'],
-                                'price' => $apiProduct['price'],
-                                'recommendedPrice' => $apiProduct['recommendedPrice'],
-                                'quantityInStock' => $apiProduct['quantityInStock'],
-                                'hasHigherPrice' => $apiProduct['hasHigherPrice'],
-                                'active' => 0,
-                                'provider' => $dropProvider,
-                            ]
-                        );
-                } catch (Exception $exception) {
-                    dd($oneProduct);
+                $promId = 0;
+                if (isset($apiProduct['promID'])) {
+                    $promId = $apiProduct['promID'];
                 }
+                OrigamiProducts::query()
+                    ->create(
+                        [
+                            'vendorCode' => trim($apiProduct['vendorCode']),
+                            'vendor' => trim($vendor),
+                            'imageUrl' => $apiProduct['imageUrl'],
+                            'nameUa' => str_replace(PHP_EOL, '', $apiProduct['nameUa']),
+                            'name' => '',
+                            'promID' => $promId,
+                            'description' => '',
+                            'description_ua' => '',
+                            'productType' => $apiProduct['productType'],
+                            'size' => $apiProduct['size'],
+                            'price' => $apiProduct['price'],
+                            'recommendedPrice' => $apiProduct['recommendedPrice'],
+                            'quantityInStock' => $apiProduct['quantityInStock'],
+                            'hasHigherPrice' => $apiProduct['hasHigherPrice'],
+                            'active' => 0,
+                            'provider' => $dropProvider,
+                        ]
+                    );
             }
         }
 
