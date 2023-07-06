@@ -42,7 +42,7 @@ class AskAiCommand extends Command
         $client = \OpenAI::factory()
             ->withApiKey($yourApiKey)
             ->withOrganization('ArtNum') // default: null
-            ->withBaseUri('api.openai.com/v1/completions') // default: api.openai.com/v1
+            ->withBaseUri('api.openai.com/v1') // default: api.openai.com/v1
             ->withHttpClient(
                 $client = new \GuzzleHttp\Client([])
             ) // default: HTTP client found using PSR-18 HTTP Client Discovery
