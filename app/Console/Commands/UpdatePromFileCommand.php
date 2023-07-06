@@ -45,7 +45,6 @@ class UpdatePromFileCommand extends Command
         OrigamiProducts::query()->update(['active' => 0]);
 
         $data = [];
-        $dropProvider = 1;
         $url = '';
         if ($inputKey == 'origami') {
             $url = 'https://origami.bycof.com/drop-api/products';
@@ -53,7 +52,6 @@ class UpdatePromFileCommand extends Command
 
         if ($inputKey == 'royal') {
             $url = 'https://royaltoys.com.ua/mprices/download/108/';
-            $dropProvider = 2;
         }
 
         $data = $this->dropService->getRemoteData($url, $inputKey);
@@ -68,7 +66,7 @@ class UpdatePromFileCommand extends Command
                     'vendorCode',
                     trim($apiProduct['vendorCode'])
                 )
-                ->where('provider', $dropProvider)
+                ->where('provider', $inputKey)
                 ->first();
 
             if ($oneProduct) {
