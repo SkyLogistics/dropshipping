@@ -6,6 +6,8 @@ use App\Services\DropService;
 use Illuminate\Console\Command;
 use OpenAI\Client;
 use OpenAI\API\API;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class AskAiCommand extends Command
 {
@@ -35,15 +37,20 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $openai = new API('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');
-        $result = $openai->completions()->create(
-            [
-                'model' => 'text-davinci-003',
-                'prompt' => 'PHP is',
-            ]
-        );
+        $client = new Client();
+        $yourApiKey = getenv('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');
 
-        echo $result['choices'][0]['text'];
+        $client = \OpenAI::factory()
+            ->withApiKey($yourApiKey)
+            ->withOrganization('ArtNum') // default: null
+            ->withBaseUri('openai.example.com/v1') // default: api.openai.com/v1
+            ->withHttpClient($client = new \GuzzleHttp\Client([])) // default: HTTP client found using PSR-18 HTTP Client Discovery
+            ->withHttpHeader('X-My-Header', 'foo')
+            ->withQueryParam('my-param', 'bar')
+            ->withStreamHandler(fn (RequestInterface $request): ResponseInterface => $client->send($request, [
+                'stream' => true // Allows to provide a custom stream handler for the http client.
+            ]))
+            ->make();
     }
 
     private function translateAi()
