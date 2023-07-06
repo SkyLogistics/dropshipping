@@ -46,8 +46,8 @@ class AskAiCommand extends Command
             ->withHttpClient(
                 $client = new \GuzzleHttp\Client([])
             ) // default: HTTP client found using PSR-18 HTTP Client Discovery
-            ->withHttpHeader('X-My-Header', 'foo')
-            ->withQueryParam('my-param', 'bar')
+            ->withHttpHeader('Authorization', 'Bearer ' . $yourApiKey)
+            ->withQueryParam('OpenAI-Organization', 'org-WYlAZmxU71900K2AUOdRsw3e')
             ->withStreamHandler(fn(RequestInterface $request): ResponseInterface => $client->send($request, [
                 'stream' => true // Allows to provide a custom stream handler for the http client.
             ]))
