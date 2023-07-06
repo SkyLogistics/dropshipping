@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\DropService;
 use Illuminate\Console\Command;
 use OpenAI\Client;
-use OpenAI\API\Endpoints\Completion;
+use OpenAI\API\API;
 
 class AskAiCommand extends Command
 {
@@ -35,8 +35,8 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $completion = new Completion('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');
-        $result = $completion->create(
+        $openai = new API('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');
+        $result = $openai->completions()->create(
             [
                 'model' => 'text-davinci-003',
                 'prompt' => 'PHP is',
