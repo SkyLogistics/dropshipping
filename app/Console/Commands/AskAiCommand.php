@@ -5,8 +5,7 @@ namespace App\Console\Commands;
 use App\Services\DropService;
 use Illuminate\Console\Command;
 use OpenAI\Client;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use OpenAI\Transporters\GuzzleTransporter;
 
 class AskAiCommand extends Command
 {
