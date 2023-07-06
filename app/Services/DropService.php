@@ -35,6 +35,7 @@ class DropService
             ->get()
             ->shuffle();
         foreach ($products as $row) {
+            dd($row);
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
             }
@@ -52,7 +53,7 @@ class DropService
 
             $parcelArrayInfo[] = $row->name;
             $parcelArrayInfo[] = $row->nameUa;
-            $parcelArrayInfo[] = '';
+            $parcelArrayInfo[] = 0;
 
             $row->keywordsUa = str_replace("&quot;", '"', $row->keywordsUa);
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
