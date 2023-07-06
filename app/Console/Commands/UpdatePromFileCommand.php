@@ -14,7 +14,7 @@ class UpdatePromFileCommand extends Command
      *
      * @var string
      */
-    protected string $signature = 'update:export {provider}';
+    protected string $name = 'update:export {provider}';
 
     /**
      * The console command description.
