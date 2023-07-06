@@ -58,7 +58,7 @@ class UpdatePromFileCommand extends Command
         $data = $this->dropService->getRemoteData($url, $inputKey);
         $template = 'export-origami.xls';
 
-        dd($data);
+        dd($data[0]);
 
 //        foreach ($data as $apiProduct) {
 //            $vendor = $apiProduct['vendor'];
