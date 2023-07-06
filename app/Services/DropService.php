@@ -203,11 +203,7 @@ class DropService
                 )->getBody()->getContents(),
                 true
             );
-        }
-
-        dd($data);
-
-        if ($provider == 'royal') {
+        } elseif ($provider == 'royal') {
             $response = $this->guzzle->get($url);
             $contents = $response->getBody()->getContents();
             $time = time();
@@ -236,6 +232,8 @@ class DropService
             //dd($tempFile);
             //$response = response()->download($tempFile, $filename);
             dd($dataCell);
+        } else {
+            return 'need correct provider';
         }
 
         $dataResult = [];
