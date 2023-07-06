@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\OrigamiProducts;
 use App\Services\DropService;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use OpenAI\Client;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -39,13 +37,13 @@ class AskAiCommand extends Command
     public function handle(): void
     {
         $yourApiKey = getenv('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');
-        $client = \OpenAI::client($yourApiKey);
-
-        $result = $client->completions()
-            ->create([
-                         'model' => 'text-davinci-003',
-                         'prompt' => 'PHP is',
-                     ]);
+        $client = Client::client($yourApiKey);
+        $result = $client->completions()->create(
+            [
+                'model' => 'text-davinci-003',
+                'prompt' => 'PHP is',
+            ]
+        );
 
         echo $result['choices'][0]['text'];
     }
