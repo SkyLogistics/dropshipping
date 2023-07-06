@@ -32,7 +32,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Touhidurabir\\Filterable\\": "packages/laravel-filterable/src/"
+            "Touhidurabir\\Filterable\\": "packages/laravel-filterable/src/",
+            "App\\Console\\Commands\\": "app/Console/Commands/"
         }
     },
     "autoload-dev": {
