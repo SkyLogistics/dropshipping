@@ -38,7 +38,7 @@ class DropService
 
         $column = 'vendorCode';
         $priceColumn = 'price';
-        $table = 'origami_products';
+        $table = 'origami_product';
 
         $duplicates = DB::table('origami_products')
             ->select($table.'.*')
