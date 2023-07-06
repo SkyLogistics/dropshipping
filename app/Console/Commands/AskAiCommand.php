@@ -37,7 +37,7 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $yourApiKey = getenv('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');
+        $yourApiKey = getenv('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');
 
         $client = \OpenAI::factory()
             ->withApiKey($yourApiKey)
