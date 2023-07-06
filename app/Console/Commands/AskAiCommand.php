@@ -36,25 +36,13 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $yourApiKey = getenv('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');
-        $client = Client::factory()
-            ->withApiKey($yourApiKey)
-            ->withOrganization('your-organization') // default: null
-            ->withBaseUri('openai.example.com/v1') // default: api.openai.com/v1
-            ->withHttpClient($client = new \GuzzleHttp\Client([])) // default: HTTP client found using PSR-18 HTTP Client Discovery
-            ->withHttpHeader('X-My-Header', 'foo')
-            ->withQueryParam('my-param', 'bar')
-            ->withStreamHandler(fn (RequestInterface $request): ResponseInterface => $client->send($request, [
-                'stream' => true // Allows to provide a custom stream handler for the http client.
-            ]))
-            ->make();
+        $client = new Client('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');
         $result = $client->completions()->create(
             [
                 'model' => 'text-davinci-003',
                 'prompt' => 'PHP is',
             ]
         );
-
         echo $result['choices'][0]['text'];
     }
 
