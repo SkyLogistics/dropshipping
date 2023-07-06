@@ -14,7 +14,7 @@ class UpdatePromFileCommand extends Command
      *
      * @var string
      */
-    protected string $signature = 'create:export {inputKey}';
+    protected string $signature = 'update:export {provider}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class UpdatePromFileCommand extends Command
      */
     public function handle(): void
     {
-        $inputKey = $this->argument('inputKey');
+        $inputKey = $this->argument('provider');
         OrigamiProducts::query()->update(['active' => 0]);
 
         $data = [];
