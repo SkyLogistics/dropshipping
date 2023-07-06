@@ -40,7 +40,7 @@ class DropService
         $priceColumn = 'price';
         $table = 'origami_product';
 
-        $duplicates = DB::table('origami_products')
+        $duplicates = DB::table($table)
             ->select($table.'.*')
             ->join(
                 DB::raw('(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM '.$table.' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'),
