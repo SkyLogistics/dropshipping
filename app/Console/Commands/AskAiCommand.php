@@ -17,7 +17,7 @@ class AskAiCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:auto-ask}';
+    protected $signature = 'app:auto-ask';
 
     /**
      * The console command description.
