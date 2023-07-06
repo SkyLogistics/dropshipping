@@ -123,7 +123,7 @@ class UpdatePromFileCommand extends Command
                             'price' => $apiProduct['price'],
                             'recommendedPrice' => $apiProduct['recommendedPrice'],
                             'quantityInStock' => $apiProduct['quantityInStock'],
-                            'hasHigherPrice' => $apiProduct['hasHigherPrice'],
+                            'hasHigherPrice' => ($apiProduct['hasHigherPrice'] != '') ? $apiProduct['hasHigherPrice'] : false,
                             'active' => 0,
                             'provider' => $dropProvider,
                         ]
