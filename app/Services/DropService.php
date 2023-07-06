@@ -205,6 +205,8 @@ class DropService
             );
         }
 
+        dd($data);
+
         if ($provider == 'royal') {
             $response = $this->guzzle->get($url);
             $contents = $response->getBody()->getContents();
