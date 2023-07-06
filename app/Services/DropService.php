@@ -49,7 +49,6 @@ class DropService
                 }
             )
             ->orderBy($column)
-            ->shuffle()
             ->get();
 
         foreach ($duplicates as $duplicate) {
