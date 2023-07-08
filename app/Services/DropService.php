@@ -34,14 +34,15 @@ class DropService
         $products = OrigamiProducts::query()
             ->where('active', 1)
             ->where('provider', $provider)
-            ->min('price')
             ->get();
 
-//        foreach ($products as $product){
-//            echo $product->id.')  '.$product->vendorCode . ' =>>> ' . $product->min_price.PHP_EOL;
-//        }
-        dd($products);
+        $minItems = $products->groupBy('vendorCode')
+            ->map(function ($items) {
+                $minPrice = $items->min('price');
+                return $items->where('price', $minPrice);
+            })->flatten(1);
 
+        dd($minItems);
 
         $column = 'vendorCode';
         $priceColumn = 'price';
