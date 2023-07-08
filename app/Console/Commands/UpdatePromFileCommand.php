@@ -94,7 +94,12 @@ class UpdatePromFileCommand extends Command
                 $oneProduct->productType = $productType;
                 $oneProduct->nameUa = str_replace("&quot;", '"', $apiProduct['nameUa']);
                 $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->nameUa);
+
+                $oneProduct->name = str_replace("&quot;", '"', $apiProduct['name']);
+                $oneProduct->name = str_replace("  ", ' ', $oneProduct->name);
+
                 $oneProduct->vendorCode = trim($apiProduct['vendorCode']);
+                $oneProduct->productUrl = $apiProduct['productUrl'];
                 if ($oneProduct->nameUa != '' && $oneProduct->name != '') {
                     $oneProduct->active = 1;
                 }
@@ -111,7 +116,7 @@ class UpdatePromFileCommand extends Command
                             'vendor' => trim($vendor),
                             'imageUrl' => $apiProduct['imageUrl'],
                             'nameUa' => str_replace(PHP_EOL, '', $apiProduct['nameUa']),
-                            'name' => '',
+                            'name' => str_replace(PHP_EOL, '', $apiProduct['name']),
                             'promID' => $promId,
                             'description' => '',
                             'description_ua' => '',
@@ -123,6 +128,7 @@ class UpdatePromFileCommand extends Command
                             'hasHigherPrice' => ($apiProduct['hasHigherPrice'] != '') ? $apiProduct['hasHigherPrice'] : false,
                             'active' => 0,
                             'provider' => $inputKey,
+                            'productUrl' => $apiProduct['productUrl'],
                         ]
                     );
             }
