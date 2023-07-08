@@ -41,18 +41,20 @@ class DropService
         $table = 'origami_product';
 
         $duplicates = DB::table($table)
-            ->select($table.'.*')
+            ->select($table . '.*')
             ->join(
-                DB::raw('(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM '.$table.' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'),
+                DB::raw(
+                    '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'
+                ),
                 function ($join) use ($column, $table) {
-                    $join->on($table.'.' . $column, '=', 'duplicates.' . $column);
+                    $join->on($table . '.' . $column, '=', 'duplicates.' . $column);
                 }
             )
             ->orderBy($column)
             ->get();
 
         foreach ($duplicates as $duplicate) {
-            echo 'id = '.$duplicate->id.' ==> '.$duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
+            echo 'id = ' . $duplicate->id . ' ==> ' . $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
         }
 
         dd($duplicates);
@@ -227,39 +229,34 @@ class DropService
                 true
             );
         } elseif ($provider == 'royal') {
-            dd(1);
-            $response = $this->guzzle->get($url);
-            $contents = $response->getBody()->getContents();
             $time = time();
+            $fileURL = 'https://royaltoys.com.ua/mprices/download/108/';
+            $filePath = '/tmp/' . $time . '.xls';
+            $fileContent = file_get_contents($fileURL);
+            file_put_contents($filePath, $fileContent);
 
-            echo $contents;
-
-            //$localFilePath = storage_path('public') . $time . '.xls';
-            $localFilePath = '/tmp/' . $time . '.xls';
-            file_put_contents($localFilePath, $contents);
-
-            $spreadsheet = IOFactory::load($localFilePath);
-            $worksheet = $spreadsheet->getActiveSheet();
-            $highestRow = $worksheet->getHighestRow();
-            $highestColumn = $worksheet->getHighestColumn();
-
-            $dataCell = [];
-            for ($row = 1; $row <= $highestRow; ++$row) {
-                $newRow = [];
-                $i = 0;
-                for ($col = 'A'; $col <= $highestColumn; ++$col) {
-                    $cellValue = $worksheet->getCell($col . $row)->getValue();
-                    echo $cellValue . ' ';
-                    $newRow[$i] = $cellValue;
-                    $i++;
-                }
-                $dataCell[] = $newRow;
-                echo PHP_EOL;
-            }
+//            $spreadsheet = IOFactory::load($localFilePath);
+//            $worksheet = $spreadsheet->getActiveSheet();
+//            $highestRow = $worksheet->getHighestRow();
+//            $highestColumn = $worksheet->getHighestColumn();
+//
+//            $dataCell = [];
+//            for ($row = 1; $row <= $highestRow; ++$row) {
+//                $newRow = [];
+//                $i = 0;
+//                for ($col = 'A'; $col <= $highestColumn; ++$col) {
+//                    $cellValue = $worksheet->getCell($col . $row)->getValue();
+//                    echo $cellValue . ' ';
+//                    $newRow[$i] = $cellValue;
+//                    $i++;
+//                }
+//                $dataCell[] = $newRow;
+//                echo PHP_EOL;
+//            }
 
             //dd($tempFile);
             //$response = response()->download($tempFile, $filename);
-            dd($dataCell);
+            //dd($dataCell);
         } else {
             return 'need correct provider';
         }

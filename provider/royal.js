@@ -36,33 +36,35 @@ async function loginAndDownload() {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
+        // Enable downloads in headless mode
+        await page._client.send('Page.setDownloadBehavior', {
+            behavior: 'allow',
+            downloadPath: filePath
+        });
+
         // Navigate to the URL
         await page.goto(url);
 
-        // Get the file URL
-        const fileURL = await page.evaluate(() => {
-            const linkElement = document.querySelector('#download-link'); // Replace with the appropriate selector
-            return linkElement.href;
-        });
-
-        // Download the file
-        await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: filePath});
-        await page.goto(fileURL);
-
         // Wait for the download to complete
-        await page.waitForEvent('download');
+        await page.waitForTimeout(5000);
 
+        console.log('File downloaded successfully.');
+
+        // Close the browser
+        await browser.close();
         // Close the browser
         await browser.close();
     }
 
     // Usage
     const fileURL = 'https://royaltoys.com.ua/mprices/download/108/'; // Replace with the actual file URL
-    const filePath = '../storage/app/public/downloaded-file.xlsx'; // Replace with the desired file path
+    const filePath = './downloaded-file.xlsx'; // Replace with the desired file path
 
     downloadFileFromURL(fileURL, filePath)
         .then(() => console.log('File downloaded successfully.'))
         .catch(error => console.error('Error downloading file:', error));
+
+    await page.waitForTimeout(10000);
 
     // // Get the download link element
     // const downloadLink = await page.$('#download-link');
