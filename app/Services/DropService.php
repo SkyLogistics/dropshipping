@@ -52,6 +52,7 @@ class DropService
                 }
             )
             ->orderBy($column)
+            ->groupBy('vendorCode')
             ->get();
 
         foreach ($duplicates as $duplicate) {
