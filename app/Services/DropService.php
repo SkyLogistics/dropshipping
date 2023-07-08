@@ -257,6 +257,7 @@ class DropService
         }
 
         $dataResult = [];
+        $i = 0;
         foreach ($data as $key => $item) {
             echo '$key = '.$key.PHP_EOL;
             if ($key < 8) {
@@ -287,8 +288,7 @@ class DropService
                     $quantityInStock = $item['quantityInStock'];
                 }
                 if ($provider == 'royal') {
-                    dd($item[$key]);
-                    $myItem = $item[$key];
+                    $myItem = $item[$i];
                     echo $myItem[0] . PHP_EOL;
                     $vendor = $myItem[1];
                     $vendorCode = $myItem[3];
@@ -334,6 +334,7 @@ class DropService
 
         //$data = file_get_contents($url);
         //TODO: parse data
+        $i++;
         return $dataResult;
     }
 
