@@ -28,7 +28,7 @@ fs.readdir(folderPath, (err, files) => {
         }
     });
 });
-
+await page.waitForTimeout(10000);
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
             headless: true,
