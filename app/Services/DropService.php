@@ -261,6 +261,7 @@ class DropService
             if ($key < 9) {
                 continue;
             }
+            dump($item);
 
             $vendor ='';
             $nameUa = '';
