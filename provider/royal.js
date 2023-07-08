@@ -35,10 +35,6 @@ async function loginAndDownload() {
     );
 
     const page = await browser.newPage();
-    await page._client.send('Page.setDownloadBehavior', {
-        behavior: 'allow',
-        downloadPath: '/tmp',
-    });
     await page.goto('https://royaltoys.com.ua/login/');
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
