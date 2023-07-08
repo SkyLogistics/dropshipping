@@ -32,7 +32,7 @@ fs.readdir(folderPath, (err, files) => {
 
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
-            headless: 'new',
+            headless: false,
             args: ['--no-sandbox'],
             downloadsPath: '/tmp'
         }
@@ -43,8 +43,8 @@ async function loginAndDownload() {
     const page = await browser.newPage();
     await page.goto('https://royaltoys.com.ua/login/');
     await page.waitForTimeout(5000);
-    const html = await page.content();
-    console.log(html);
+    // const html = await page.content();
+    // console.log(html);
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
 
