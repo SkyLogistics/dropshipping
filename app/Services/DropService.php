@@ -258,9 +258,9 @@ class DropService
             exit();
         }
 
-        dd($data[0]);
         $dataResult = [];
         foreach ($data as $item) {
+            dd($item);
             $vendor = '';
             $nameUa = '';
             $imageUrl = '';
