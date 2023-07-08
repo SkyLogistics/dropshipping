@@ -255,7 +255,7 @@ class DropService
 
         $dataResult = [];
         $i = 0;
-        dd($data[10]);
+        //dd($data[10]);
         foreach ($data as $key => $item) {
             echo '$key = ' . $key . PHP_EOL;
             if ($key < 8) {
@@ -287,7 +287,7 @@ class DropService
                 }
                 if ($provider == 'royal') {
                     dump($item);
-                    echo $item[0] . PHP_EOL;
+                    //echo $item . PHP_EOL;
                     $vendor = $item[1];
                     $vendorCode = $item[3];
                     $imageUrl = $item[10];
@@ -301,9 +301,6 @@ class DropService
                     $newPrice = $price * (1 + ($increasePercentage / 100));
                     $recommendedPrice = $newPrice;
                     $quantityInStock = $item[7];
-                }
-                if ($i === 2) {
-                    exit();
                 }
             } catch (\Exception $e) {
                 dump($item);
