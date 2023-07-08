@@ -231,8 +231,6 @@ class DropService
         } elseif ($provider == 'royal') {
             $filePath = storage_path() . '/app/public/royal/';
             $localFilePath = $filePath . 'kartiny-po-nomeram.xlsx';
-            //echo $filePath.PHP_EOL;exit();
-
             $spreadsheet = IOFactory::load($localFilePath);
             $worksheet = $spreadsheet->getActiveSheet();
             $highestRow = $worksheet->getHighestRow();
@@ -252,21 +250,20 @@ class DropService
                 echo PHP_EOL;
                 $j++;
             }
-            //dd($dataCell);
         } else {
             echo 'need correct provider';
             exit();
         }
 
         $dataResult = [];
-//        dd($data[9]);
         foreach ($data as $key => $item) {
             if ($key < 9) {
                 continue;
             }
-            dd($item);
-            $vendor = '';
+
+            $vendor ='';
             $nameUa = '';
+            $name = '';
             $imageUrl = '';
             $vendorCode = '';
             $productType = '';
@@ -274,6 +271,7 @@ class DropService
             $price = '';
             $recommendedPrice = '';
             $quantityInStock = 0;
+            $productUrl = '';
             if ($provider == 'origami') {
                 $vendor = $item['vendor'];
                 $vendorCode = trim($item['vendorCode']);
@@ -286,14 +284,19 @@ class DropService
                 $quantityInStock = $item['quantityInStock'];
             }
             if ($provider == 'royal') {
-                $vendorCode = '';
-                $imageUrl = '';
+                $vendor = $item[1];
+                $vendorCode = $item[3];
+                $imageUrl = $item[10];
+                $productUrl = $item[11];
                 $nameUa = '';
+                $name = $item[5];
                 $productType = '';
                 $size = '';
-                $price = '';
-                $recommendedPrice = '';
-                $quantityInStock = '';
+                $price = $item[8];
+                $increasePercentage = 20;
+                $newPrice = $price * (1 + ($increasePercentage / 100));
+                $recommendedPrice = $newPrice;
+                $quantityInStock = $item[7];
             }
 
             $dataResult[] = [
@@ -301,7 +304,7 @@ class DropService
                 'vendor' => trim($vendor),
                 'imageUrl' => $imageUrl,
                 'nameUa' => $nameUa,
-                'name' => '',
+                'name' => $name,
                 'promID' => '',
                 'description' => '',
                 'description_ua' => '',
@@ -312,7 +315,8 @@ class DropService
                 'quantityInStock' => $quantityInStock,
                 'hasHigherPrice' => '',
                 'active' => 0,
-                'provider' => $provider
+                'provider' => $provider,
+                'productUrl' => $productUrl,
             ];
         }
 

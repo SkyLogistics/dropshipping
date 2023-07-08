@@ -23,6 +23,7 @@ class OrigamiProducts extends Model
         'recommendedPrice',
         'hasHigherPrice',
         'active',
+        'productUrl',
     ];
 
 }
