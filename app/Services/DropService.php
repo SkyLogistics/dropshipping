@@ -296,7 +296,7 @@ class DropService
                     $name = $myItem[5];
                     $productType = '';
                     $size = '';
-                    $price = (empty($myItem[8]) ? 0 : $myItem[8]);
+                    $price = $myItem[8];
                     $increasePercentage = 20;
                     $newPrice = $price * (1 + ($increasePercentage / 100));
                     $recommendedPrice = $newPrice;
