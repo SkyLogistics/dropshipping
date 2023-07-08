@@ -92,7 +92,7 @@ class UpdatePromFileCommand extends Command
                 $oneProduct->recommendedPrice = $recommendedPrice;
                 $oneProduct->vendor = $vendor;
                 $oneProduct->productType = $productType;
-                $oneProduct->nameUa = str_replace("&quot;", '"', $apiProduct['nameUa']);
+                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->nameUa);
                 $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->nameUa);
 
                 $oneProduct->name = str_replace("&quot;", '"', $apiProduct['name']);
