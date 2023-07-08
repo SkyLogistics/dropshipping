@@ -48,7 +48,7 @@ class DropService
             if ($row->name == '' && $row->nameUa != '') {
                 $text = $row->nameUa;
                 $targetLanguage = 'ru';
-                $translatedText = $this->translate($targetLanguage, $text);
+                $translatedText = '';//$this->translate($targetLanguage, $text);
                 $row->name = str_replace("&quot;", '"', $translatedText);
                 $row->name = str_replace("  ", ' ', $row->name);
             }
@@ -135,7 +135,7 @@ class DropService
             if ($row->keywordsUa != '') {
                 $targetLanguage = 'ru';
 
-                $translatedText = $this->translate($targetLanguage, $row->keywordsUa);
+                $translatedText = '';//$this->translate($targetLanguage, $row->keywordsUa);
                 $row->keywords = str_replace("&quot;", '"', $translatedText);
                 $row->keywords = str_replace("  ", ' ', $row->keywords);
             }
