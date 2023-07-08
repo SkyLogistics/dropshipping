@@ -38,6 +38,7 @@ class DropService
 
         $myFiltered = [];
         for ($i = 0; $i < count($products); $i++) {
+            dd($products[$i]);
             $code = $products[$i]->vendorCode;
             $price = $products[$i]->price;
             $id = $products[$i]->id;
