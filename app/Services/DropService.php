@@ -52,25 +52,26 @@ class DropService
                 }
             )
             ->orderBy($column)
+            ->groupBy($table . '.' . $column)
             ->get();
 
         $minIds = [];
         $count = count($duplicates);
+        $newArrayDelete = [];
         for ($i = 0; $i < $count; $i++) {
             $min = $duplicates[$i]->price;
             $minId = $duplicates[$i]->id;
-
             dump('$min = ' . $min);
             for ($j = $i + 1; $j < $count - 1; $j++) {
                 if ($duplicates[$j]->price < $duplicates[$i]->price) {
-                    $min = $duplicates[$j]->price;
+                    //$min = $duplicates[$j]->price;
                     $minId = $duplicates[$j]->id;
                 }
             }
 
             $minIds[] = $minId;
         }
-            echo 'COUNT = '.$count;
+        echo 'COUNT = ' . $count;
         //dd($duplicates);
 
         foreach ($products as $row) {
