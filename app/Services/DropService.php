@@ -28,13 +28,16 @@ class DropService
         dd($params);
     }
 
+    public function exportXls(){
+
+    }
+
     public function getExcelData(): array
     {
         $excelData = [];
         $products = OrigamiProducts::query()
             ->where('active', 1)
             ->get();
-
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
@@ -49,8 +52,6 @@ class DropService
                 $row->name = str_replace("&quot;", '"', $translatedText);
                 $row->name = str_replace("  ", ' ', $row->name);
             }
-
-            //$this->line($row->id . '. ' . $row->nameUa . ' - ' . $row->name);
 
             $parcelArrayInfo[] = $row->name;
             $parcelArrayInfo[] = $row->nameUa;

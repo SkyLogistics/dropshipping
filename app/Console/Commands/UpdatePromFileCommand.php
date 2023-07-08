@@ -44,7 +44,6 @@ class UpdatePromFileCommand extends Command
         $inputKey = $this->argument('provider');
         OrigamiProducts::query()->update(['active' => 0]);
 
-        $data = [];
         $url = '';
         if ($inputKey == 'origami') {
             $url = 'https://origami.bycof.com/drop-api/products';
@@ -54,6 +53,7 @@ class UpdatePromFileCommand extends Command
         }
 
         $data = $this->dropService->getRemoteData($url, $inputKey);
+        //$data = $this->dropService->getRemoteData($url, $inputKey);
         $template = 'export-origami.xls';
 
         foreach ($data as $apiProduct) {
@@ -132,20 +132,6 @@ class UpdatePromFileCommand extends Command
                     );
             }
         }
-
-        $excelData = $this->dropService->getExcelData();
-
-        $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
-        $spreadsheet->getActiveSheet()->fromArray(
-            $excelData,
-            null,
-            'A2'
-        );
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
-        $path = '/example/' . $template;
-        $file = public_path() . $path;
-        $writer->save($file);
     }
 
     private function translateAi()
