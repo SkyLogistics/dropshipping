@@ -238,6 +238,7 @@ class DropService
             $highestRow = $worksheet->getHighestRow();
             $highestColumn = $worksheet->getHighestColumn();
 
+            $j = 0;
             for ($row = 1; $row <= $highestRow; ++$row) {
                 $newRow = [];
                 $i = 0;
@@ -247,8 +248,9 @@ class DropService
                     $newRow[$i] = $cellValue;
                     $i++;
                 }
-                $data[] = $newRow;
+                $data[$j][] = $newRow;
                 echo PHP_EOL;
+                $j++;
             }
 
             //dd($dataCell);
