@@ -274,34 +274,36 @@ class DropService
             $quantityInStock = 0;
             $productUrl = '';
 //            try {
-                if ($provider == 'origami') {
-                    $vendor = $item['vendor'];
-                    $vendorCode = trim($item['vendorCode']);
-                    $imageUrl = $item['imageUrl'];
-                    $nameUa = $item['nameUa'];
-                    $productType = $item['productType'];
-                    $size = $item['productType'];
-                    $price = $item['price'];
-                    $recommendedPrice = $item['recommendedPrice'];
-                    $quantityInStock = $item['quantityInStock'];
-                }
-                if ($provider == 'royal') {
-                    dump($item);
-                    //echo $item . PHP_EOL;
-                    $vendor = $item[1];
-                    $vendorCode = $item[2];
-                    $imageUrl = $item[9];
-                    $productUrl = $item[10];
-                    $nameUa = '';
-                    $name = $item[4];
-                    $productType = '';
-                    $size = '';
-                    $price = $item[7];
-                    $increasePercentage = 20;
-                    $newPrice = $price * (1 + ($increasePercentage / 100));
-                    $recommendedPrice = $newPrice;
-                    $quantityInStock = $item[5];
-                }
+            if ($provider == 'origami') {
+                $vendor = $item['vendor'];
+                $vendorCode = trim($item['vendorCode']);
+                $imageUrl = $item['imageUrl'];
+                $nameUa = $item['nameUa'];
+                $productType = $item['productType'];
+                $size = $item['productType'];
+                $price = $item['price'];
+                $recommendedPrice = $item['recommendedPrice'];
+                $quantityInStock = $item['quantityInStock'];
+            }
+            if ($provider == 'royal' && $item[7] > 0) {
+                dump($item);
+                //echo $item . PHP_EOL;
+                $vendor = $item[1];
+                $vendorCode = $item[2];
+                $imageUrl = $item[9];
+                $productUrl = $item[10];
+                $nameUa = '';
+                $name = $item[4];
+                $productType = '';
+                $size = '';
+                $price = $item[7];
+                $increasePercentage = 20;
+                $newPrice = $price * (1 + ($increasePercentage / 100));
+                $recommendedPrice = $newPrice;
+                $quantityInStock = $item[5];
+            } else {
+                continue;
+            }
 //            } catch (\Exception $e) {
 //                dump($item);
 //                dump($e->getLine());
