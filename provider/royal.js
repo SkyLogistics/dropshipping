@@ -58,7 +58,7 @@ async function loginAndDownload() {
 
     // Usage
     const fileURL = 'https://royaltoys.com.ua/mprices/download/108/'; // Replace with the actual file URL
-    const filePath = './downloaded-file.xlsx'; // Replace with the desired file path
+    const filePath = '../storage/app/public/downloaded-file.xlsx'; // Replace with the desired file path
 
     downloadFileFromURL(fileURL, filePath)
         .then(() => console.log('File downloaded successfully.'))
