@@ -229,8 +229,8 @@ class DropService
                 true
             );
         } elseif ($provider == 'royal') {
-            $filePath = storage_path().'/app/public/royal/';
-            $localFilePath = $filePath.'kartiny-po-nomeram.xlsx';
+            $filePath = storage_path() . '/app/public/royal/';
+            $localFilePath = $filePath . 'kartiny-po-nomeram.xlsx';
             //echo $filePath.PHP_EOL;exit();
 
             $spreadsheet = IOFactory::load($localFilePath);
@@ -252,7 +252,6 @@ class DropService
                 echo PHP_EOL;
                 $j++;
             }
-
             //dd($dataCell);
         } else {
             echo 'need correct provider';
@@ -260,8 +259,11 @@ class DropService
         }
 
         $dataResult = [];
-        dd($data[9]);
-        foreach ($data as $item) {
+//        dd($data[9]);
+        foreach ($data as $key => $item) {
+            if ($key < 9) {
+                continue;
+            }
             dd($item);
             $vendor = '';
             $nameUa = '';
