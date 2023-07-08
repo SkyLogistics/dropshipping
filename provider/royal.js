@@ -43,6 +43,8 @@ async function loginAndDownload() {
     const page = await browser.newPage();
     await page.goto('https://royaltoys.com.ua/login/');
     await page.waitForTimeout(5000);
+    const html = await page.content();
+    console.log(html);
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
 
