@@ -41,7 +41,7 @@ class DropService
         $priceColumn = 'price';
         $table = 'origami_product';
 
-        $duplicates = DB::table($table)
+        $nonDuplicates = DB::table($table)
             ->select(DB::raw('MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
             ->join(
                 DB::raw(
@@ -55,25 +55,7 @@ class DropService
             ->groupBy($table . '.' . $column)
             ->get();
 
-
-        $minIds = [];
-        $count = count($duplicates);
-        $newArrayDelete = [];
-        for ($i = 0; $i < $count; $i++) {
-            $min = $duplicates[$i]->price;
-            $minId = $duplicates[$i]->id;
-            dump('$min = ' . $min);
-            for ($j = $i + 1; $j < $count - 1; $j++) {
-                if ($duplicates[$j]->price < $duplicates[$i]->price) {
-                    //$min = $duplicates[$j]->price;
-                    $minId = $duplicates[$j]->id;
-                }
-            }
-
-            $minIds[] = $minId;
-        }
-        echo 'COUNT = ' . $count;
-        //dd($duplicates);
+        dd($nonDuplicates);
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
