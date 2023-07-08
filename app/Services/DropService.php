@@ -294,7 +294,7 @@ class DropService
 
             $dataResult[] = [
                 'vendorCode' => trim($vendorCode),
-                'vendor' => $vendor,
+                'vendor' => trim($vendor),
                 'imageUrl' => $imageUrl,
                 'nameUa' => $nameUa,
                 'name' => '',

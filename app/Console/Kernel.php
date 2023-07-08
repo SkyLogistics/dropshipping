@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update:export origami')->cron('*/50 * * * *');
+        $schedule->command('app:export origami')->cron('*/5 * * * *');
+        $schedule->command('app:export royal')->cron('*/5 * * * *');
         //$schedule->command('update:export royal')->cron('*/15 * * * *');
         // $schedule->command('inspire')->hourly();
     }
