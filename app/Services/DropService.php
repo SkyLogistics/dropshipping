@@ -55,7 +55,9 @@ class DropService
             ->groupBy($table . '.' . $column)
             ->get();
 
-        dd($nonDuplicates);
+        foreach ($nonDuplicates as $nonDuplicate) {
+            echo $nonDuplicate->id .' => '.$nonDuplicate->price.PHP_EOL;
+        }
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
