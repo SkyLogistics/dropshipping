@@ -305,7 +305,7 @@ class DropService
             } catch (\Exception $e) {
                 dump($item);
                 dump($e->getLine());
-                dd($e->getMessage());
+//                dd($e->getMessage());
             }
 
             $dataResult[] = [
