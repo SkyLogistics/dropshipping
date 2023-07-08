@@ -42,7 +42,7 @@ class DropService
         $table = 'origami_product';
 
         $duplicates = DB::table($table)
-            ->select(DB::raw('ANY_VALUE(' . $table . '.*), MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
+            ->select(DB::raw('MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
             ->join(
                 DB::raw(
                     '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'
@@ -54,6 +54,7 @@ class DropService
             ->orderBy($column)
             ->groupBy($table . '.' . $column)
             ->get();
+
 
         $minIds = [];
         $count = count($duplicates);
