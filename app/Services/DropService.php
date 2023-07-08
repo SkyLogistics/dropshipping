@@ -273,7 +273,7 @@ class DropService
             $recommendedPrice = 0;
             $quantityInStock = 0;
             $productUrl = '';
-            try {
+//            try {
                 if ($provider == 'origami') {
                     $vendor = $item['vendor'];
                     $vendorCode = trim($item['vendorCode']);
@@ -302,11 +302,11 @@ class DropService
                     $recommendedPrice = $newPrice;
                     $quantityInStock = $item[5];
                 }
-            } catch (\Exception $e) {
-                dump($item);
-                dump($e->getLine());
-//                dd($e->getMessage());
-            }
+//            } catch (\Exception $e) {
+//                dump($item);
+//                dump($e->getLine());
+////                dd($e->getMessage());
+//            }
 
             $dataResult[] = [
                 'vendorCode' => trim($vendorCode),
