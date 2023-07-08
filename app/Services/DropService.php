@@ -329,6 +329,8 @@ class DropService
             ];
         }
 
+        dd($dataResult[1511]);
+
         //$data = file_get_contents($url);
         //TODO: parse data
         $i++;
