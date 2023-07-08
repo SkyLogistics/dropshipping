@@ -36,7 +36,8 @@ class DropService
             ->where('provider', $provider)
             ->get();
 
-        $minItems = $products->groupBy('vendorCode')
+        $minItems = $products
+            ->groupBy('vendorCode')
             ->map(function ($items) {
                 $minPrice = $items->min('price');
                 return $items->where('price', $minPrice);
