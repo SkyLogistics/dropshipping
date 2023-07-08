@@ -54,12 +54,11 @@ class DropService
             ->orderBy($column)
             ->groupBy($table . '.' . $column)
             ->get();
-        //dd($nonDuplicates[0]);
 
         foreach ($nonDuplicates as $nonDuplicate) {
-
             echo $nonDuplicate[0].') '.$nonDuplicate[2] .' => '.$nonDuplicate[6].PHP_EOL;
         }
+        dd(888);
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
