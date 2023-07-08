@@ -41,7 +41,7 @@ class DropService
         $priceColumn = 'price';
         $table = 'origami_product';
 
-        $nonDuplicates = DB::table($table)
+        $duplicates = DB::table($table)
             ->select(DB::raw('MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
             ->join(
                 DB::raw(
@@ -55,10 +55,31 @@ class DropService
             ->groupBy($table . '.' . $column)
             ->get();
 
+        $nonDuplicates = DB::table($table)
+            ->select(DB::raw('MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
+            ->join(
+                DB::raw(
+                    '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) = 1) duplicates'
+                ),
+                function ($join) use ($column, $table) {
+                    $join->on($table . '.' . $column, '=', 'duplicates.' . $column);
+                }
+            )
+            ->orderBy($column)
+            ->get();
+
+        $ids = [];
+        foreach ($duplicates as $duplicate) {
+            echo $duplicate->id.') '.$duplicate->vendorCode .' => '.$duplicate->min_price.PHP_EOL;
+            $ids[] = $duplicate->id;
+        }
+
         foreach ($nonDuplicates as $nonDuplicate) {
             echo $nonDuplicate->id.') '.$nonDuplicate->vendorCode .' => '.$nonDuplicate->min_price.PHP_EOL;
+            $ids[] = $nonDuplicate->id;
         }
-        dd(888);
+        dd($ids);
+
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
