@@ -231,8 +231,10 @@ class DropService
             $contents = $response->getBody()->getContents();
             $time = time();
 
-            $localFilePath = storage_path('public') . $time . '.xls';
+            //$localFilePath = storage_path('public') . $time . '.xls';
+            $localFilePath = '/tmp/' . $time . '.xls';
             file_put_contents($localFilePath, $contents);
+
             $spreadsheet = IOFactory::load($localFilePath);
             $worksheet = $spreadsheet->getActiveSheet();
             $highestRow = $worksheet->getHighestRow();
