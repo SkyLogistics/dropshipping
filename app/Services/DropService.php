@@ -261,9 +261,8 @@ class DropService
             if ($key < 9) {
                 continue;
             }
-            dump($item);
 
-            $vendor ='';
+            $vendor = '';
             $nameUa = '';
             $name = '';
             $imageUrl = '';
@@ -274,32 +273,36 @@ class DropService
             $recommendedPrice = '';
             $quantityInStock = 0;
             $productUrl = '';
-            if ($provider == 'origami') {
-                $vendor = $item['vendor'];
-                $vendorCode = trim($item['vendorCode']);
-                $imageUrl = $item['imageUrl'];
-                $nameUa = $item['nameUa'];
-                $productType = $item['productType'];
-                $size = $item['productType'];
-                $price = $item['price'];
-                $recommendedPrice = $item['recommendedPrice'];
-                $quantityInStock = $item['quantityInStock'];
-            }
-            if ($provider == 'royal') {
-                echo $item[0].PHP_EOL;
-                $vendor = $item[1];
-                $vendorCode = $item[3];
-                $imageUrl = $item[10];
-                $productUrl = $item[11];
-                $nameUa = '';
-                $name = $item[5];
-                $productType = '';
-                $size = '';
-                $price = $item[8];
-                $increasePercentage = 20;
-                $newPrice = $price * (1 + ($increasePercentage / 100));
-                $recommendedPrice = $newPrice;
-                $quantityInStock = $item[7];
+            try {
+                if ($provider == 'origami') {
+                    $vendor = $item['vendor'];
+                    $vendorCode = trim($item['vendorCode']);
+                    $imageUrl = $item['imageUrl'];
+                    $nameUa = $item['nameUa'];
+                    $productType = $item['productType'];
+                    $size = $item['productType'];
+                    $price = $item['price'];
+                    $recommendedPrice = $item['recommendedPrice'];
+                    $quantityInStock = $item['quantityInStock'];
+                }
+                if ($provider == 'royal') {
+                    echo $item[0] . PHP_EOL;
+                    $vendor = $item[1];
+                    $vendorCode = $item[3];
+                    $imageUrl = $item[10];
+                    $productUrl = $item[11];
+                    $nameUa = '';
+                    $name = $item[5];
+                    $productType = '';
+                    $size = '';
+                    $price = $item[8];
+                    $increasePercentage = 20;
+                    $newPrice = $price * (1 + ($increasePercentage / 100));
+                    $recommendedPrice = $newPrice;
+                    $quantityInStock = $item[7];
+                }
+            } catch (\Exception $e) {
+                dump($item);
             }
 
             $dataResult[] = [
