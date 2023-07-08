@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 require('dotenv').config();
-let folderPath = '/Users/admin/Downloads/';
-if (process.env.ROYAL_ENV !== 'server') {
-    folderPath = '/home/root/Downloads';
+let folderPath = '/home/root/Downloads';
+if (process.env.ROYAL_ENV === 'local') {
+    folderPath = '/Users/admin/Downloads/';
 }
 const path = require('path');
 const substring = 'kartiny-po-nomeram'; // Replace with the desired substring
@@ -30,7 +30,7 @@ fs.readdir(folderPath, (err, files) => {
 });
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
-            headless: true,
+            headless: 'new',
             args: ['--no-sandbox'],
             downloadsPath: '/tmp'
         }
@@ -40,7 +40,7 @@ async function loginAndDownload() {
 
     const page = await browser.newPage();
     await page.goto('https://royaltoys.com.ua/login/');
-    await page.waitForTimeout(10000);
+    await page.waitForTimeout(5000);
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
 
