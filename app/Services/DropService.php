@@ -58,7 +58,7 @@ class DropService
 
         foreach ($nonDuplicates as $nonDuplicate) {
 
-            echo $nonDuplicate[2] .' => '.$nonDuplicate[6].PHP_EOL;
+            echo $nonDuplicate[0].') '.$nonDuplicate[2] .' => '.$nonDuplicate[6].PHP_EOL;
         }
 
         foreach ($products as $row) {
