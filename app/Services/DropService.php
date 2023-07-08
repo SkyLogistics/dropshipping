@@ -286,26 +286,24 @@ class DropService
                     $quantityInStock = $item['quantityInStock'];
                 }
                 if ($provider == 'royal') {
-                    echo $item[0] . PHP_EOL;
-                    $vendor = $item[1];
-                    $vendorCode = $item[3];
-                    $imageUrl = $item[10];
-                    $productUrl = $item[11];
+                    $myItem = $item[$key];
+                    echo $myItem[0] . PHP_EOL;
+                    $vendor = $myItem[1];
+                    $vendorCode = $myItem[3];
+                    $imageUrl = $myItem[10];
+                    $productUrl = $myItem[11];
                     $nameUa = '';
-                    $name = $item[5];
+                    $name = $myItem[5];
                     $productType = '';
                     $size = '';
-                    $price = (empty($item[8]) ? 0 : $item[8]);
+                    $price = (empty($myItem[8]) ? 0 : $myItem[8]);
                     $increasePercentage = 20;
                     $newPrice = $price * (1 + ($increasePercentage / 100));
                     $recommendedPrice = $newPrice;
-                    $quantityInStock = $item[7];
+                    $quantityInStock = $myItem[7];
                 }
             } catch (\Exception $e) {
-                dump($item);
-                dump($e->getLine());
                 dd($e->getMessage());
-                dump($item);
             }
 
             $dataResult[] = [
