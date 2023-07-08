@@ -304,11 +304,6 @@ class DropService
             } else {
                 continue;
             }
-//            } catch (\Exception $e) {
-//                dump($item);
-//                dump($e->getLine());
-////                dd($e->getMessage());
-//            }
 
             $dataResult[] = [
                 'vendorCode' => trim($vendorCode),
@@ -331,11 +326,8 @@ class DropService
             ];
         }
 
-        dd($dataResult[0]);
-
         //$data = file_get_contents($url);
         //TODO: parse data
-        $i++;
         return $dataResult;
     }
 
