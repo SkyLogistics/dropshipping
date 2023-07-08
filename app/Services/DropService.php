@@ -36,43 +36,25 @@ class DropService
             ->where('provider', $provider)
             ->get();
 
-        $minItems = $products
-            ->groupBy('vendorCode')
-            ->map(function ($items) {
-                $minPrice = $items->min('price');
-                return $items->where('price', $minPrice);
-            })->flatten(1);
-
-        dd($minItems);
-
-        $column = 'vendorCode';
-        $priceColumn = 'price';
-        $table = 'origami_product';
-
-        $duplicates = DB::table($table)
-            ->select(
-                DB::raw(
-                    $table . '.id as table_id, MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'
-                )
-            )
-            ->join(
-                DB::raw(
-                    '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) >= 1) duplicates'
-                ),
-                function ($join) use ($column, $table) {
-                    $join->on($table . '.' . $column, '=', 'duplicates.' . $column);
+        $myFiltered = [];
+        for ($i = 0; $i < count($products); $i++) {
+            $code = $products[$i]->vendorCode;
+            $price = $products[$i]->price;
+            $id = $products[$i]->id;
+            for ($j = $i; $j < count($products); $j++) {
+                if ($products[$j]->price < $products[$i]->price && $products[$j]->vendorCode == $products[$i]->vendorCode) {
+                    $price = $products[$j]->price;
+                    $id = $products[$j]->id;
+                    $j++;
                 }
-            )
-            ->orderBy($column)
-            ->groupBy($table . '.' . $column)
-            ->get();
-
-        $ids = [];
-        foreach ($duplicates as $duplicate) {
-            echo $duplicate->table_id . ') ' . $duplicate->vendorCode . ' => ' . $duplicate->min_price . PHP_EOL;
-            $ids[] = $duplicate->vendorCode . ' =>>> ' . $duplicate->min_price;
+            }
+            $myFiltered[$i]['id'] = $id;
+            $myFiltered[$i]['price'] = $price;
+            $myFiltered[$i]['code'] = $code;
+            $i++;
         }
-        dd($ids);
+
+        dd($myFiltered);
 
 
         foreach ($products as $row) {
