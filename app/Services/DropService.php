@@ -57,7 +57,7 @@ class DropService
         $i = 0;
         $count = count($duplicates);
         for ($i = 0; $i < $count; $i++) {
-            $min = $duplicates[$i]['price'];
+            $min = $duplicates[$i]->price;
             dump('$min = '.$min);
 //            $min = $duplicate['price'];
 //            dump($key[]);
