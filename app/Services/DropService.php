@@ -54,12 +54,17 @@ class DropService
             ->orderBy($column)
             ->get();
         $minProduct = [];
-        foreach ($duplicates as $key => $duplicate) {
-            dump($key);
+        $i = 0;
+        $count = count($duplicates);
+        for ($i = 0; $i < $count; $i++) {
+            $min = $duplicates[$i]['price'];
+            dump('$min = '.$min);
+//            $min = $duplicate['price'];
+//            dump($key[]);
             //echo 'id = ' . $duplicate->id . ' ==> ' . $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
         }
 
-        dd($duplicates);
+        //dd($duplicates);
 
         foreach ($products as $row) {
             if ($row->nameUa == '' && $row->name == '') {
