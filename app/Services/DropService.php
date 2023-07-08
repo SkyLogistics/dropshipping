@@ -263,16 +263,7 @@ class DropService
                 continue;
             }
 
-            $vendor = '';
-            $nameUa = '';
             $name = '';
-            $imageUrl = '';
-            $vendorCode = '';
-            $productType = '';
-            $size = 0;
-            $price = 0;
-            $recommendedPrice = 0;
-            $quantityInStock = 0;
             $productUrl = '';
 //            try {
             if ($provider == 'origami') {
@@ -301,8 +292,7 @@ class DropService
                 $size = '';
                 $price = $item[7];
                 $increasePercentage = 20;
-                $newPrice = $price * (1 + ($increasePercentage / 100));
-                $recommendedPrice = $newPrice;
+                $recommendedPrice = ceil($price * (1 + ($increasePercentage / 100)));
                 $quantityInStock = 100;
                 if (is_numeric($item[5])) {
                     $quantityInStock = $item[5];

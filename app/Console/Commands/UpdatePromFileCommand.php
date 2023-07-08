@@ -87,6 +87,7 @@ class UpdatePromFileCommand extends Command
                 if ($apiProduct['price'] > $apiProduct['recommendedPrice']) {
                     $recommendedPrice = $apiProduct['price'];
                 }
+                $oneProduct->provider = $inputKey;
                 $oneProduct->price = $apiProduct['price'];
                 $oneProduct->recommendedPrice = $recommendedPrice;
                 $oneProduct->vendor = $vendor;
