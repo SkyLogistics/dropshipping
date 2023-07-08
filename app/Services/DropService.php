@@ -177,20 +177,21 @@ class DropService
 
     private function translate($toLang, $text)
     {
-        $apiKey = 'AIzaSyCqrmsw4xk4KA1qa8cHtFYU7ShKAGbpBGE';
-        $response = $this->guzzle->post('https://translation.googleapis.com/language/translate/v2', [
-            'query' => [
-                'key' => $apiKey,
-            ],
-            'json' => [
-                'q' => $text,
-                'target' => $toLang,
-            ],
-        ]);
+//        $apiKey = 'AIzaSyCqrmsw4xk4KA1qa8cHtFYU7ShKAGbpBGE';
+//        $response = $this->guzzle->post('https://translation.googleapis.com/language/translate/v2', [
+//            'query' => [
+//                'key' => $apiKey,
+//            ],
+//            'json' => [
+//                'q' => $text,
+//                'target' => $toLang,
+//            ],
+//        ]);
 
-        $result = json_decode($response->getBody(), true);
-
-        return $result['data']['translations'][0]['translatedText'];
+//        $result = json_decode($response->getBody(), true);
+//
+//        return $result['data']['translations'][0]['translatedText'];
+        return '';
     }
 
     /**
