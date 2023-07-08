@@ -28,34 +28,12 @@ class DropService
         dd($params);
     }
 
-    public function getExcelData($provider): array
+    public function getExcelData(): array
     {
         $excelData = [];
         $products = OrigamiProducts::query()
             ->where('active', 1)
-            ->where('provider', $provider)
             ->get();
-
-        $myFiltered = [];
-        for ($i = 0; $i < count($products); $i++) {
-            dd($products[$i]);
-            $code = $products[$i]->vendorCode;
-            $price = $products[$i]->price;
-            $id = $products[$i]->id;
-            for ($j = $i; $j < count($products); $j++) {
-                if ($products[$j]->price < $products[$i]->price && $products[$j]->vendorCode == $products[$i]->vendorCode) {
-                    $price = $products[$j]->price;
-                    $id = $products[$j]->id;
-                    $j++;
-                }
-            }
-            $myFiltered[$i]['id'] = $id;
-            $myFiltered[$i]['price'] = $price;
-            $myFiltered[$i]['code'] = $code;
-            $i++;
-        }
-
-        dd($myFiltered);
 
 
         foreach ($products as $row) {
@@ -252,8 +230,6 @@ class DropService
         }
 
         $dataResult = [];
-        $i = 0;
-        //dd($data[10]);
         foreach ($data as $key => $item) {
             echo '$key = ' . $key . PHP_EOL;
             if ($key < 9) {
@@ -262,7 +238,6 @@ class DropService
 
             $name = '';
             $productUrl = '';
-//            try {
             if ($provider == 'origami') {
                 $vendor = $item['vendor'];
                 $vendorCode = trim($item['vendorCode']);

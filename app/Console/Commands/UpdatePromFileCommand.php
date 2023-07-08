@@ -49,7 +49,6 @@ class UpdatePromFileCommand extends Command
         if ($inputKey == 'origami') {
             $url = 'https://origami.bycof.com/drop-api/products';
         }
-
         if ($inputKey == 'royal') {
             $url = 'https://royaltoys.com.ua/mprices/download/108/';
         }
@@ -134,7 +133,7 @@ class UpdatePromFileCommand extends Command
             }
         }
 
-        $excelData = $this->dropService->getExcelData($data);
+        $excelData = $this->dropService->getExcelData();
 
         $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
         $spreadsheet->getActiveSheet()->fromArray(
