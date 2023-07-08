@@ -247,7 +247,7 @@ class DropService
                     $newRow[$i] = $cellValue;
                     $i++;
                 }
-                $dataCell[] = $newRow;
+                $data[] = $newRow;
                 echo PHP_EOL;
             }
 
