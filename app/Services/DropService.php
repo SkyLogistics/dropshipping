@@ -258,7 +258,7 @@ class DropService
 
         $dataResult = [];
         foreach ($data as $key => $item) {
-            if ($key < 9) {
+            if ($key < 8) {
                 continue;
             }
 
