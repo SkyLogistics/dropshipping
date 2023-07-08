@@ -254,9 +254,11 @@ class DropService
 
             dd($dataCell);
         } else {
-            return 'need correct provider';
+            echo 'need correct provider';
+            exit();
         }
 
+        dd($data[0]);
         $dataResult = [];
         foreach ($data as $item) {
             $vendor = '';
