@@ -220,7 +220,7 @@ class DropService
      */
     public function getRemoteData(string $url, $provider): array
     {
-        $data = '';
+        $data = [];
         if ($provider == 'origami') {
             $data = json_decode(
                 $this->guzzle->get(
@@ -238,7 +238,6 @@ class DropService
             $highestRow = $worksheet->getHighestRow();
             $highestColumn = $worksheet->getHighestColumn();
 
-            $dataCell = [];
             for ($row = 1; $row <= $highestRow; ++$row) {
                 $newRow = [];
                 $i = 0;
