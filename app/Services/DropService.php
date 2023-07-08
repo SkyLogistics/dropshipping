@@ -58,7 +58,7 @@ class DropService
         $ids = [];
         foreach ($duplicates as $duplicate) {
             echo $duplicate->id.') '.$duplicate->vendorCode .' => '.$duplicate->min_price.PHP_EOL;
-            $ids[] = $duplicate->min_price;
+            $ids[] = $duplicate->vendorCode.' =>>> '.$duplicate->min_price;
         }
         dd($ids);
 
