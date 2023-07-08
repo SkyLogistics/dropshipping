@@ -285,7 +285,7 @@ class DropService
                 $recommendedPrice = $item['recommendedPrice'];
                 $quantityInStock = $item['quantityInStock'];
             }
-            if ($provider == 'royal' && $item[7] > 0) {
+            if ($provider == 'royal' && is_numeric($item[7])) {
                 dump($item);
                 //echo $item . PHP_EOL;
                 $vendor = $item[1];
