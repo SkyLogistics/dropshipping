@@ -304,7 +304,7 @@ class DropService
                     $quantityInStock = $myItem[7];
                 }
             } catch (\Exception $e) {
-                dd($item);
+                dump($item);
                 dump($e->getLine());
                 dd($e->getMessage());
 
