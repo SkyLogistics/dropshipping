@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 require('dotenv').config();
 
-const folderPath = '/Users/admin/Downloads'; // Replace with the path to the folder containing the files you want to delete
+const folderPath = '/tmp'; // Replace with the path to the folder containing the files you want to delete
 const path = require('path');
 const substring = 'kartiny-po-nomeram'; // Replace with the desired substring
 
@@ -29,11 +29,16 @@ fs.readdir(folderPath, (err, files) => {
 
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             downloadsPath: '/tmp'
         }
     );
+
     const page = await browser.newPage();
+    await page._client.send('Page.setDownloadBehavior', {
+        behavior: 'allow',
+        downloadPath: '/tmp',
+    });
     await page.goto('https://royaltoys.com.ua/login/');
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
