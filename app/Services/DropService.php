@@ -289,7 +289,7 @@ class DropService
                     dump($item);
                     //echo $item . PHP_EOL;
                     $vendor = $item[1];
-                    $vendorCode = $item[3];
+                    $vendorCode = $item[2];
                     $imageUrl = $item[10];
                     $productUrl = $item[11];
                     $nameUa = '';
