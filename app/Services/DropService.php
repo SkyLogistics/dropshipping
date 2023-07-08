@@ -231,7 +231,7 @@ class DropService
         } elseif ($provider == 'royal') {
             $time = time();
             $fileURL = 'https://royaltoys.com.ua/mprices/download/108/';
-            $filePath = storage_path('public');
+            $filePath = storage_path().'/app/public/royal';
             echo $filePath.PHP_EOL;exit();
             $fileContent = file_get_contents($fileURL);
             file_put_contents($filePath, $fileContent);
