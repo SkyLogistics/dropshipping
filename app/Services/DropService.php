@@ -222,11 +222,12 @@ class DropService
         if ($provider == 'origami') {
             $data = json_decode(
                 $this->guzzle->get(
-                    'https://origami.bycof.com/drop-api/products', []
+                    $url, []
                 )->getBody()->getContents(),
                 true
             );
         } elseif ($provider == 'royal') {
+            dd(1);
             $response = $this->guzzle->get($url);
             $contents = $response->getBody()->getContents();
             $time = time();
