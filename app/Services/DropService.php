@@ -49,7 +49,7 @@ class DropService
                 $text = $row->nameUa;
                 $targetLanguage = 'ru';
                 $translatedText = '';//$this->translate($targetLanguage, $text);
-                $row->name = str_replace("&quot;", '"', $translatedText);
+                $row->name = str_replace("&quot;", '"', $text);
                 $row->name = str_replace("  ", ' ', $row->name);
             }
 
@@ -136,7 +136,7 @@ class DropService
                 $targetLanguage = 'ru';
 
                 $translatedText = '';//$this->translate($targetLanguage, $row->keywordsUa);
-                $row->keywords = str_replace("&quot;", '"', $translatedText);
+                $row->keywords = str_replace("&quot;", '"', $row->keywordsUa);
                 $row->keywords = str_replace("  ", ' ', $row->keywords);
             }
 
