@@ -295,13 +295,14 @@ class DropService
                     $name = $item[5];
                     $productType = '';
                     $size = '';
-                    $price = $item[8];
+                    $price = (empty($item[8]) ? 0 : $item[8]);
                     $increasePercentage = 20;
                     $newPrice = $price * (1 + ($increasePercentage / 100));
                     $recommendedPrice = $newPrice;
                     $quantityInStock = $item[7];
                 }
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 dump($item);
             }
 
