@@ -290,17 +290,17 @@ class DropService
                     //echo $item . PHP_EOL;
                     $vendor = $item[1];
                     $vendorCode = $item[2];
-                    $imageUrl = $item[10];
-                    $productUrl = $item[11];
+                    $imageUrl = $item[9];
+                    $productUrl = $item[10];
                     $nameUa = '';
-                    $name = $item[5];
+                    $name = $item[4];
                     $productType = '';
                     $size = '';
-                    $price = $item[8];
+                    $price = $item[7];
                     $increasePercentage = 20;
                     $newPrice = $price * (1 + ($increasePercentage / 100));
                     $recommendedPrice = $newPrice;
-                    $quantityInStock = $item[7];
+                    $quantityInStock = $item[5];
                 }
             } catch (\Exception $e) {
                 dump($item);
