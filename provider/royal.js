@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 require('dotenv').config();
-let folderPath = '/home/root/Downloads';
+let folderPath = '/home/Downloads';
 if (process.env.ROYAL_ENV === 'local') {
     folderPath = '/Users/admin/Downloads/';
 }
