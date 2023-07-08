@@ -37,10 +37,10 @@ class DropService
             ->min('price')
             ->get();
 
-        foreach ($products as $product){
-            echo $product->id.')  '.$product->vendorCode . ' =>>> ' . $product->min_price.PHP_EOL;
-        }
-        dd(1);
+//        foreach ($products as $product){
+//            echo $product->id.')  '.$product->vendorCode . ' =>>> ' . $product->min_price.PHP_EOL;
+//        }
+        dd($products);
 
 
         $column = 'vendorCode';
