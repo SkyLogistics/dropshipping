@@ -99,7 +99,7 @@ class UpdatePromFileCommand extends Command
 
                 $oneProduct->vendorCode = trim($apiProduct['vendorCode']);
                 $oneProduct->productUrl = $apiProduct['productUrl'];
-                if ($oneProduct->nameUa != '' && $oneProduct->name != '') {
+                if ($oneProduct->nameUa != '' || $oneProduct->name != '') {
                     $oneProduct->active = 1;
                 }
                 $oneProduct->save();
