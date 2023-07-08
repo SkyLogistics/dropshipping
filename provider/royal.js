@@ -5,6 +5,7 @@ let folderPath = '/home/root/Downloads';
 if (process.env.ROYAL_ENV === 'local') {
     folderPath = '/Users/admin/Downloads/';
 }
+console.log('folderPath = ' + folderPath)
 const path = require('path');
 const substring = 'kartiny-po-nomeram'; // Replace with the desired substring
 
@@ -28,6 +29,7 @@ fs.readdir(folderPath, (err, files) => {
         }
     });
 });
+
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
             headless: 'new',
