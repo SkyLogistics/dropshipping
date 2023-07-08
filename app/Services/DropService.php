@@ -52,11 +52,11 @@ class DropService
                 }
             )
             ->orderBy($column)
-            ->groupBy(['vendorCode, id'])
             ->get();
-
-        foreach ($duplicates as $duplicate) {
-            echo 'id = ' . $duplicate->id . ' ==> ' . $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
+        $minProduct = [];
+        foreach ($duplicates as $key => $duplicate) {
+            dump($key);
+            //echo 'id = ' . $duplicate->id . ' ==> ' . $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
         }
 
         dd($duplicates);
