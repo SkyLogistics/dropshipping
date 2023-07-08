@@ -287,6 +287,9 @@ class DropService
             } elseif ($provider == 'royal') {
                 dump($item);
                 //echo $item . PHP_EOL;
+                if (!is_numeric($item[7])) {
+                    continue;
+                }
                 $vendor = $item[1];
                 $vendorCode = $item[2];
                 $imageUrl = $item[9];
