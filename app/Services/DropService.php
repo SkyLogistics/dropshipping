@@ -229,35 +229,30 @@ class DropService
                 true
             );
         } elseif ($provider == 'royal') {
-            $time = time();
-            $fileURL = 'https://royaltoys.com.ua/mprices/download/108/';
-            $filePath = storage_path().'/app/public/royal';
-            echo $filePath.PHP_EOL;exit();
-            $fileContent = file_get_contents($fileURL);
-            file_put_contents($filePath, $fileContent);
+            $filePath = storage_path().'/app/public/royal/';
+            $localFilePath = $filePath.'kartiny-po-nomeram.xlsx';
+            //echo $filePath.PHP_EOL;exit();
 
-//            $spreadsheet = IOFactory::load($localFilePath);
-//            $worksheet = $spreadsheet->getActiveSheet();
-//            $highestRow = $worksheet->getHighestRow();
-//            $highestColumn = $worksheet->getHighestColumn();
-//
-//            $dataCell = [];
-//            for ($row = 1; $row <= $highestRow; ++$row) {
-//                $newRow = [];
-//                $i = 0;
-//                for ($col = 'A'; $col <= $highestColumn; ++$col) {
-//                    $cellValue = $worksheet->getCell($col . $row)->getValue();
-//                    echo $cellValue . ' ';
-//                    $newRow[$i] = $cellValue;
-//                    $i++;
-//                }
-//                $dataCell[] = $newRow;
-//                echo PHP_EOL;
-//            }
+            $spreadsheet = IOFactory::load($localFilePath);
+            $worksheet = $spreadsheet->getActiveSheet();
+            $highestRow = $worksheet->getHighestRow();
+            $highestColumn = $worksheet->getHighestColumn();
 
-            //dd($tempFile);
-            //$response = response()->download($tempFile, $filename);
-            //dd($dataCell);
+            $dataCell = [];
+            for ($row = 1; $row <= $highestRow; ++$row) {
+                $newRow = [];
+                $i = 0;
+                for ($col = 'A'; $col <= $highestColumn; ++$col) {
+                    $cellValue = $worksheet->getCell($col . $row)->getValue();
+                    echo $cellValue . ' ';
+                    $newRow[$i] = $cellValue;
+                    $i++;
+                }
+                $dataCell[] = $newRow;
+                echo PHP_EOL;
+            }
+
+            dd($dataCell);
         } else {
             return 'need correct provider';
         }
