@@ -284,8 +284,7 @@ class DropService
                 $price = $item['price'];
                 $recommendedPrice = $item['recommendedPrice'];
                 $quantityInStock = $item['quantityInStock'];
-            }
-            if ($provider == 'royal' && is_numeric($item[7])) {
+            } elseif ($provider == 'royal') {
                 dump($item);
                 //echo $item . PHP_EOL;
                 $vendor = $item[1];
@@ -300,7 +299,10 @@ class DropService
                 $increasePercentage = 20;
                 $newPrice = $price * (1 + ($increasePercentage / 100));
                 $recommendedPrice = $newPrice;
-                $quantityInStock = $item[5];
+                $quantityInStock = 100;
+                if (is_numeric($item[5])) {
+                    $quantityInStock = $item[5];
+                }
             } else {
                 continue;
             }
