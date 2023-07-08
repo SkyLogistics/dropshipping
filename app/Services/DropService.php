@@ -56,6 +56,7 @@ class DropService
             ->get();
 
         foreach ($nonDuplicates as $nonDuplicate) {
+            dd($nonDuplicate);
             echo $nonDuplicate->id.') '.$nonDuplicate->vendorCode .' => '.$nonDuplicate->price.PHP_EOL;
         }
         dd(888);
