@@ -252,7 +252,7 @@ class DropService
                 echo PHP_EOL;
             }
 
-            dd($dataCell);
+            //dd($dataCell);
         } else {
             echo 'need correct provider';
             exit();
