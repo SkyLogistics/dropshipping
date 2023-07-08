@@ -268,9 +268,9 @@ class DropService
             $imageUrl = '';
             $vendorCode = '';
             $productType = '';
-            $size = '';
-            $price = '';
-            $recommendedPrice = '';
+            $size = 0;
+            $price = 0;
+            $recommendedPrice = 0;
             $quantityInStock = 0;
             $productUrl = '';
             try {
