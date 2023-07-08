@@ -258,7 +258,7 @@ class DropService
         //dd($data[10]);
         foreach ($data as $key => $item) {
             echo '$key = ' . $key . PHP_EOL;
-            if ($key < 8) {
+            if ($key < 9) {
                 continue;
             }
 
