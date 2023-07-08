@@ -237,19 +237,16 @@ class DropService
             $highestRow = $worksheet->getHighestRow();
             $highestColumn = $worksheet->getHighestColumn();
 
-            $j = 0;
             for ($row = 1; $row <= $highestRow; ++$row) {
                 $newRow = [];
-                $i = 0;
+
                 for ($col = 'A'; $col <= $highestColumn; ++$col) {
                     $cellValue = $worksheet->getCell($col . $row)->getValue();
                     echo $cellValue . ' ';
-                    $newRow[$i] = $cellValue;
-                    $i++;
+                    $newRow[] = $cellValue;
                 }
                 $data[] = $newRow;
                 echo PHP_EOL;
-                $j++;
             }
         } else {
             echo 'need correct provider';
