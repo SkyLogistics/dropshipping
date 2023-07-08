@@ -287,6 +287,7 @@ class DropService
                     $quantityInStock = $item['quantityInStock'];
                 }
                 if ($provider == 'royal') {
+                    dd($item[$key]);
                     $myItem = $item[$key];
                     echo $myItem[0] . PHP_EOL;
                     $vendor = $myItem[1];
