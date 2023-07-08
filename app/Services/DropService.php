@@ -42,7 +42,11 @@ class DropService
         $table = 'origami_product';
 
         $duplicates = DB::table($table)
-            ->select(DB::raw( $table . '.id AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
+            ->select(
+                DB::raw(
+                    $table . '.id as table_id, MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'
+                )
+            )
             ->join(
                 DB::raw(
                     '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) >= 1) duplicates'
@@ -57,8 +61,8 @@ class DropService
 
         $ids = [];
         foreach ($duplicates as $duplicate) {
-            echo $duplicate->id.') '.$duplicate->vendorCode .' => '.$duplicate->min_price.PHP_EOL;
-            $ids[] = $duplicate->id.') '.$duplicate->vendorCode.' =>>> '.$duplicate->min_price;
+            echo $duplicate->table_id . ') ' . $duplicate->vendorCode . ' => ' . $duplicate->min_price . PHP_EOL;
+            $ids[] = $duplicate->vendorCode . ' =>>> ' . $duplicate->min_price;
         }
         dd($ids);
 
