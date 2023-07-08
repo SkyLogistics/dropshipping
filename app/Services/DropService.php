@@ -260,7 +260,7 @@ class DropService
         }
 
         $dataResult = [];
-        dd($data[0]);
+        dd($data[9]);
         foreach ($data as $item) {
             dd($item);
             $vendor = '';
