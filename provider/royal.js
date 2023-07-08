@@ -28,7 +28,6 @@ fs.readdir(folderPath, (err, files) => {
         }
     });
 });
-await page.waitForTimeout(10000);
 async function loginAndDownload() {
     const browser = await puppeteer.launch({
             headless: true,
@@ -41,6 +40,7 @@ async function loginAndDownload() {
 
     const page = await browser.newPage();
     await page.goto('https://royaltoys.com.ua/login/');
+    await page.waitForTimeout(10000);
     await page.type('input[name="login"]', process.env.ROYAL_MAIL);
     await page.type('input[name="password"]', process.env.ROYAL_PASS);
 
