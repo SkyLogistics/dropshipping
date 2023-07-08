@@ -255,7 +255,7 @@ class DropService
 
         $dataResult = [];
         $i = 0;
-        dd($data[2]);
+        dd($data[10]);
         foreach ($data as $key => $item) {
             echo '$key = ' . $key . PHP_EOL;
             if ($key < 8) {
