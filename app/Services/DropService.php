@@ -54,11 +54,11 @@ class DropService
             ->orderBy($column)
             ->groupBy($table . '.' . $column)
             ->get();
-        dd($nonDuplicates[0]);
+        //dd($nonDuplicates[0]);
 
         foreach ($nonDuplicates as $nonDuplicate) {
 
-            echo $nonDuplicate->id .' => '.$nonDuplicate->price.PHP_EOL;
+            echo $nonDuplicate[2] .' => '.$nonDuplicate[6].PHP_EOL;
         }
 
         foreach ($products as $row) {
