@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Event\Runtime\PHP;
 
 class DropService
 {
@@ -284,6 +285,7 @@ class DropService
                 $quantityInStock = $item['quantityInStock'];
             }
             if ($provider == 'royal') {
+                echo $item[0].PHP_EOL;
                 $vendor = $item[1];
                 $vendorCode = $item[3];
                 $imageUrl = $item[10];
