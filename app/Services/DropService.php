@@ -258,6 +258,7 @@ class DropService
 
         $dataResult = [];
         foreach ($data as $key => $item) {
+            echo '$key = '.$key.PHP_EOL;
             if ($key < 8) {
                 continue;
             }
@@ -303,7 +304,7 @@ class DropService
                     $quantityInStock = $myItem[7];
                 }
             } catch (\Exception $e) {
-                dump($item);
+                dd($item);
                 dump($e->getLine());
                 dd($e->getMessage());
 
