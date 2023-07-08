@@ -45,7 +45,7 @@ class DropService
             ->select(DB::raw('MIN(' . $table . '.id) AS id, ' . $table . '.' . $column . ', MIN(' . $table . '.' . $priceColumn . ') AS min_price'))
             ->join(
                 DB::raw(
-                    '(SELECT ' . $column . ', MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'
+                    '(SELECT *, MIN(' . $priceColumn . ') AS min_price FROM ' . $table . ' GROUP BY ' . $column . ' HAVING COUNT(*) > 1) duplicates'
                 ),
                 function ($join) use ($column, $table) {
                     $join->on($table . '.' . $column, '=', 'duplicates.' . $column);
@@ -56,6 +56,7 @@ class DropService
             ->get();
 
         foreach ($nonDuplicates as $nonDuplicate) {
+
             echo $nonDuplicate->id .' => '.$nonDuplicate->price.PHP_EOL;
         }
 
