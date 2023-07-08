@@ -52,7 +52,7 @@ class DropService
             ->get();
 
         foreach ($duplicates as $duplicate) {
-            echo $duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
+            echo 'id = '.$duplicate->id.' ==> '.$duplicate->$column . ' - Min Price: ' . $duplicate->$priceColumn . PHP_EOL;
         }
 
         dd($duplicates);
