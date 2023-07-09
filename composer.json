@@ -19,7 +19,9 @@
         "pusher/pusher-php-server": "^7.2.3",
         "spatie/laravel-newsletter": "^5.1",
         "srmklive/paypal": "^3.0",
-        "unisharp/laravel-filemanager": "^2.6"
+        "unisharp/laravel-filemanager": "^2.6",
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

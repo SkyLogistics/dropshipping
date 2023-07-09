@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\OrigamiProducts;
 use App\Services\DropService;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
 class AskAiCommand extends Command
@@ -41,18 +42,43 @@ class AskAiCommand extends Command
         return $text;
     }
 
+    private function getDivContent($url): string
+    {
+        $divContent = '';
+        $dom = new \DOMDocument();
+        $html = file_get_contents($url);
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html);
+        $xpath = new \DOMXPath($dom);
+        $divXPath = "//div[@itemprop='description']";
+        $divElements = $xpath->query($divXPath);
+        if ($divElements->length > 0) {
+            $divContent = $dom->saveHTML($divElements->item(0));
+            echo $divContent;
+        } else {
+            echo 'Div not found.';
+        }
+
+        return $divContent;
+    }
+
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function handle(): void
     {
         $yourApiKey = config('app.open_ai');
+
+        $url = 'https://royaltoys.com.ua/product/kartina-po-nomeram-venecianskoe-taksi-40-50sm-kho2749-/';
+        $text = $this->getDivContent($url);
+        dd($text);
         //$client = new OpenAi($yourApiKey);
 
 
 //        $prompts = OrigamiProducts::query()
 //            ->where('provider', 'royal')
 //            ->where('promt', '');
+
 
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
@@ -109,7 +135,7 @@ class AskAiCommand extends Command
                 ]);
                 $result = json_decode($response->getBody(), true);
                 $assistantResponse = $result['choices'][0]['message']['content'];
-                dump($prompt->id.') '.$this->removeQuotes($assistantResponse));
+                dump($prompt->id . ') ' . $this->removeQuotes($assistantResponse));
                 $prompt->nameUa = $this->removeQuotes($assistantResponse);
 //                $prompt->description = $assistantResponse;
                 $prompt->save();
