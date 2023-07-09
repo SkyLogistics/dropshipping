@@ -7,6 +7,7 @@ use App\Services\DropService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
+use JetBrains\PhpStorm\NoReturn;
 
 class AskAiCommand extends Command
 {
@@ -65,7 +66,7 @@ class AskAiCommand extends Command
     /**
      * @throws GuzzleException
      */
-    public function handle(): void
+    #[NoReturn] public function handle(): void
     {
         $yourApiKey = config('app.open_ai');
 
