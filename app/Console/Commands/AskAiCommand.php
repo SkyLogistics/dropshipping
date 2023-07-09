@@ -102,7 +102,7 @@ class AskAiCommand extends Command
                 ]);
                 $result = json_decode($response->getBody(), true);
                 $assistantResponse = $result['choices'][0]['message']['content'];
-                dump($this->removeQuotes($assistantResponse));
+                dump($prompt->id.') '.$this->removeQuotes($assistantResponse));
                 $prompt->nameUa = $this->removeQuotes($assistantResponse);
 //                $prompt->description = $assistantResponse;
                 $prompt->save();
