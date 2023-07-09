@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'open_ai' => env('OPEN_AI_KEY', 'no_key'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*

@@ -37,7 +37,7 @@ class AskAiCommand extends Command
 
     public function handle(): void
     {
-        $yourApiKey = getenv('OPEN_AI_KEY');
+        $yourApiKey = config('app.open_ai');
         dd($yourApiKey);
         $model = 'gpt-3.5-turbo';
         $url = 'https://api.openai.com/v1/engines/' . $model . '/completions';
