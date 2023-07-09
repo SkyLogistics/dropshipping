@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:export origami')->cron('*/5 * * * *');
         $schedule->command('app:export royal')->cron('*/5 * * * *');
         //$schedule->command('update:export royal')->cron('*/15 * * * *');
-        $schedule->command('app:export_prom')->cron('*/59 * * * *');
+        $schedule->command('app:auto-ask')->cron('* * * * *');
         // $schedule->command('inspire')->hourly();
     }
 
