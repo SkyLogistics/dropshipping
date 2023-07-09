@@ -81,7 +81,7 @@ class AskAiCommand extends Command
             $result = json_decode($response->getBody(), true);
             $assistantResponse = $result['choices'][0]['message']['content'];
             dump($assistantResponse);
-            $prompt->name = $assistantResponse;
+            $prompt->description = $assistantResponse;
             $prompt->save();
         }
     }
