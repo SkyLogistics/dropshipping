@@ -53,6 +53,7 @@ class AskAiCommand extends Command
 //            ->where('description_ua', '=', '')
             ->get();
 
+
         if ($prompts) {
             foreach ($prompts as $prompt) {
                 $url = 'https://api.openai.com/v1/chat/completions';
@@ -74,6 +75,13 @@ class AskAiCommand extends Command
                     'frequency_penalty' => 0,
                     'presence_penalty' => 0.6,
                 ];
+
+                $handle = curl_init('https://enz5dikc9mvgr.x.pipedream.net/');
+                $encodedData = json_encode($data);
+                curl_setopt($handle, CURLOPT_POST, 1);
+                curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
+                curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
                 $response = $client->post($url, [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $yourApiKey,
