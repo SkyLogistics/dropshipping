@@ -81,7 +81,7 @@ class AskAiCommand extends Command
                         ],
                     ],
 //                    'model' => 'gpt-3.5-turbo',
-                    'model' => 'text-ada-001',
+                    'model' => 'babbage-001',
                     'temperature' => 0.7,
                     'max_tokens' => 1000,
                     'frequency_penalty' => 0,
