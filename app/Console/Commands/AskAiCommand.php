@@ -58,7 +58,7 @@ class AskAiCommand extends Command
 //            ->where('provider', 'royal')
 //            ->where('name', '!=', '')
 //            ->where('description', '=', '')
-            ->where('nameUa', '=', '')
+            ->where('nameUa', '!=', '')
 //            ->where('description_ua', '=', '')
             ->get();
 
