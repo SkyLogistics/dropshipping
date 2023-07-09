@@ -80,8 +80,8 @@ class AskAiCommand extends Command
                             "content" => $translate
                         ],
                     ],
-//                    'model' => 'gpt-3.5-turbo',
-                    'model' => 'babbage-001',
+                    'model' => 'gpt-3.5-turbo',
+//                    'model' => 'text-moderation-latest',
                     'temperature' => 0.7,
                     'max_tokens' => 1000,
                     'frequency_penalty' => 0,
