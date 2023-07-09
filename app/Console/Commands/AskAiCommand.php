@@ -40,7 +40,7 @@ class AskAiCommand extends Command
 //        $client = new Client($transport);
         $client = new OpenAi($yourApiKey);
         $chat = json_decode(
-            $client->engines(
+            $client->complete(
                 [
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
@@ -57,6 +57,8 @@ class AskAiCommand extends Command
             ),
             true
         );
+
+        dd($chat);
 
         $assistantResponse = $chat['choices'][0]['message']['content'];
 
