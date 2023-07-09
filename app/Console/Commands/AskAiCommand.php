@@ -51,9 +51,9 @@ class AskAiCommand extends Command
                 ["role" => "system", "content" => "You are a helpful assistant."],
                 ["role" => "user", "content" => "Напиши опис для картини по номерах - на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді відзеркалення лебедів та дерев, що є по боках на березі. На задньому плані романтичний міст. Це восени. Кожен абзац обрамити в тег <p>."],
             ],
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4',
             'temperature' => 0.7,
-            'max_tokens' => 1700,
+            'max_tokens' => 2000,
             'frequency_penalty' => 0,
             'presence_penalty' => 0.6,
         ];
