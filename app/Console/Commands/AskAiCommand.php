@@ -57,7 +57,7 @@ class AskAiCommand extends Command
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
-                $translate = 'сделать перевод текста на украинский язык - ' . '"' . $prompt->name;
+                $translate = 'сделать перевод текста на украинский язык - '. $prompt->name;
                 $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
                 $url = 'https://api.openai.com/v1/chat/completions';
                 $client = new Client();
