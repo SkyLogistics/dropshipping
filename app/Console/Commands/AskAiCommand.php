@@ -59,6 +59,7 @@ class AskAiCommand extends Command
         $xpath = new \DOMXPath($dom);
         $divXPath = "//div[@itemprop='description']";
         $divElements = $xpath->query($divXPath);
+        echo $divElements;
         if ($divElements->length > 0) {
             $divContent = $dom->saveHTML($divElements->item(0));
             echo $divContent;
