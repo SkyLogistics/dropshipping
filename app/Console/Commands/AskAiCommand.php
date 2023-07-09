@@ -63,7 +63,8 @@ class AskAiCommand extends Command
         curl_close($ch);
 
         $result = json_decode($response, true);
-        echo $result['choices'][0]['text']; // Output the generated text
+        dd($result);
+        //echo $result['choices'][0]['text']; // Output the generated text
 
 
 
