@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Services\DropService;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Orhanerday\OpenAi\OpenAi;
 
 class AskAiCommand extends Command
 {
@@ -32,28 +32,39 @@ class AskAiCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function handle(): void
     {
         $yourApiKey = config('app.open_ai');
-//        $transport = new RequestTranspo($yourApiKey);
-//        $client = new Client($transport);
-        $client = new OpenAi($yourApiKey);
+        //$client = new OpenAi($yourApiKey);
 
-        $complete = json_decode(
-            $client->complete(
-                [
-                    'engine' => 'gpt-3.5-turbo',
-                    'prompt' => "Напиши опис для картини по номерах - на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді відзеркалення лебедів та дерев, що є по боках на березі. На задньому плані романтичний міст. Це восени. Кожен абзац обрамити в тег <p>.",
-                    'temperature' => 0.9,
-                    'max_tokens' => 1700,
-                    'frequency_penalty' => 0,
-                    'presence_penalty' => 0.6,
-                ]
-            ),
-            true
-        );
 
-        dd($complete);
+
+        $url = 'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions';
+
+        $client = new Client();
+
+        $response = $client->post($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $yourApiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'prompt' => 'Напиши опис для картини по номерах - на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді відзеркалення лебедів та дерев, що є по боках на березі. На задньому плані романтичний міст. Це восени. Кожен абзац обрамити в тег <p>.',
+                'temperature' => 0.9,
+                'max_tokens' => 1700,
+                'frequency_penalty' => 0,
+                'presence_penalty' => 0.6,
+            ],
+        ]);
+
+        $result = json_decode($response->getBody(), true);
+
+        $assistantResponse = $result['choices'][0]['message']['content'];
+
+        dd($assistantResponse);
 
 //        $chat = json_decode(
 //            $client->chat(
@@ -74,11 +85,11 @@ class AskAiCommand extends Command
 //            true
 //        );
 
-        dd($chat);
+        //dd($chat);
 
-        $assistantResponse = $chat['choices'][0]['message']['content'];
-
-        dd($assistantResponse);
+//        $assistantResponse = $chat['choices'][0]['message']['content'];
+//
+//        dd($assistantResponse);
 
 //        $result = $client->chatCompletions()->create($data);
 //
