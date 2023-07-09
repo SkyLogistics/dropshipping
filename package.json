@@ -26,6 +26,7 @@
         "dotenv": "^16.3.1",
         "fs": "^0.0.1-security",
         "laravel-echo": "^1.8.0",
+        "mysql2": "^3.5.0",
         "puppeteer": "^20.8.0",
         "pusher-js": "^6.0.3",
         "remote-content": "^3.0.1"

@@ -59,7 +59,7 @@ async function update(){
 async function scrapeHTMLFromURL(url) {
     // Launch a new browser instance
     const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             args: ['--no-sandbox'],
             downloadsPath: '/tmp'
         }
