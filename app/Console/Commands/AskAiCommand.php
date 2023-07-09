@@ -48,8 +48,8 @@ class AskAiCommand extends Command
 
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
-            ->where('promt', '!=', '')
-            ->where('description', '=', '')
+//            ->where('name', '!=', '')
+//            ->where('description', '=', '')
             ->where('description_ua', '=', '')
 //            ->where('description_ua', '=', '')
             ->get();
