@@ -4,11 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\DropService;
 use Illuminate\Console\Command;
-use OpenAI;
 use OpenAI\Client;
-use OpenAI\API\API;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class AskAiCommand extends Command
 {
@@ -39,9 +35,8 @@ class AskAiCommand extends Command
     public function handle(): void
     {
         $yourApiKey = config('app.open_ai');
-
-        $client = new Client($yourApiKey);
-
+        $transport = new RequestTransporter($yourApiKey);
+        $client = new Client($transport);
         $chat = $client->chat(
             [
                 'model' => 'gpt-3.5-turbo',
