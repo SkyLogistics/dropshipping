@@ -46,45 +46,50 @@ class AskAiCommand extends Command
 //            ->where('provider', 'royal')
 //            ->where('promt', '');
 
-        $prompt = OrigamiProducts::query()
+        $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
-            ->where('vendorCode', 'KHO6312')
-            ->first();
+            ->where('promt', '!=', '')
+            ->where('description', '=', '')
+            ->where('description_ua', '=', '')
+            ->get();
 
-        if ($prompt) {
-            $url = 'https://api.openai.com/v1/chat/completions';
-            $client = new Client();
-            $data = [
-                "messages" => [
-                    [
-                        "role" => "system",
-                        "content" => "You are a helpful assistant."
+        if ($prompts) {
+            foreach ($prompts as $prompt) {
+                $url = 'https://api.openai.com/v1/chat/completions';
+                $client = new Client();
+                $data = [
+                    "messages" => [
+                        [
+                            "role" => "system",
+                            "content" => "You are a helpful assistant."
+                        ],
+                        [
+                            "role" => "user",
+                            "content" => $prompt->promt . " Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
+                        ],
                     ],
-                    [
-                        "role" => "user",
-                        "content" => $prompt->promt . " Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
+                    'model' => 'gpt-3.5-turbo-16k',
+                    'temperature' => 0.7,
+                    'max_tokens' => 1000,
+                    'frequency_penalty' => 0,
+                    'presence_penalty' => 0.6,
+                ];
+                $response = $client->post($url, [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $yourApiKey,
+                        'Content-Type' => 'application/json',
                     ],
-                ],
-                'model' => 'gpt-3.5-turbo-16k',
-                'temperature' => 0.7,
-                'max_tokens' => 1000,
-                'frequency_penalty' => 0,
-                'presence_penalty' => 0.6,
-            ];
-            $response = $client->post($url, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $yourApiKey,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $data,
-            ]);
-            $result = json_decode($response->getBody(), true);
-            $assistantResponse = $result['choices'][0]['message']['content'];
-            dump($assistantResponse);
-            $prompt->description = $assistantResponse;
-            $prompt->save();
+                    'json' => $data,
+                ]);
+                $result = json_decode($response->getBody(), true);
+                $assistantResponse = $result['choices'][0]['message']['content'];
+                dump($assistantResponse);
+                $prompt->description = $assistantResponse;
+                $prompt->save();
+            }
         }
     }
+
 
     private function translateAi()
     {
