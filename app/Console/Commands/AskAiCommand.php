@@ -49,7 +49,8 @@ class AskAiCommand extends Command
 
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
-            ->where('vendorCode', 'KHO5078')->first();
+            ->where('vendorCode', 'KHO6312')
+            ->first();
         dd($prompts->promt);
 
         if($prompts) {
