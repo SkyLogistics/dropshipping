@@ -38,38 +38,54 @@ class AskAiCommand extends Command
     public function handle(): void
     {
         $yourApiKey = config('app.open_ai');
-        //dd($yourApiKey);
-        $model = 'gpt-3.5-turbo';
-        $url = 'https://api.openai.com/v1/engines/' . $model . '/completions';
+
+
+
+        $client = new GptApi($yourApiKey);
 
         $data = [
-            "prompt" => "Будь копірайтером. Напиши опис для картини по номерах [опис картини: на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді видно відзеркалення лебедів та відзеркалення дерев, що є по боках на березі. На задньому плані картини видно міст, що дає змогу пернйти з одного берега на інший. Міст виглядає дуже романтично. Пора року, що зображена на картині - осінь.]для інтернет-магазину, який приверне увагу мого ідеального клієнта [опис клієнта: 20-45 років, жіноча стать, захоплення мистетством, рукоділлям, малюванням] сильним заголовком і зачіпкою, а потім переконає його зробити [покупку картини] за допомогою переконливої мови і переконливих доказів. Кожен абзац обрам в тег <p>.",
-            'temperature' => 0.7,
-            'max_tokens' => 1500,
-            'stream' => false,
+            "messages" => [
+                ["role" => "user", "content" => "Будь копірайтером. Напиши опис для картини по номерах [опис картини: на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді видно відзеркалення лебедів та відзеркалення дерев, що є по боках на березі. На задньому плані картини видно міст, що дає змогу пернйти з одного берега на інший. Міст виглядає дуже романтично. Пора року, що зображена на картині - осінь.]для інтернет-магазину, який приверне увагу мого ідеального клієнта [опис клієнта: 20-45 років, жіноча стать, захоплення мистетством, рукоділлям, малюванням] сильним заголовком і зачіпкою, а потім переконає його зробити [покупку картини] за допомогою переконливої мови і переконливих доказів. Кожен абзац обрам в тег <p>."],
+            ]
         ];
 
-        $headers = [
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $yourApiKey,
-        ];
+        $result = $client->chatCompletions()->create($data);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $result = json_decode($response, true);
-        dd($result);
-        //echo $result['choices'][0]['text']; // Output the generated text
+        $assistantResponse = $result['choices'][0]['message']['content']; // Extract the assistant's response
 
 
-
+        //dd($yourApiKey);
+//        $model = 'gpt-3.5-turbo';
+//        $url = 'https://api.openai.com/v1/engines/' . $model . '/completions';
+//
+//        $data = [
+//            "prompt" => ["Будь копірайтером. Напиши опис для картини по номерах [опис картини: на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді видно відзеркалення лебедів та відзеркалення дерев, що є по боках на березі. На задньому плані картини видно міст, що дає змогу пернйти з одного берега на інший. Міст виглядає дуже романтично. Пора року, що зображена на картині - осінь.]для інтернет-магазину, який приверне увагу мого ідеального клієнта [опис клієнта: 20-45 років, жіноча стать, захоплення мистетством, рукоділлям, малюванням] сильним заголовком і зачіпкою, а потім переконає його зробити [покупку картини] за допомогою переконливої мови і переконливих доказів. Кожен абзац обрам в тег <p>.",
+//            'temperature' => 0.7,
+//            'max_tokens' => 1500,
+//            'stream' => false,
+//        ];
+//
+//        $headers = [
+//            'Content-Type: application/json',
+//            'Authorization: Bearer ' . $yourApiKey,
+//        ];
+//
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+//        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//
+//        $response = curl_exec($ch);
+//        curl_close($ch);
+//
+//        $result = json_decode($response, true);
+//        dd($result);
+//        //echo $result['choices'][0]['text']; // Output the generated text
+//
+//
+//
 
 //        $yourApiKey = getenv('YOUR_API_KEY');
 //        $client = OpenAI::client($yourApiKey);
