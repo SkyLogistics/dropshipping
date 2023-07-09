@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const mysql = require('mysql2');
 
+console.log(process.env.DB_USERNAME);
 
 async function update(){
     // Параметры подключения к базе данных
