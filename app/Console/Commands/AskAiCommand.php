@@ -55,18 +55,19 @@ class AskAiCommand extends Command
 //            ->where('promt', '');
 
         $prompts = OrigamiProducts::query()
-//            ->where('provider', 'royal')
-//            ->where('name', '!=', '')
+            ->where('provider', 'royal')
+            ->where('name', '!=', '')
 //            ->where('description', '=', '')
-            ->where('nameUa', '!=', '')
+            ->where('nameUa', '==', '')
 //            ->where('description_ua', '=', '')
             ->get();
 
-        foreach ($prompts as $prompt) {
-            $prompt->nameUa =  $this->removeQuotes($prompt->nameUa);
-            $prompt->save();
-        }
-        dd(1);
+//        foreach ($prompts as $prompt) {
+//            $prompt->nameUa =  $this->removeQuotes($prompt->nameUa);
+//            $prompt->save();
+//        }
+//        dd(1);
+        dump($prompts);
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
