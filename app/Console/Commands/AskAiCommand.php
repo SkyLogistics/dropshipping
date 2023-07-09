@@ -56,6 +56,8 @@ class AskAiCommand extends Command
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
+                $translate = 'сделать перевод текста на украинский язык ' . '"' . $prompt->name . '"' . "Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
+                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
                 $url = 'https://api.openai.com/v1/chat/completions';
                 $client = new Client();
                 $data = [
@@ -66,7 +68,7 @@ class AskAiCommand extends Command
                         ],
                         [
                             "role" => "user",
-                            "content" => $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно ."
+                            "content" => $translate
                         ],
                     ],
                     'model' => 'gpt-3.5-turbo-16k',
@@ -92,8 +94,10 @@ class AskAiCommand extends Command
                 $result = json_decode($response->getBody(), true);
                 $assistantResponse = $result['choices'][0]['message']['content'];
                 dump($assistantResponse);
-                $prompt->description = $assistantResponse;
+                $prompt->nameUa = $assistantResponse;
+//                $prompt->description = $assistantResponse;
                 $prompt->save();
+                dd('1');
             }
         }
     }
