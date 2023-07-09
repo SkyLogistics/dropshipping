@@ -42,7 +42,7 @@ class AskAiCommand extends Command
 
 
 
-        $url = 'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions';
+        $url = 'https://api.openai.com/v1/chat/completions';
 
         $client = new Client();
 
