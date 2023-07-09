@@ -46,10 +46,16 @@ class AskAiCommand extends Command
     private function getDivContent($url): string
     {
         $divContent = '';
+        $url = 'https://royaltoys.com.ua/product/kartina-po-nomeram-venecianskoe-taksi-40-50sm-kho2749-/';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($curl);
+        curl_close($curl);
         $dom = new \DOMDocument();
-        $html = file_get_contents($url);
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html);
+        $dom->loadHTML($response);
         $xpath = new \DOMXPath($dom);
         $divXPath = "//div[@itemprop='description']";
         $divElements = $xpath->query($divXPath);
