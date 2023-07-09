@@ -53,6 +53,7 @@ class AskAiCommand extends Command
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $response = curl_exec($curl);
+        echo $response;
         curl_close($curl);
         $dom = new \DOMDocument();
         $dom->loadHTML($response);
