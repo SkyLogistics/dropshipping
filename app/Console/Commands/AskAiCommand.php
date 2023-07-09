@@ -54,7 +54,7 @@ class AskAiCommand extends Command
 //            'model' => 'gpt-4',
             'model' => 'gpt-3.5-turbo-16k',
             'temperature' => 0.7,
-            'max_tokens' => 100,
+            'max_tokens' => 1000,
             'frequency_penalty' => 0,
             'presence_penalty' => 0.6,
         ];
