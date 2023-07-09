@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\DropService;
 use Illuminate\Console\Command;
+use OpenAI;
 use OpenAI\Client;
 use OpenAI\API\API;
 use Psr\Http\Message\RequestInterface;
@@ -39,19 +40,31 @@ class AskAiCommand extends Command
     {
         $yourApiKey = config('app.open_ai');
 
+        $client = new Client($yourApiKey);
 
-
-        $client = new GptApi($yourApiKey);
-
-        $data = [
-            "messages" => [
-                ["role" => "user", "content" => "Будь копірайтером. Напиши опис для картини по номерах [опис картини: на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді видно відзеркалення лебедів та відзеркалення дерев, що є по боках на березі. На задньому плані картини видно міст, що дає змогу пернйти з одного берега на інший. Міст виглядає дуже романтично. Пора року, що зображена на картині - осінь.]для інтернет-магазину, який приверне увагу мого ідеального клієнта [опис клієнта: 20-45 років, жіноча стать, захоплення мистетством, рукоділлям, малюванням] сильним заголовком і зачіпкою, а потім переконає його зробити [покупку картини] за допомогою переконливої мови і переконливих доказів. Кожен абзац обрам в тег <p>."],
+        $chat = $client->chat(
+            [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    [
+                        "role" => "user",
+                        "content" => "Будь копірайтером. Напиши опис для картини по номерах [опис картини: на передньому плані плавають два лебеді, доторкаючись один до одного клювами, утворюючи ніби серце. У воді видно відзеркалення лебедів та відзеркалення дерев, що є по боках на березі. На задньому плані картини видно міст, що дає змогу пернйти з одного берега на інший. Міст виглядає дуже романтично. Пора року, що зображена на картині - осінь.]для інтернет-магазину, який приверне увагу мого ідеального клієнта [опис клієнта: 20-45 років, жіноча стать, захоплення мистетством, рукоділлям, малюванням] сильним заголовком і зачіпкою, а потім переконає його зробити [покупку картини] за допомогою переконливої мови і переконливих доказів. Кожен абзац обрам в тег <p>."
+                    ],
+                ],
+                'temperature' => 1.0,
+                'max_tokens' => 4000,
+                'frequency_penalty' => 0,
+                'presence_penalty' => 0,
             ]
-        ];
+        );
 
-        $result = $client->chatCompletions()->create($data);
+        $assistantResponse = $chat['choices'][0]['message']['content'];
 
-        $assistantResponse = $result['choices'][0]['message']['content']; // Extract the assistant's response
+        dd($assistantResponse);
+
+//        $result = $client->chatCompletions()->create($data);
+//
+//        $assistantResponse = $result['choices'][0]['message']['content']; // Extract the assistant's response
 
 
         //dd($yourApiKey);
