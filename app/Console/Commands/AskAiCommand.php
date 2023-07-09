@@ -40,7 +40,7 @@ class AskAiCommand extends Command
 //        $client = new Client($transport);
         $client = new OpenAi($yourApiKey);
         $chat = json_decode(
-            $client->complete(
+            $client->engines(
                 [
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
