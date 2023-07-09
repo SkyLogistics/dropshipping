@@ -42,28 +42,27 @@ class AskAiCommand extends Command
         //$client = new OpenAi($yourApiKey);
 
 
-
 //        $prompts = OrigamiProducts::query()
 //            ->where('provider', 'royal')
 //            ->where('promt', '');
 
-        $prompts = OrigamiProducts::query()
+        $prompt = OrigamiProducts::query()
             ->where('provider', 'royal')
             ->where('vendorCode', 'KHO6312')
             ->first();
-        dd($prompts->promt);
 
-        if($prompts) {
+        if ($prompt) {
             $url = 'https://api.openai.com/v1/chat/completions';
-
             $client = new Client();
-
             $data = [
                 "messages" => [
-                    ["role" => "system", "content" => "You are a helpful assistant."],
+                    [
+                        "role" => "system",
+                        "content" => "You are a helpful assistant."
+                    ],
                     [
                         "role" => "user",
-                        "content" => $prompts->promt. " Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
+                        "content" => $prompt->promt . " Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
                     ],
                 ],
                 'model' => 'gpt-3.5-turbo-16k',
@@ -79,12 +78,11 @@ class AskAiCommand extends Command
                 ],
                 'json' => $data,
             ]);
-
             $result = json_decode($response->getBody(), true);
-
             $assistantResponse = $result['choices'][0]['message']['content'];
-
-            dd($assistantResponse);
+            dump($assistantResponse);
+            $prompt->name = $assistantResponse;
+            $prompt->save();
         }
     }
 
