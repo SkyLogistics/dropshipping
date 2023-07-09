@@ -65,7 +65,7 @@ class AskAiCommand extends Command
                         ],
                         [
                             "role" => "user",
-                            "content" => $prompt->promt . " Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
+                            "content" => $prompt->promt . ". Каждый абзац обрамить в тег <p> добавить тег <ul><li> если нужно ."
                         ],
                     ],
                     'model' => 'gpt-3.5-turbo-16k',
