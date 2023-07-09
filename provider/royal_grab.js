@@ -23,7 +23,7 @@ async function update(){
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = ''";
+        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = '' LIMIT 2";
         connection.query(selectQuery, (err, rows) => {
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
