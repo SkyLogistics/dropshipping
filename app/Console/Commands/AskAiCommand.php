@@ -98,7 +98,7 @@ class AskAiCommand extends Command
                 $prompt->nameUa = $assistantResponse;
 //                $prompt->description = $assistantResponse;
                 $prompt->save();
-                dd('1');
+                dump('1');
             }
         }
     }
