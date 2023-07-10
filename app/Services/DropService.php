@@ -50,8 +50,8 @@ class DropService
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
 
             $parcelArrayInfo[] = $row->keywordsUa;
-            $parcelArrayInfo[] = $row->description . ($row->properties == '-') ? "" : '<p>' . $row->properties . '</p>';
-            $parcelArrayInfo[] = $row->description_ua . ($row->properties_ua == '-') ? "" : '<p>' . $row->properties_ua . '</p>';
+            $parcelArrayInfo[] = $row->description . (($row->properties == '-') ? "" : '<p>' . $row->properties . '</p>');
+            $parcelArrayInfo[] = $row->description_ua . (($row->properties_ua == '-') ? "" : '<p>' . $row->properties_ua . '</p>');
 
             if ($row['vendorCode'] == 'ART_AL001') {
                 $productType = 'Акриловий лак';
