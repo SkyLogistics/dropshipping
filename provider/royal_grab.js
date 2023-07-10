@@ -9,7 +9,7 @@ if (process.env.ROYAL_ENV === 'local') {
     // headless = false;
 }
 
-async function parseTableData(html) {
+async function parseTableData(html, lang) {
     const $ = cheerio.load(html);
     const tableRows = $('.product_features-item');
 
@@ -18,7 +18,7 @@ async function parseTableData(html) {
     tableRows.each((index, row) => {
         const title = $(row).find('.product_features-title span').text();
         const value = $(row).find('.product_features-value').text();
-        tableArray.push({'title':title,'value':value});
+        tableArray.push({'lang':lang, 'title':title,'value':value});
     });
 
     console.log(JSON.stringify(tableArray));
@@ -61,9 +61,8 @@ async function getUrl() { // Добавлено ключевое слово asyn
                     const divContent = await scrapeHTMLFromURL(url, urlUa);
                     console.log('============== divContent and id = ' + id);
 
-
-                    const propertiesParsed = await parseTableData(divContent[2]);
-                    const propertiesParsedUa = await parseTableData(divContent[3]);
+                    const propertiesParsed = await parseTableData(divContent[2], 'ru');
+                    const propertiesParsedUa = await parseTableData(divContent[3], 'ua');
                     console.log(JSON.stringify(propertiesParsed));
                     console.log(JSON.stringify(propertiesParsedUa));
 
