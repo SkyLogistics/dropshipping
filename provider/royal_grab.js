@@ -1,11 +1,27 @@
 const puppeteer = require('puppeteer');
 const mysql = require('mysql2');
+const cheerio = require('cheerio');
 require('dotenv').config();
 
 console.log(process.env.DB_USERNAME);
 let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
-    headless = false;
+    //headless = false;
+}
+
+async function parseTableData(html) {
+    const $ = cheerio.load(html);
+    const tableRows = $('.product_features-item');
+
+    const tableData = {};
+
+    tableRows.each((index, row) => {
+        const title = $(row).find('.product_features-title span').text();
+        const value = $(row).find('.product_features-value').text();
+        tableData[title] = value;
+    });
+
+    return tableData;
 }
 
 async function getUrl() { // Добавлено ключевое слово async
@@ -26,7 +42,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = '' LIMIT 1";
+        const selectQuery = "SELECT * FROM origami_product where provider='royal' and properties is null ";
         connection.query(selectQuery, async (err, rows) => { // Добавлено ключевое слово async
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
@@ -40,13 +56,24 @@ async function getUrl() { // Добавлено ключевое слово asyn
                     let urlUa = url.replace('royaltoys.com.ua/', 'royaltoys.com.ua/ua/');
                     const divContent = await scrapeHTMLFromURL(url, urlUa);
                     console.log('============== divContent and id = ' + id);
+
+
+                    const propertiesParsed = await parseTableData(divContent[2])
+                    const propertiesParsedUa = await parseTableData(divContent[3])
+                    console.log(propertiesParsed);
+                    console.log(propertiesParsedUa);
+
                     const updateQuery = 'UPDATE origami_product SET ' +
+                        'options = "{}", ' +
+                        'options_ua = "{}", ' +
                         'properties = ?, ' +
-                        'propertiesUa = ?, ' +
+                        'properties_ua = ?, ' +
                         'description = ?, ' +
                         'description_ua= ? WHERE id = ?';
                     const values = [divContent[2], divContent[3], divContent[0], divContent[1], id];
-                    console.log(updateQuery);
+                    // const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], divContent[0], divContent[1], id];
+
+                    //console.log(updateQuery);
                     //return false;
                     connection.query(updateQuery, values, (err, result) => {
                         if (err) {
