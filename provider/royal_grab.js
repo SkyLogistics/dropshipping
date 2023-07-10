@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 console.log(process.env.DB_USERNAME);
-let headless = true;
+let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
     headless = false;
 }
