@@ -76,7 +76,7 @@ class DropService
             }
 
             if ($row->provider == 'royal') {
-                $percent = 40;
+                $percent = 35;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = $row->price * $multiplier;
                 $row->recommendedPrice = $recommendedPrice;
