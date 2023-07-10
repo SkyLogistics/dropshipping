@@ -50,6 +50,7 @@ class DropService
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
 
             $parcelArrayInfo[] = $row->keywordsUa;
+            dd($row->description . '<p>' . $row->properties . '</p>');
             $parcelArrayInfo[] = $row->description . '<p>' . $row->properties . '</p>';
             $parcelArrayInfo[] = $row->description_ua .'<p>' . $row->properties_ua . '</p>';
 
