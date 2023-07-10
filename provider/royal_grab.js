@@ -6,22 +6,26 @@ require('dotenv').config();
 console.log(process.env.DB_USERNAME);
 let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
-    //headless = false;
+    // headless = false;
 }
 
 async function parseTableData(html) {
     const $ = cheerio.load(html);
     const tableRows = $('.product_features-item');
 
-    const tableData = {};
-
+    //const tableData = {};
+    let tableArray = [];
     tableRows.each((index, row) => {
         const title = $(row).find('.product_features-title span').text();
         const value = $(row).find('.product_features-value').text();
-        tableData[title] = value;
+        tableArray.push({'title':title,'value':value});
     });
 
-    return tableData;
+    console.log(JSON.stringify(tableArray));
+
+    //return '';
+
+    return JSON.stringify(tableArray);
 }
 
 async function getUrl() { // Добавлено ключевое слово async
@@ -42,7 +46,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and properties is null ";
+        const selectQuery = "SELECT * FROM origami_product where provider='royal' and options is null ";
         connection.query(selectQuery, async (err, rows) => { // Добавлено ключевое слово async
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
@@ -58,20 +62,20 @@ async function getUrl() { // Добавлено ключевое слово asyn
                     console.log('============== divContent and id = ' + id);
 
 
-                    const propertiesParsed = await parseTableData(divContent[2])
-                    const propertiesParsedUa = await parseTableData(divContent[3])
-                    console.log(propertiesParsed);
-                    console.log(propertiesParsedUa);
+                    const propertiesParsed = await parseTableData(divContent[2]);
+                    const propertiesParsedUa = await parseTableData(divContent[3]);
+                    console.log(JSON.stringify(propertiesParsed));
+                    console.log(JSON.stringify(propertiesParsedUa));
 
                     const updateQuery = 'UPDATE origami_product SET ' +
-                        'options = "{}", ' +
-                        'options_ua = "{}", ' +
-                        'properties = ?, ' +
-                        'properties_ua = ?, ' +
-                        'description = ?, ' +
-                        'description_ua= ? WHERE id = ?';
-                    const values = [divContent[2], divContent[3], divContent[0], divContent[1], id];
-                    // const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], divContent[0], divContent[1], id];
+                        "options = " + `?,` +
+                        "options_ua = " + `?,` +
+                        "properties = " + `?,` +
+                        "properties_ua = " + `?,` +
+                        "description = " + `?,` +
+                        "description_ua = ? WHERE id = ?";
+                    //const values = [divContent[2], divContent[3], divContent[0], divContent[1], id];
+                    const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], divContent[0], divContent[1], id];
 
                     //console.log(updateQuery);
                     //return false;

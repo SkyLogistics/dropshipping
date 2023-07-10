@@ -9,6 +9,10 @@ class OrigamiProducts extends Model
     protected $table = 'origami_product';
 
     protected $fillable = [
+        'options',
+        'options_ua',
+        'properties',
+        'properties_ua',
         'vendorCode',
         'imageUrl',
         'promID',
