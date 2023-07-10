@@ -9,8 +9,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\DB;
-use PHPUnit\Event\Runtime\PHP;
 
 class DropService
 {
@@ -22,15 +20,6 @@ class DropService
     public function __construct()
     {
         $this->guzzle = new Client();
-    }
-
-    public function updateProm(...$params)
-    {
-        dd($params);
-    }
-
-    public function exportXls()
-    {
     }
 
     #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
@@ -87,7 +76,7 @@ class DropService
             }
 
             if ($row->provider == 'royal') {
-                $percent = 30;
+                $percent = 40;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = $row->price * $multiplier;
                 $row->recommendedPrice = $recommendedPrice;
