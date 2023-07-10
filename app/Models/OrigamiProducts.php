@@ -30,11 +30,4 @@ class OrigamiProducts extends Model
         'provider',
         'productUrl',
     ];
-
-    protected $casts = [
-        'options' => 'array',
-        'options_ua' => 'array'
-    ];
-
-
 }
