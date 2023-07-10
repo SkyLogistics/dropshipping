@@ -6,7 +6,7 @@ require('dotenv').config();
 console.log(process.env.DB_USERNAME);
 let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
-    // headless = false;
+    headless = false;
 }
 
 async function parseTableData(html, lang) {
@@ -138,7 +138,7 @@ async function scrapeHTMLFromURL(url, urlUa) {
     } else {
         console.log('Div not found.');
         await browser.close();
-        return null;
+        return ['-', '-', '-', '-'];;
     }
 }
 
