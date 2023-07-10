@@ -73,14 +73,11 @@ async function getUrl() { // Добавлено ключевое слово asyn
                         "properties_ua = " + `?,` +
                         "description = " + `?,` +
                         "description_ua = ? WHERE id = ?";
-                    //const values = [divContent[2], divContent[3], divContent[0], divContent[1], id];
                     const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], divContent[0], divContent[1], id];
-
-                    //console.log(updateQuery);
-                    //return false;
                     connection.query(updateQuery, values, (err, result) => {
                         if (err) {
                             console.error(`Ошибка обновления поля для записи с ID ${id}: `, err);
+                            process.exit(1);
                         } else {
                             console.log(`Поле успешно обновлено для записи с ID ${id}`);
                         }
@@ -93,6 +90,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
             connection.end((err) => {
                 if (err) {
                     console.error('Ошибка закрытия соединения: ', err);
+                    process.exit(1);
                 } else {
                     console.log('Соединение с базой данных закрыто');
                 }
