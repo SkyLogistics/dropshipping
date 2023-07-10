@@ -37,38 +37,26 @@ class ExportPromCommand extends Command
     public function handle(): void
     {
         $template = 'export-origami.xls';
-        $excelData = $this->dropService->getExcelData();
-
-        $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
-        $spreadsheet->getActiveSheet()->fromArray(
-            $excelData,
-            null,
-            'A2'
-        );
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
-        $path = '/example/' . $template;
-        $file = public_path() . $path;
-        $writer->save($file);
+        $this->extracted($template);
     }
 
-    public function preparedData(){
-        $excelData = $this->dropService->getExcelData();
-
-        $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
-        $spreadsheet->getActiveSheet()->fromArray(
-            $excelData,
-            null,
-            'A2'
-        );
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
-        $path = '/example/' . $template;
-        $file = public_path() . $path;
-        $writer->save($file);
-    }
-    private function translateAi()
+    /**
+     * @param string $template
+     */
+    public function extracted(string $template): void
     {
-    }
+        $excelData = $this->dropService->getExcelData();
 
+        $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
+        $spreadsheet->getActiveSheet()->fromArray(
+            $excelData,
+            null,
+            'A2'
+        );
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+        $path = '/example/' . $template;
+        $file = public_path() . $path;
+        $writer->save($file);
+    }
 }

@@ -65,6 +65,7 @@ class DropService
             $parcelArrayInfo[] = $row->keywordsUa;
             $parcelArrayInfo[] = $row->description . '<p>' . $row->properties . '</p>';
             $parcelArrayInfo[] = $row->description_ua . '<p>' . $row->properties_ua . '</p>';;
+
             if ($row['vendorCode'] == 'ART_AL001') {
                 $productType = 'Акриловий лак';
             } else {
@@ -79,8 +80,10 @@ class DropService
             if ($productType == 'Алмазна мозаїка') {
                 $weight = '1';
             }
+
             $parcelArrayInfo[] = $productType;
             $recommendedPrice = $row->recommendedPrice;
+
             if ($row->price > $row->recommendedPrice) {
                 $recommendedPrice = $row->price;
             }
@@ -177,12 +180,6 @@ class DropService
 
         return $excelData;
     }
-
-//    public function getRoyalData($data): array{
-//        $excelData = [];
-//
-//        return $excelData;
-//    }
 
     private function translate($toLang, $text)
     {
