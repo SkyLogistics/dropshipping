@@ -7,6 +7,7 @@ let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
     headless = false;
 }
+
 async function getUrl() { // Добавлено ключевое слово async
     // Параметры подключения к базе данных
     const connection = mysql.createConnection({
@@ -25,7 +26,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = ''";
+        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = '' LIMIT 1";
         connection.query(selectQuery, async (err, rows) => { // Добавлено ключевое слово async
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
@@ -39,13 +40,15 @@ async function getUrl() { // Добавлено ключевое слово asyn
                     let urlUa = url.replace('royaltoys.com.ua/', 'royaltoys.com.ua/ua/');
                     const divContent = await scrapeHTMLFromURL(url, urlUa);
                     console.log('============== divContent and id = ' + id);
-                    console.log(divContent[0]);
-                    console.log(divContent[1]);
-                    const updateQuery = `UPDATE origami_product
-                                         SET description='${divContent[0]}',
-                                             description_ua='${divContent[1]}'
-                                         WHERE id = ${id}`;
-                    connection.query(updateQuery, (err, result) => {
+                    const updateQuery = 'UPDATE origami_product SET ' +
+                        'properties = ?, ' +
+                        'propertiesUa = ?, ' +
+                        'description = ?, ' +
+                        'description_ua= ? WHERE id = ?';
+                    const values = [divContent[2], divContent[3], divContent[0], divContent[1], id];
+                    console.log(updateQuery);
+                    //return false;
+                    connection.query(updateQuery, values, (err, result) => {
                         if (err) {
                             console.error(`Ошибка обновления поля для записи с ID ${id}: `, err);
                         } else {
@@ -80,20 +83,30 @@ async function scrapeHTMLFromURL(url, urlUa) {
     const divSelector = 'div[itemprop="description"]';
     const divElement = await page.$(divSelector);
 
+    const divProperties = 'div[id="product-options"]';
+    const divElementProp = await page.$(divProperties);
 
-    let contentUa = '';
     let content = '';
+    let contentUa = '';
+    let properties = '';
+    let propertiesUa = '';
+
     if (divElement) {
         content = await page.evaluate(element => element.innerHTML, divElement);
+        properties = await page.evaluate(element => element.innerHTML, divElementProp);
+
         await page.goto(urlUa);
-        const divSelectorUa = 'div[itemprop="description"]';
-        const divElementUa = await page.$(divSelectorUa);
+        const divElementUa = await page.$(divSelector);
+        const divElementPropUa = await page.$(divProperties);
+
         if (divElementUa) {
             contentUa = await page.evaluate(element => element.innerHTML, divElementUa);
+            propertiesUa = await page.evaluate(element => element.innerHTML, divElementPropUa);
+            console.log('properties = ' + propertiesUa);
         }
 
         await browser.close();
-        return [content, contentUa];
+        return [content, contentUa, properties, propertiesUa];
     } else {
         console.log('Div not found.');
         await browser.close();
