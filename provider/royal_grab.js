@@ -6,7 +6,7 @@ require('dotenv').config();
 console.log(process.env.DB_USERNAME);
 let headless = 'new';
 if (process.env.ROYAL_ENV === 'local') {
-    headless = false;
+    //headless = false;
 }
 
 async function parseTableData(html, lang) {

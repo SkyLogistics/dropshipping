@@ -28,8 +28,8 @@ class DropService
         dd($params);
     }
 
-    public function exportXls(){
-
+    public function exportXls()
+    {
     }
 
     public function getExcelData(): array
@@ -37,6 +37,7 @@ class DropService
         $excelData = [];
         $products = OrigamiProducts::query()
             ->where('active', 1)
+            ->where('provider', 'royal')
             ->get();
 
         foreach ($products as $row) {
@@ -62,8 +63,8 @@ class DropService
 
 
             $parcelArrayInfo[] = $row->keywordsUa;
-            $parcelArrayInfo[] = $row->description;
-            $parcelArrayInfo[] = $row->description_ua;
+            $parcelArrayInfo[] = $row->description . '<p>' . $row->properties . '</p>';
+            $parcelArrayInfo[] = $row->description_ua . '<p>' . $row->properties_ua . '</p>';;
             if ($row['vendorCode'] == 'ART_AL001') {
                 $productType = 'Акриловий лак';
             } else {
@@ -79,10 +80,19 @@ class DropService
                 $weight = '1';
             }
             $parcelArrayInfo[] = $productType;
+            $recommendedPrice = $row->recommendedPrice;
             if ($row->price > $row->recommendedPrice) {
-                $row->recommendedPrice = $row->price;
+                $recommendedPrice = $row->price;
             }
-            $parcelArrayInfo[] = $row->recommendedPrice;
+
+            if ($row->provider == 'royal') {
+                $percent = 30;
+                $multiplier = 1 + ($percent / 100);
+                $recommendedPrice = $row->price * $multiplier;
+                $row->recommendedPrice = $recommendedPrice;
+            }
+
+            $parcelArrayInfo[] = $recommendedPrice;
             $parcelArrayInfo[] = 'UAH';
             $parcelArrayInfo[] = 'шт.';
             $parcelArrayInfo[] = '';
@@ -134,7 +144,6 @@ class DropService
 
             if ($row->keywordsUa != '') {
                 $targetLanguage = 'ru';
-
                 $translatedText = '';//$this->translate($targetLanguage, $row->keywordsUa);
                 $row->keywords = str_replace("&quot;", '"', $row->keywordsUa);
                 $row->keywords = str_replace("  ", ' ', $row->keywords);
