@@ -7,6 +7,7 @@ use App\Models\TmpAvizationScanned;
 use App\Models\TmpAvizationSelected;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Event\Runtime\PHP;
@@ -32,15 +33,13 @@ class DropService
     {
     }
 
-    public function getExcelData(): array
+    #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
+    private function getProducts($products): array
     {
+        $royalProductsIds = [];
         $excelData = [];
-        $products = OrigamiProducts::query()
-            ->where('active', 1)
-            ->where('provider', 'royal')
-            ->get();
-
         foreach ($products as $row) {
+            $royalProductsVendorCode[] = $row->vendorCode;
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
             }
@@ -61,10 +60,9 @@ class DropService
             $row->keywordsUa = str_replace("&quot;", '"', $row->keywordsUa);
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
 
-
             $parcelArrayInfo[] = $row->keywordsUa;
-            $parcelArrayInfo[] = $row->description . '<p>' . $row->properties . '</p>';
-            $parcelArrayInfo[] = $row->description_ua . '<p>' . $row->properties_ua . '</p>';;
+            $parcelArrayInfo[] = $row->description . ($row->properties == '-') ? "" : '<p>' . $row->properties . '</p>';
+            $parcelArrayInfo[] = $row->description_ua . ($row->properties_ua == '-') ? "" : '<p>' . $row->properties_ua . '</p>';
 
             if ($row['vendorCode'] == 'ART_AL001') {
                 $productType = 'Акриловий лак';
@@ -178,7 +176,26 @@ class DropService
             $excelData[] = $parcelArrayInfo;
         }
 
-        return $excelData;
+        return ['vendorCodes' => $royalProductsIds, 'excelData' => $excelData];
+    }
+
+    public function getExcelData(): array
+    {
+        $products = OrigamiProducts::query()
+            ->where('active', 1);
+
+        $productsRoyal = $products
+            ->where('provider', 'royal')
+            ->get();
+        $royalProductsExcelData = $this->getProducts($productsRoyal);
+
+//        $productsOrigami = $products
+//            ->whereNotIn('vendorCode', $royalProductsExcelData['vendorCodes'])
+//            ->get();
+//        $origamiProductsExcelData = $this->getProducts($productsOrigami);
+
+
+        return array_merge($royalProductsExcelData['excelData'], []);
     }
 
     private function translate($toLang, $text)
