@@ -3,10 +3,11 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 console.log(process.env.DB_USERNAME);
-let content = '';
-
-await function getUrl() {
-    let myDesc = [];
+let headless = true;
+if (process.env.ROYAL_ENV === 'local') {
+    headless = false;
+}
+async function getUrl() { // Добавлено ключевое слово async
     // Параметры подключения к базе данных
     const connection = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -21,28 +22,28 @@ await function getUrl() {
             console.error('Ошибка подключения: ', err);
             return;
         }
-
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = '' LIMIT 10";
-        connection.query(selectQuery, (err, rows) => {
+        const selectQuery = "SELECT * FROM origami_product where provider='royal' and description = ''";
+        connection.query(selectQuery, async (err, rows) => { // Добавлено ключевое слово async
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
                 return;
             }
             if (rows.length > 0) {
-                rows.forEach((row) => {
+                for (const row of rows) { // Заменено на цикл for-of
                     const id = row.id;
                     const url = row.productUrl;
-                    //console.log('ur = ' + url)
-                    myDesc.push({"id": id, "url": url});
-                    console.log(myDesc)
-                    const divContent = scrapeHTMLFromURL(url);
-                    console.log('divContent and id = ' + id)
-                    console.log(divContent)
+
+                    let urlUa = url.replace('royaltoys.com.ua/', 'royaltoys.com.ua/ua/');
+                    const divContent = await scrapeHTMLFromURL(url, urlUa);
+                    console.log('============== divContent and id = ' + id);
+                    console.log(divContent[0]);
+                    console.log(divContent[1]);
                     const updateQuery = `UPDATE origami_product
-                                         SET description='${divContent}'
+                                         SET description='${divContent[0]}',
+                                             description_ua='${divContent[1]}'
                                          WHERE id = ${id}`;
                     connection.query(updateQuery, (err, result) => {
                         if (err) {
@@ -51,7 +52,7 @@ await function getUrl() {
                             console.log(`Поле успешно обновлено для записи с ID ${id}`);
                         }
                     });
-                });
+                }
             } else {
                 console.log('Нет данных');
             }
@@ -61,41 +62,47 @@ await function getUrl() {
                     console.error('Ошибка закрытия соединения: ', err);
                 } else {
                     console.log('Соединение с базой данных закрыто');
-
                 }
             });
-
-
         });
     });
-
-    return myDesc;
 }
 
-async function scrapeHTMLFromURL(url) {
+async function scrapeHTMLFromURL(url, urlUa) {
     const browser = await puppeteer.launch({
-            headless: false,
-            args: ['--no-sandbox'],
-            downloadsPath: '/tmp'
-        }
-    );
+        headless: headless,
+        args: ['--no-sandbox'],
+        downloadsPath: '/tmp'
+    });
 
     const page = await browser.newPage();
     await page.goto(url);
-    const htmlContent = await page.content();
     const divSelector = 'div[itemprop="description"]';
     const divElement = await page.$(divSelector);
 
+
+    let contentUa = '';
+    let content = '';
     if (divElement) {
         content = await page.evaluate(element => element.innerHTML, divElement);
+        await page.goto(urlUa);
+        const divSelectorUa = 'div[itemprop="description"]';
+        const divElementUa = await page.$(divSelectorUa);
+        if (divElementUa) {
+            contentUa = await page.evaluate(element => element.innerHTML, divElementUa);
+        }
 
+        await browser.close();
+        return [content, contentUa];
     } else {
         console.log('Div not found.');
+        await browser.close();
+        return null;
     }
-    // Close the browser
-    await browser.close();
 }
 
-let productUrls = getUrl();
+async function main() {
+    await getUrl();
+}
 
-console.log(productUrls);
+main().then(r => console.log('Done'));
