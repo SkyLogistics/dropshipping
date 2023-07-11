@@ -156,7 +156,7 @@
                                     <div class="content">
                                         <h5><a href="#">{{$post->title}}</a></h5>
                                         <ul class="comment">
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i>{{$post->created_at->format('d M, y')}}</li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i>{{\Carbon\Carbon::now()->toDateString()}}</li>
                                             <li><i class="fa fa-user" aria-hidden="true"></i>
                                                 {{$post->author_info->name ?? 'Anonymous'}}
                                             </li>
