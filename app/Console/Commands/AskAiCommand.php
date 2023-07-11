@@ -127,10 +127,10 @@ class AskAiCommand extends Command
         if ($prompts) {
             foreach ($prompts as $prompt) {
                 $translateRu = 'Написать ключевые SEO слова с разделителем "," на русском языке для текста -"' . $prompt->name . '" и такими условиями - цифр не должно быть, без кода товара по типу CH114, без сантиметров, без ширины без высоты, без штук, без шт';
-                $translateUa = 'Перекласти на українську мову "' . $translateRu . '"';
-//                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
-
+                  $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
+                $translateUa = 'Перекласти на українську мову текст - "' . $resultRu . '"';
+
                 $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultRu));
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultUa));
