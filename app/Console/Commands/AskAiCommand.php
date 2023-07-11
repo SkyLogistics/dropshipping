@@ -137,7 +137,7 @@ class AskAiCommand extends Command
                 $prompt->keywords = $this->removeQuotes($resultRu);
                 $prompt->keywordsUa = $this->removeQuotes($resultUa);
                 $prompt->save();
-                sleep(2);
+                //sleep(2);
             }
         }
     }
