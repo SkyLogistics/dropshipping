@@ -25,6 +25,8 @@ class AskAiCommand extends Command
      */
     protected $description = 'Update description';
 
+    private string $yourApiKey;
+
     /**
      * Create a new command instance.
      *
@@ -33,6 +35,7 @@ class AskAiCommand extends Command
     {
         $this->dropService = $dropService;
         parent::__construct();
+        $this->yourApiKey = config('app.open_ai');
     }
 
     private function removeQuotes($text)
@@ -43,40 +46,67 @@ class AskAiCommand extends Command
         return $text;
     }
 
-    private function getDivContent($url): string
-    {
-        $divContent = '';
-        $url = 'https://royaltoys.com.ua/product/kartina-po-nomeram-venecianskoe-taksi-40-50sm-kho2749-/';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        echo $response;
-        dd(1);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($curl);
-        echo $response;
-        curl_close($curl);
-        $dom = new \DOMDocument();
-        $dom->loadHTML($response);
-        $xpath = new \DOMXPath($dom);
-        $divXPath = "//div[@itemprop='description']";
-        $divElements = $xpath->query($divXPath);
-        var_dump($divElements);
-        if ($divElements->length > 0) {
-            $divContent = $dom->saveHTML($divElements->item(0));
-            echo $divContent;
-        } else {
-            echo 'Div not found.';
-        }
 
-        return $divContent;
+    function translateText($text, $sourceLang, $targetLang) {
+        $apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $this->yourApiKey,
+        ];
+
+        $payload = [
+            'prompt' => "Translate the following $sourceLang text to $targetLang: '$text'",
+            'max_tokens' => 100,
+            'temperature' => 0.7,
+            'n' => 1,
+            'stop' => null,
+            'log_level' => 'info',
+        ];
+
+        $client = new Client();
+        $response = $client->post($apiUrl, [
+            'headers' => $headers,
+            'json' => $payload,
+        ]);
+
+        $responseData = json_decode($response->getBody(), true);
+        $translation = trim($responseData['choices'][0]['text']);
+
+        return $translation;
+    }
+
+    public function getKeywords(string $prompt){
+        $url = 'https://api.openai.com/v1/chat/completions';
+        $client = new Client();
+        $data = [
+            "messages" => [
+                [
+                    "role" => "system",
+                    "content" => "You are a helpful assistant."
+                ],
+                [
+                    "role" => "user",
+                    "content" => $prompt
+                ],
+            ],
+            'model' => 'gpt-3.5-turbo',
+//                    'model' => 'text-moderation-latest',
+            'temperature' => 0.7,
+            'max_tokens' => 100,
+            'frequency_penalty' => 0,
+            'presence_penalty' => 0.6,
+        ];
+
+        $response= $client->post($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->yourApiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'json' => $data,
+        ]);
+
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -84,86 +114,28 @@ class AskAiCommand extends Command
      */
     #[NoReturn] public function handle(): void
     {
-        $yourApiKey = config('app.open_ai');
-
-        $url = 'https://royaltoys.com.ua/product/kartina-po-nomeram-venecianskoe-taksi-40-50sm-kho2749-/';
-        $text = $this->getDivContent($url);
-        dd($text);
-        //$client = new OpenAi($yourApiKey);
-
-
-//        $prompts = OrigamiProducts::query()
-//            ->where('provider', 'royal')
-//            ->where('promt', '');
-
-
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
             ->where('name', '!=', '')
 //            ->where('description', '=', '')
-            ->where('nameUa', '==', '')
 //            ->where('description_ua', '=', '')
             ->get();
 
-//        foreach ($prompts as $prompt) {
-//            $prompt->nameUa =  $this->removeQuotes($prompt->nameUa);
-//            $prompt->save();
-//        }
-//        dd(1);
-        dump($prompts);
-
         if ($prompts) {
             foreach ($prompts as $prompt) {
-                $translate = 'сделать перевод текста на украинский язык - ' . $prompt->name;
-                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
-                $url = 'https://api.openai.com/v1/chat/completions';
-                $client = new Client();
-                $data = [
-                    "messages" => [
-                        [
-                            "role" => "system",
-                            "content" => "You are a helpful assistant."
-                        ],
-                        [
-                            "role" => "user",
-                            "content" => $translate
-                        ],
-                    ],
-                    'model' => 'gpt-3.5-turbo',
-//                    'model' => 'text-moderation-latest',
-                    'temperature' => 0.7,
-                    'max_tokens' => 1000,
-                    'frequency_penalty' => 0,
-                    'presence_penalty' => 0.6,
-                ];
+                $translateRu = 'Ключевые слова на русском языке для "' . $prompt->name.'" с разделителем "," (без кода товара, ширины и высоты)';
+                $translateUa = 'Ключові слова для "' . $prompt->name.'" с разделителем "," (без кода товара, ширины и высоты)';
+//                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
 
-                $handle = curl_init('https://enz5dikc9mvgr.x.pipedream.net/');
-                $encodedData = json_encode($data);
-                curl_setopt($handle, CURLOPT_POST, 1);
-                curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
-                curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-                $response = $client->post($url, [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $yourApiKey,
-                        'Content-Type' => 'application/json',
-                    ],
-                    'json' => $data,
-                ]);
-                $result = json_decode($response->getBody(), true);
-                $assistantResponse = $result['choices'][0]['message']['content'];
-                dump($prompt->id . ') ' . $this->removeQuotes($assistantResponse));
-                $prompt->nameUa = $this->removeQuotes($assistantResponse);
-//                $prompt->description = $assistantResponse;
+                $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
+                $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
+                $this->info($prompt->id . ') ' . $this->removeQuotes($resultRu));
+                $this->info($prompt->id . ') ' . $this->removeQuotes($resultUa));
+                $prompt->name = $this->removeQuotes($resultRu);
+                $prompt->nameUa = $this->removeQuotes($resultUa);
                 $prompt->save();
                 sleep(2);
             }
         }
     }
-
-
-    private function translateAi()
-    {
-    }
-
 }

@@ -22,6 +22,19 @@ class DropService
         $this->guzzle = new Client();
     }
 
+    private function getCategory($name): string
+    {
+        if (str_contains($name, 'Картина')) {
+            $category = "Картины по номерам";
+        } elseif (str_contains($name, 'Алмазная')) {
+            $category = "Алмазеная мозаика";
+        }else{
+            $category = "Творчество";
+        }
+
+        return $category;
+    }
+
     #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
     private function getProducts($products): array
     {
@@ -100,7 +113,7 @@ class DropService
 
             $parcelArrayInfo[] = $quantityInStock;
             $parcelArrayInfo[] = '';
-            $parcelArrayInfo[] = '';
+            $parcelArrayInfo[] = $this->getCategory($row->name);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
@@ -312,15 +325,5 @@ class DropService
         //$data = file_get_contents($url);
         //TODO: parse data
         return $dataResult;
-    }
-
-    /**
-     * @param array $data
-     * @param $provider
-     * @return array
-     */
-    public function getApiProduct(array $data, $provider): array
-    {
-        return '';
     }
 }

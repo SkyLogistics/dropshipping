@@ -133,9 +133,4 @@ class UpdatePromFileCommand extends Command
             }
         }
     }
-
-    private function translateAi()
-    {
-    }
-
 }
