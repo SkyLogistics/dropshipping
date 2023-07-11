@@ -42,7 +42,7 @@ class UpdatePromFileCommand extends Command
     public function handle(): void
     {
         $inputKey = $this->argument('provider');
-        OrigamiProducts::query()->update(['active' => 0]);
+        //OrigamiProducts::query()->update(['active' => 0]);
 
         $url = '';
         if ($inputKey == 'origami') {
