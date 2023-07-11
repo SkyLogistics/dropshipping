@@ -57,7 +57,7 @@ class DropService
 
             $parcelArrayInfo[] = $row->name;
             $parcelArrayInfo[] = $row->nameUa;
-            $parcelArrayInfo[] = 0;
+            $parcelArrayInfo[] = $row->keywords;
 
             $row->keywordsUa = str_replace("&quot;", '"', $row->keywordsUa);
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
