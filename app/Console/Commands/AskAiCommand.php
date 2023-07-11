@@ -47,7 +47,8 @@ class AskAiCommand extends Command
     }
 
 
-    function translateText($text, $sourceLang, $targetLang) {
+    function translateText($text, $sourceLang, $targetLang)
+    {
         $apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
 
         $headers = [
@@ -76,7 +77,8 @@ class AskAiCommand extends Command
         return $translation;
     }
 
-    public function getKeywords(string $prompt){
+    public function getKeywords(string $prompt)
+    {
         $url = 'https://api.openai.com/v1/chat/completions';
         $client = new Client();
         $data = [
@@ -98,7 +100,7 @@ class AskAiCommand extends Command
             'presence_penalty' => 0.6,
         ];
 
-        $response= $client->post($url, [
+        $response = $client->post($url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->yourApiKey,
                 'Content-Type' => 'application/json',
@@ -117,14 +119,15 @@ class AskAiCommand extends Command
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
             ->where('name', '!=', '')
+            ->where('keywords', 'IS NULL')
 //            ->where('description', '=', '')
 //            ->where('description_ua', '=', '')
             ->get();
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
-                $translateRu = 'Написать ключевые SEO слова с разделителем "," на русском языке для текста -"' . $prompt->name.'" и такими условиями - без кода товара по типу CH114, без сантиметров, без ширины без высоты, без штук, без шт';
-                $translateUa = 'Написати ключові SEO слова з роздільником "," українською мовою для тексту - "' . $prompt->name.'" та з такими умовами - без коду товару по типу CH114, сантиметрiв, без ширини, без, без висоти, без штук, без шт';
+                $translateRu = 'Написать ключевые SEO слова с разделителем "," на русском языке для текста -"' . $prompt->name . '" и такими условиями - без кода товара по типу CH114, без сантиметров, без ширины без высоты, без штук, без шт';
+                $translateUa = 'Написати ключові SEO слова з роздільником "," українською мовою для тексту - "' . $prompt->name . '" та з такими умовами - без коду товару по типу CH114, сантиметрiв, без ширини, без, без висоти, без штук, без шт';
 //                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
 
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
