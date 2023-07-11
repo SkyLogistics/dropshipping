@@ -120,8 +120,6 @@ class AskAiCommand extends Command
             ->where('provider', 'royal')
             ->where('name', '!=', '')
             ->whereNull('keywords')
-//            ->where('description', '=', '')
-//            ->where('description_ua', '=', '')
             ->get();
 
         if ($prompts) {
