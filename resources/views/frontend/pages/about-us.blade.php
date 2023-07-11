@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || About Us')
+@section('title','Ukrainian Shop || About Us')
 
 @section('main-content')
 
