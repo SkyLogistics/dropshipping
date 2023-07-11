@@ -131,8 +131,8 @@ class AskAiCommand extends Command
                 $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultRu));
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultUa));
-                $prompt->name = $this->removeQuotes($resultRu);
-                $prompt->nameUa = $this->removeQuotes($resultUa);
+                $prompt->keywords = $this->removeQuotes($resultRu);
+                $prompt->keywordsUa = $this->removeQuotes($resultUa);
                 $prompt->save();
                 sleep(2);
             }
