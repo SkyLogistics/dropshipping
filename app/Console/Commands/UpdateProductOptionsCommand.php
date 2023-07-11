@@ -71,7 +71,7 @@ class UpdateProductOptionsCommand extends Command
                     ->create([
                                  'option_id' => $findOpt->id,
                                  'product_id' => $product->id,
-                                 'value' => $option->value,
+                                 'value' => $option['value'],
                              ]);
             }
         }
