@@ -129,7 +129,8 @@ class AskAiCommand extends Command
                 $translateRu = 'Написать ключевые SEO слова с разделителем "," на русском языке для текста -"' . $prompt->name . '" и такими условиями - цифр не должно быть, без кода товара по типу CH114, без сантиметров, без ширины без высоты, без штук, без шт';
 //                $copyright = $prompt->promt . " Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно";
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
-                $translateUa = 'Перекласти на українську мову текст - "' . $resultRu . '"';
+                //$translateUa = 'Перекласти на українську мову текст - "' . $resultRu . '"';
+                $translateUa = 'Написати ключові SEO слова з роздільником "," українською мовою для тексту -"' . $prompt->nameUa . '" і такими умовами - цифр не повинно бути, без коду товару на кшталт CH114, без сантиметрів, без ширини без висоти, без штук, без шт';
 
                 $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultRu));
