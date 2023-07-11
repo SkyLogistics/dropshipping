@@ -74,7 +74,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-                                <span>Copyright &copy; <a href="https://artnum.com.ua" target="_blank">Саша</a> <?php echo e(date('Y')); ?></span>
+                                <span>Copyright &copy; <a href="https://#" target="_blank">Саша</a> <?php echo e(date('Y')); ?></span>
                             </div>
 						</div>
 						<div class="col-lg-6 col-12">
