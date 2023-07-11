@@ -123,8 +123,8 @@ class AskAiCommand extends Command
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
-                $translateRu = 'Ключевые слова на русском языке для "' . $prompt->name.'" с разделителем "," (без кода товара, ширины и высоты)';
-                $translateUa = 'Ключові слова для "' . $prompt->name.'" с разделителем "," (без кода товара, ширины и высоты)';
+                $translateRu = 'Написать ключевые слова на русском языке для "' . $prompt->name.'" с разделителем "," (без кода товара, ширины и высоты)';
+                $translateUa = 'Написати ключові слова українською мовою для "' . $prompt->name.'" з роздільником "," (без коду товару, ширини та висоти)';
 //                $copyright = $prompt->promt . ". Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно .";
 
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
