@@ -93,7 +93,7 @@ class DropService
                 $percent = 35;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = $row->price * $multiplier;
-                $row->recommendedPrice = $recommendedPrice;
+                $row->recommendedPrice = ceil($recommendedPrice);
             }
 
             $parcelArrayInfo[] = $recommendedPrice;
