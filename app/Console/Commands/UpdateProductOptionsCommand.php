@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
+use App\Models\ProductOption;
 use App\Services\DropService;
 use Illuminate\Console\Command;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -41,11 +43,33 @@ class UpdateProductOptionsCommand extends Command
             ->whereNotNull('options')
             ->get();
 
-        foreach ($products as $product){
+        foreach ($products as $product) {
             $optionRu = json_decode($product->options, true);
-            dd($optionRu);
             $optionUa = json_decode($product->options_ua, true);
-        }
+            $options = array_merge($optionRu, $optionUa);
+            foreach ($options as $option) {
+                if ($option['title'] == 'Рекомендованная цена' || ($option['title'] == 'Рекомендована ціна')) {
+                    continue;
+                }
+                $findOpt = ProductOption::query()
+                    ->where('title', $option['title'])
+                    ->where('lang', $option['lang'])
+                    ->first();
 
+                if (!$findOpt) {
+                    $option = ProductOption::query()
+                        ->create([
+                                     'title' => $option['title'],
+                                     'lang' => $option['lang']
+                                 ]);
+                    OptionForProduct::query()
+                        ->create([
+                                     'option_id' => $option->id,
+                                     'product_id' => $product->id,
+                                     'value' => $option->value,
+                                 ]);
+                }
+            }
+        }
     }
 }
