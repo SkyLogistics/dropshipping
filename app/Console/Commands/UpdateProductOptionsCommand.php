@@ -49,7 +49,10 @@ class UpdateProductOptionsCommand extends Command
             $optionUa = json_decode($product->options_ua, true);
             $options = array_merge($optionRu, $optionUa);
             foreach ($options as $option) {
-                if ($option['title'] == 'Рекомендованная цена' || ($option['title'] == 'Рекомендована ціна')) {
+                if (
+                    $option['title'] == 'Рекомендованная цена' ||
+                    $option['title'] == 'Рекомендована ціна' ||
+                    $option['title'] == '') {
                     continue;
                 }
                 $findOpt = ProductOption::query()
