@@ -58,22 +58,21 @@ class UpdateProductOptionsCommand extends Command
                     ->first();
 
                 if (!$findOpt) {
-                    $option = ProductOption::query()
+                    $findOpt = ProductOption::query()
                         ->create([
                                      'title' => $option['title'],
                                      'lang' => $option['lang'],
                                      'created_at' => Carbon::now(),
                                      'updated_at' => Carbon::now(),
                                  ]);
-                    OptionForProduct::query()
-                        ->create([
-                                     'option_id' => $option->id,
-                                     'product_id' => $product->id,
-                                     'value' => $option->value,
-                                     'created_at' => Carbon::now(),
-                                     'updated_at' => Carbon::now(),
-                                 ]);
                 }
+
+                OptionForProduct::query()
+                    ->create([
+                                 'option_id' => $findOpt->id,
+                                 'product_id' => $product->id,
+                                 'value' => $option->value,
+                             ]);
             }
         }
     }
