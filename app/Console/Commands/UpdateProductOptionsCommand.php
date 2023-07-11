@@ -70,6 +70,8 @@ class UpdateProductOptionsCommand extends Command
                                  ]);
                 }
 
+                $this->line('findOptId = ' . $findOpt);
+
                 OptionForProduct::query()
                     ->create([
                                  'option_id' => $findOpt->id,
