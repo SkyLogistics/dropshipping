@@ -6,6 +6,7 @@ use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
 use App\Models\ProductOption;
 use App\Services\DropService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -60,13 +61,17 @@ class UpdateProductOptionsCommand extends Command
                     $option = ProductOption::query()
                         ->create([
                                      'title' => $option['title'],
-                                     'lang' => $option['lang']
+                                     'lang' => $option['lang'],
+                                     'created_at' => Carbon::now(),
+                                     'updated_at' => Carbon::now(),
                                  ]);
                     OptionForProduct::query()
                         ->create([
                                      'option_id' => $option->id,
                                      'product_id' => $product->id,
                                      'value' => $option->value,
+                                     'created_at' => Carbon::now(),
+                                     'updated_at' => Carbon::now(),
                                  ]);
                 }
             }
