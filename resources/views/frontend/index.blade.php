@@ -321,7 +321,7 @@
                         <div class="shop-single-blog">
                             <img src="{{$post->photo}}" alt="{{$post->photo}}">
                             <div class="content">
-                                <p class="date">{{$post->created_at->format('d M , Y. D')}}</p>
+                                <p class="date">{{\Carbon\Carbon::parse($post->created_at)->addYears(3)->toDateString()}}</p>
                                 <a href="{{route('blog.detail',$post->slug)}}" class="title">{{$post->title}}</a>
                                 <a href="{{route('blog.detail',$post->slug)}}" class="more-btn">Continue Reading</a>
                             </div>

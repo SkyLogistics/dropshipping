@@ -33,7 +33,7 @@
                                 <div class="shop-single-blog">
                                 <img src="{{$post->photo}}" alt="{{$post->photo}}">
                                     <div class="content">
-                                        <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{$post->created_at->format('d M, Y. D')}}
+                                        <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{\Carbon\Carbon::parse($post->created_at)->addYears(3)->toDateString()}}
                                             <span class="float-right">
                                                 <i class="fa fa-user" aria-hidden="true"></i>
                                                  {{$post->author_info->name ?? 'Anonymous'}}
