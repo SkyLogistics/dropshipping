@@ -93,7 +93,7 @@ class AskAiCommand extends Command
             'model' => 'gpt-3.5-turbo',
 //                    'model' => 'text-moderation-latest',
             'temperature' => 0.7,
-            'max_tokens' => 100,
+            'max_tokens' => 300,
             'frequency_penalty' => 0,
             'presence_penalty' => 0.6,
         ];
