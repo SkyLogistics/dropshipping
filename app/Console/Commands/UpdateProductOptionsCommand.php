@@ -72,8 +72,8 @@ class UpdateProductOptionsCommand extends Command
 
                 $this->line('findOptId = ' . $findOpt);
 
-
-                $product->options()->attach($option->id);
+//                $product->options()->attach($option['id']);
+//                $product->options()->value = $option['value'];
 
                 $findOptForProduct = OptionForProduct::query()
                     ->where('option_id', $findOpt->id)
