@@ -185,7 +185,8 @@ class DropService
             $parcelArrayInfo[] = $length;
             $parcelArrayInfo[] = 'Київ/Дніпро';
 
-            $options = $this->getProductOptions($row->id, [2, 3, 4, 54]);
+            $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
+            dd($options);
 
             $parcelArrayInfo[] = '3';
             $parcelArrayInfo[] = '4';
