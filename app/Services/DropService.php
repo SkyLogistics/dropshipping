@@ -326,4 +326,9 @@ class DropService
         //TODO: parse data
         return $dataResult;
     }
+
+    public function getProductOptions($productId){
+//        $product = OrigamiProducts::query()->where('id', $id)
+//            ->join()
+    }
 }

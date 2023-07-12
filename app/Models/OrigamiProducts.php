@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class OrigamiProducts extends Model
 {
@@ -30,4 +31,9 @@ class OrigamiProducts extends Model
         'provider',
         'productUrl',
     ];
+
+    public function options(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductOption::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProductOption extends Model
 {
@@ -12,4 +13,9 @@ class ProductOption extends Model
         'title',
         'lang',
     ];
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
