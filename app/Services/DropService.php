@@ -169,11 +169,6 @@ class DropService
                 $height = $size[1];
             }
 
-//            2 - длина
-//            3 - ширина
-//            4 - высота
-//            54 вес
-
             $length = ProductOption::query()->where('id', 22)->first()->value('title');
             $width = ProductOption::query()->where('id', 23)->first()->value('title');
             $height = ProductOption::query()->where('id', 24)->first()->value('title');
@@ -184,27 +179,17 @@ class DropService
             $parcelArrayInfo[] = $height;
             $parcelArrayInfo[] = $length;
             $parcelArrayInfo[] = 'Київ/Дніпро';
-
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
-
             $optionsUa = $options->filter(function ($option) {
                 return $option->lang == 'ua';
             });
-            $optionsRu = $options->filter(function ($option) {
-                return $option->lang == 'ru';
-            });
 
-            dd($optionsUa->toArray());
+            foreach ($optionsUa as $optionUa) {
+                $parcelArrayInfo[] = $optionUa->title;
+                $parcelArrayInfo[] = '';
+                $parcelArrayInfo[] = $optionUa->value;
+            }
 
-            $parcelArrayInfo[] = '3';
-            $parcelArrayInfo[] = '4';
-            $parcelArrayInfo[] = '5';
-            $parcelArrayInfo[] = '6';
-            $parcelArrayInfo[] = '7';
-            $parcelArrayInfo[] = '8';
-//            $parcelArrayInfo[] = '';
-
-            //dd($options->toArray());
             $excelData[] = $parcelArrayInfo;
         }
 
