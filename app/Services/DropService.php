@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\OrigamiProducts;
+use App\Models\ProductOption;
 use App\Models\TmpAvizationScanned;
 use App\Models\TmpAvizationSelected;
 use GuzzleHttp\Client;
@@ -50,8 +51,8 @@ class DropService
             $parcelArrayInfo[] = $row->vendorCode;
             if ($row->name == '' && $row->nameUa != '') {
                 $text = $row->nameUa;
-                $targetLanguage = 'ru';
-                $translatedText = '';//$this->translate($targetLanguage, $text);
+//                $targetLanguage = 'ru';
+//                $translatedText = '';//$this->translate($targetLanguage, $text);
                 $row->name = str_replace("&quot;", '"', $text);
                 $row->name = str_replace("  ", ' ', $row->name);
             }
@@ -76,11 +77,6 @@ class DropService
                 } else {
                     $productType = $row->productType;
                 }
-            }
-
-            $weight = '0.3';
-            if ($productType == 'Алмазна мозаїка') {
-                $weight = '1';
             }
 
             $parcelArrayInfo[] = $productType;
@@ -172,20 +168,33 @@ class DropService
             if (isset($size[1])) {
                 $height = $size[1];
             }
+
+//            2 - длина
+//            3 - ширина
+//            4 - высота
+//            54 вес
+
+            $length = ProductOption::query()->where('option_id', 22)->first()->value('value');
+            $width = ProductOption::query()->where('option_id', 23)->first()->value('value');
+            $height = ProductOption::query()->where('option_id', 24)->first()->value('value');
+            $weight = ProductOption::query()->where('option_id', 44)->first()->value('value');
+
             $parcelArrayInfo[] = $weight;
-            $parcelArrayInfo[] = $height;
             $parcelArrayInfo[] = $width;
-            $parcelArrayInfo[] = '1';
-            $parcelArrayInfo[] = '2';
+            $parcelArrayInfo[] = $height;
+            $parcelArrayInfo[] = $length;
+            $parcelArrayInfo[] = 'Київ/Дніпро';
+
+            $options = $this->getProductOptions($row->id, [2, 3, 4, 54]);
+
             $parcelArrayInfo[] = '3';
             $parcelArrayInfo[] = '4';
             $parcelArrayInfo[] = '5';
             $parcelArrayInfo[] = '6';
             $parcelArrayInfo[] = '7';
             $parcelArrayInfo[] = '8';
-            $parcelArrayInfo[] = 'Київ/Дніпро';
+//            $parcelArrayInfo[] = '';
 
-            $options = $this->getProductOptions($row->id);
             //dd($options->toArray());
             $excelData[] = $parcelArrayInfo;
         }
@@ -338,7 +347,7 @@ class DropService
         return $dataResult;
     }
 
-    public function getProductOptions($productId): Collection|array
+    public function getProductOptions($productId, $notOption): Collection|array
     {
         return OrigamiProducts::query()
             ->join('option_for_product', 'origami_product.id', '=', 'option_for_product.product_id')
@@ -349,6 +358,7 @@ class DropService
                 'option_for_product.value as value',
                 'product_option.lang as lang'
             )->where('origami_product.id', $productId)
+            ->whereNotIn('product_option.id', $notOption)
             ->get();
     }
 }
