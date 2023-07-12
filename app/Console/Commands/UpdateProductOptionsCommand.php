@@ -93,7 +93,7 @@ class UpdateProductOptionsCommand extends Command
 //                    $product->options()->attach($option->id);
                 }
             }
-            dd($findOptForProduct);
+            //dd($findOptForProduct);
         }
     }
 }
