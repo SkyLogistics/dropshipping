@@ -72,6 +72,9 @@ class UpdateProductOptionsCommand extends Command
 
                 $this->line('findOptId = ' . $findOpt);
 
+
+                $product->options()->attach($option->id);
+
                 $findOptForProduct = OptionForProduct::query()
                     ->where('option_id', $findOpt->id)
                     ->where('product_id', $product->id)
@@ -83,6 +86,8 @@ class UpdateProductOptionsCommand extends Command
                                      'product_id' => $product->id,
                                      'value' => $option['value'],
                                  ]);
+
+//                    $product->options()->attach($option->id);
                 }
             }
         }

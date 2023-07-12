@@ -10,9 +10,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('option_for_product', function (Blueprint $table) {
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('product_option_id');
+        Schema::create('option_for_product', function (Blueprint $table) {
+            $table->unsignedInteger('id')->autoIncrement();
+            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('option_id');
 
             $table->foreign('product_id')
                 ->references('id')
@@ -25,7 +26,7 @@ return new class extends Migration {
 
             // Add any additional fields to the pivot table if needed
             $table->char('value',100)->nullable();
-            $table->primary(['product_id', 'option_id']);
+            //$table->primary(['product_id', 'option_id']);
             $table->timestamps();
         });
     }
