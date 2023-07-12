@@ -186,7 +186,7 @@ class DropService
             $parcelArrayInfo[] = 'Київ/Дніпро';
 
             $options = $this->getProductOptions($row->id);
-            dd($options->toArray());
+            //dd($options->toArray());
             $excelData[] = $parcelArrayInfo;
         }
 
