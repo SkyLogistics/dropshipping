@@ -177,24 +177,24 @@ class DropService
 
             $length = OptionForProduct::query()
                 ->where('option_id',$length->id)
-                ->where('product_id', $row->id)->first()->value('value');
+                ->where('product_id', $row->id)->first();
 
             $width = OptionForProduct::query()
                 ->where('option_id',$width->id)
-                ->where('product_id', $row->id)->first()->value('value');
+                ->where('product_id', $row->id)->first();
 
             $height = OptionForProduct::query()
                 ->where('option_id',$height->id)
-                ->where('product_id', $row->id)->first()->value('value');
+                ->where('product_id', $row->id)->first();
 
             $weight = OptionForProduct::query()
                 ->where('option_id',$weight->id)
-                ->where('product_id', $row->id)->first()->value('value');
+                ->where('product_id', $row->id)->first();
 
-            $parcelArrayInfo[] = $weight;
-            $parcelArrayInfo[] = $width;
-            $parcelArrayInfo[] = $height;
-            $parcelArrayInfo[] = $length;
+            $parcelArrayInfo[] = $weight->value;
+            $parcelArrayInfo[] = $width->value;
+            $parcelArrayInfo[] = $height->value;
+            $parcelArrayInfo[] = $length->value;
             $parcelArrayInfo[] = 'Київ';
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
             $optionsUa = $options->filter(function ($option) {
