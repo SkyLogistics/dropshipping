@@ -16,6 +16,6 @@ class ProductOption extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(OrigamiProducts::class,'origami_product');
     }
 }
