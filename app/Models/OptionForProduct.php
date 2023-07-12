@@ -11,6 +11,6 @@ class OptionForProduct extends Model
     protected $fillable = [
         'product_id',
         'option_id',
-        'value'
+        'value',
     ];
 }
