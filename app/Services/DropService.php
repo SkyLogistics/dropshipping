@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
 use App\Models\ProductOption;
 use App\Models\TmpAvizationScanned;
@@ -169,10 +170,26 @@ class DropService
                 $height = $size[1];
             }
 
-            $length = ProductOption::query()->where('id', 22)->first()->value('title');
-            $width = ProductOption::query()->where('id', 23)->first()->value('title');
-            $height = ProductOption::query()->where('id', 24)->first()->value('title');
-            $weight = ProductOption::query()->where('id', 44)->first()->value('title');
+            $length = ProductOption::query()->where('id', 22)->first();
+            $width = ProductOption::query()->where('id', 23)->first();
+            $height = ProductOption::query()->where('id', 24)->first();
+            $weight = ProductOption::query()->where('id', 44)->first();
+
+            $length = OptionForProduct::query()
+                ->where('option_id',$length->id)
+                ->where('product_id', $row->id)->first()->value('value');
+
+            $width = OptionForProduct::query()
+                ->where('option_id',$width->id)
+                ->where('product_id', $row->id)->first()->value('value');
+
+            $height = OptionForProduct::query()
+                ->where('option_id',$height->id)
+                ->where('product_id', $row->id)->first()->value('value');
+
+            $weight = OptionForProduct::query()
+                ->where('option_id',$weight->id)
+                ->where('product_id', $row->id)->first()->value('value');
 
             $parcelArrayInfo[] = $weight;
             $parcelArrayInfo[] = $width;
