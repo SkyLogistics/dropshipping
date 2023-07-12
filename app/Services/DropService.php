@@ -7,6 +7,7 @@ use App\Models\TmpAvizationScanned;
 use App\Models\TmpAvizationSelected;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\Eloquent\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -180,8 +181,6 @@ class DropService
             $options = $this->getProductOptions($row->id);
             dd($options);
             $excelData[] = $parcelArrayInfo;
-
-
         }
 
         return ['vendorCodes' => $royalProductsIds, 'excelData' => $excelData];
@@ -332,7 +331,7 @@ class DropService
         return $dataResult;
     }
 
-    public function getProductOptions($productId): \Illuminate\Database\Eloquent\Collection|array
+    public function getProductOptions($productId): Collection|array
     {
         return OrigamiProducts::query()
             ->join('option_for_product', 'origami_product.id', '=', 'option_for_product.product_id')
@@ -341,7 +340,7 @@ class DropService
                 'origami_product.id as productId',
                 'product_option.title as title',
                 'option_for_product.value as value'
-            )
+            )->where('origami_product.id', $productId)
             ->get();
     }
 }
