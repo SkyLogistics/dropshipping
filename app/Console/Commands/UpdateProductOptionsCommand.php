@@ -70,7 +70,7 @@ class UpdateProductOptionsCommand extends Command
                                  ]);
                 }
 
-                $this->line('findOptId = ' . $findOpt);
+                $this->line('findOptId = '.$findOpt->id.' -> ' . $findOpt->title);
 
                 //$product->options()->attach($findOpt->id);
 
@@ -81,7 +81,7 @@ class UpdateProductOptionsCommand extends Command
                 $findOptForProduct = OptionForProduct::query()
                     ->where('option_id', $findOpt->id)
                     ->where('product_id', $product->id)
-                    ->where('value', $option['value']);
+                    ->where('value', $option['value'])->first();
                 if (!$findOptForProduct) {
                     OptionForProduct::query()
                         ->create([
@@ -93,6 +93,7 @@ class UpdateProductOptionsCommand extends Command
 //                    $product->options()->attach($option->id);
                 }
             }
+            dd($findOptForProduct);
         }
     }
 }
