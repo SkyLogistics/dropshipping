@@ -340,7 +340,7 @@ class DropService
                 'origami_product.id as productId',
                 'product_option.title as title',
                 'option_for_product.value as value',
-                'option_for_product.lang as lang'
+                'product_option.lang as lang'
             )->where('origami_product.id', $productId)
             ->get();
     }
