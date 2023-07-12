@@ -176,25 +176,43 @@ class DropService
             $weight = ProductOption::query()->where('id', 44)->first();
 
             $length = OptionForProduct::query()
-                ->where('option_id',$length->id)
+                ->where('option_id', $length->id)
                 ->where('product_id', $row->id)->first();
 
             $width = OptionForProduct::query()
-                ->where('option_id',$width->id)
+                ->where('option_id', $width->id)
                 ->where('product_id', $row->id)->first();
 
             $height = OptionForProduct::query()
-                ->where('option_id',$height->id)
+                ->where('option_id', $height->id)
                 ->where('product_id', $row->id)->first();
 
             $weight = OptionForProduct::query()
-                ->where('option_id',$weight->id)
+                ->where('option_id', $weight->id)
                 ->where('product_id', $row->id)->first();
 
-            $parcelArrayInfo[] = $weight->value;
-            $parcelArrayInfo[] = $width->value;
-            $parcelArrayInfo[] = $height->value;
-            $parcelArrayInfo[] = $length->value;
+            $le = 0;
+            if ($length) {
+                $le = $length->value;
+            }
+            $wi = 0;
+            if ($width) {
+                $wi = $width->value;
+            }
+            $he = 0;
+            if ($height) {
+                $he = $height->value;
+            }
+
+            $we = 0;
+            if ($weight) {
+                $we = $weight->value;
+            }
+
+            $parcelArrayInfo[] = $we;
+            $parcelArrayInfo[] = $wi;
+            $parcelArrayInfo[] = $he;
+            $parcelArrayInfo[] = $le;
             $parcelArrayInfo[] = 'Київ';
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
             $optionsUa = $options->filter(function ($option) {
