@@ -42,7 +42,7 @@ class UpdateProductOptionsCommand extends Command
     {
         $products = OrigamiProducts::query()
             ->whereNotNull('options')
-            ->where('id', '>=', 32468)
+//            ->where('id', '>=', 32468)
             ->get();
 
         $i = 1;
