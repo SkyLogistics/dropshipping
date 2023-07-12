@@ -161,19 +161,11 @@ class DropService
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
             $size = explode('*', $row->size);
-            $width = 'Запитайте у менеджера сайту';
-            $height = '';
-            if (isset($size[0])) {
-                $width = $size[0];
-            }
-            if (isset($size[1])) {
-                $height = $size[1];
-            }
 
-            $length = ProductOption::query()->where('id', 22)->first();
-            $width = ProductOption::query()->where('id', 23)->first();
-            $height = ProductOption::query()->where('id', 24)->first();
-            $weight = ProductOption::query()->where('id', 44)->first();
+            $length = ProductOption::find(22);
+            $width = ProductOption::find(23);
+            $height = ProductOption::find(24);
+            $weight = ProductOption::find(44);
 
             $length = OptionForProduct::query()
                 ->where('option_id', $length->id)
