@@ -31,9 +31,4 @@ class OrigamiProducts extends Model
         'provider',
         'productUrl',
     ];
-
-    public function options(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductOption::class, 'product_option');
-    }
 }

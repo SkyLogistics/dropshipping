@@ -28,7 +28,7 @@ class DropService
             $category = "Картины по номерам";
         } elseif (str_contains($name, 'Алмазная')) {
             $category = "Алмазеная мозаика";
-        }else{
+        } else {
             $category = "Творчество";
         }
 
@@ -65,7 +65,7 @@ class DropService
             $parcelArrayInfo[] = $row->keywordsUa;
             //dd($row->description . '<p>' . $row->properties . '</p>');
             $parcelArrayInfo[] = $row->description . '<p>' . $row->properties . '</p>';
-            $parcelArrayInfo[] = $row->description_ua .'<p>' . $row->properties_ua . '</p>';
+            $parcelArrayInfo[] = $row->description_ua . '<p>' . $row->properties_ua . '</p>';
 
             if ($row['vendorCode'] == 'ART_AL001') {
                 $productType = 'Акриловий лак';
@@ -176,7 +176,12 @@ class DropService
             $parcelArrayInfo[] = $width;
             $parcelArrayInfo[] = '1';
             $parcelArrayInfo[] = 'Київ/Дніпро';
+
+            $options = $this->getProductOptions($row->id);
+            dd($options);
             $excelData[] = $parcelArrayInfo;
+
+
         }
 
         return ['vendorCodes' => $royalProductsIds, 'excelData' => $excelData];
@@ -327,8 +332,16 @@ class DropService
         return $dataResult;
     }
 
-    public function getProductOptions($productId){
-//        $product = OrigamiProducts::query()->where('id', $id)
-//            ->join()
+    public function getProductOptions($productId): \Illuminate\Database\Eloquent\Collection|array
+    {
+        return OrigamiProducts::query()
+            ->join('option_for_product', 'origami_products.id', '=', 'option_for_product.product_id')
+            ->join('product_option', 'option_for_product.order_id', '=', 'product_option.id')
+            ->select(
+                'origami_products as productId',
+                'product_option.title as title',
+                'option_for_product.value as value'
+            )
+            ->get();
     }
 }
