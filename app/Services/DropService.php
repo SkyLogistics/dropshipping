@@ -335,10 +335,10 @@ class DropService
     public function getProductOptions($productId): \Illuminate\Database\Eloquent\Collection|array
     {
         return OrigamiProducts::query()
-            ->join('option_for_product', 'origami_products.id', '=', 'option_for_product.product_id')
+            ->join('option_for_product', 'origami_product.id', '=', 'option_for_product.product_id')
             ->join('product_option', 'option_for_product.order_id', '=', 'product_option.id')
             ->select(
-                'origami_products as productId',
+                'origami_product.id as productId',
                 'product_option.title as title',
                 'option_for_product.value as value'
             )
