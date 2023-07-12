@@ -72,7 +72,7 @@ class UpdateProductOptionsCommand extends Command
 
                 $this->line('findOptId = ' . $findOpt);
 
-                $product->options()->attach($option['id']);
+                $product->options()->attach($findOpt->id);
 
                 dd($product->options());
 
