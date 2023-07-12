@@ -336,7 +336,7 @@ class DropService
     {
         return OrigamiProducts::query()
             ->join('option_for_product', 'origami_product.id', '=', 'option_for_product.product_id')
-            ->join('product_option', 'option_for_product.order_id', '=', 'product_option.id')
+            ->join('product_option', 'product_option.id', '=', 'option_for_product.option_id')
             ->select(
                 'origami_product.id as productId',
                 'product_option.title as title',
