@@ -186,7 +186,15 @@ class DropService
             $parcelArrayInfo[] = 'Київ/Дніпро';
 
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
-            dd($options->toArray());
+
+            $optionsUa = $options->filter(function ($option) {
+                return $option->lang == 'ua';
+            });
+            $optionsRu = $options->filter(function ($option) {
+                return $option->lang == 'ru';
+            });
+
+            dd($optionsUa->toArray());
 
             $parcelArrayInfo[] = '3';
             $parcelArrayInfo[] = '4';
