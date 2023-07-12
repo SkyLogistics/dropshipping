@@ -44,11 +44,12 @@ class UpdateProductOptionsCommand extends Command
             ->whereNotNull('options')
             ->get();
 
-        $i =1;
+        $i = 1;
         foreach ($products as $product) {
             $optionRu = json_decode($product->options, true);
             $optionUa = json_decode($product->options_ua, true);
             $options = array_merge($optionRu, $optionUa);
+            $j = 1;
             foreach ($options as $option) {
                 if (
                     $option['title'] == 'Рекомендованная цена' ||
@@ -71,7 +72,7 @@ class UpdateProductOptionsCommand extends Command
                                  ]);
                 }
 
-                $this->line($i.') '.'findOptId = '.$findOpt->id.' -> ' . $findOpt->title);
+                $this->line($i . ' -> ' . $j . ') ' . 'findOptId = ' . $findOpt->id . ' -> ' . $findOpt->title);
 
                 //$product->options()->attach($findOpt->id);
 
@@ -90,9 +91,9 @@ class UpdateProductOptionsCommand extends Command
                                      'product_id' => $product->id,
                                      'value' => $option['value'],
                                  ]);
-
 //                    $product->options()->attach($option->id);
                 }
+                $j++;
             }
             //dd($findOptForProduct);
             $i++;
