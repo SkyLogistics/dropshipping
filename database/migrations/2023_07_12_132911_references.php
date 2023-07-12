@@ -24,7 +24,6 @@ return new class extends Migration {
                 ->on('option_for_product')
                 ->onDelete('cascade');
 
-            // Add any additional fields to the pivot table if needed
             $table->char('value',100)->nullable();
             //$table->primary(['product_id', 'option_id']);
             $table->timestamps();
