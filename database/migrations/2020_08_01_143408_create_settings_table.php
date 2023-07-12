@@ -13,17 +13,17 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->id();
-            $table->longText('description');
-            $table->text('short_des');
-            $table->string('logo');
-            $table->string('photo');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('email');
-            $table->timestamps();
-        });
+//        Schema::create('settings', function (Blueprint $table) {
+//            $table->id();
+//            $table->longText('description');
+//            $table->text('short_des');
+//            $table->string('logo');
+//            $table->string('photo');
+//            $table->string('address');
+//            $table->string('phone');
+//            $table->string('email');
+//            $table->timestamps();
+//        });
     }
 
     /**

@@ -13,17 +13,17 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('subject');
-            $table->string('email');
-            $table->string('photo')->nullable();
-            $table->string('phone')->nullable();
-            $table->longText('message');
-            $table->timestamp('read_at')->nullable();
-            $table->timestamps();
-        });
+//        Schema::create('messages', function (Blueprint $table) {
+//            $table->id();
+//            $table->string('name');
+//            $table->text('subject');
+//            $table->string('email');
+//            $table->string('photo')->nullable();
+//            $table->string('phone')->nullable();
+//            $table->longText('message');
+//            $table->timestamp('read_at')->nullable();
+//            $table->timestamps();
+//        });
     }
 
     /**
