@@ -54,7 +54,7 @@ class ExportPromCommand extends Command
             'A2'
         );
 
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $path = '/example/' . $template;
         $file = public_path() . $path;
         $writer->save($file);
