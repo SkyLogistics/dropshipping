@@ -174,10 +174,10 @@ class DropService
 //            4 - высота
 //            54 вес
 
-            $length = ProductOption::query()->where('option.id', 22)->first()->value('value');
-            $width = ProductOption::query()->where('option.id', 23)->first()->value('value');
-            $height = ProductOption::query()->where('option.id', 24)->first()->value('value');
-            $weight = ProductOption::query()->where('option.id', 44)->first()->value('value');
+            $length = ProductOption::query()->where('id', 22)->first()->value('value');
+            $width = ProductOption::query()->where('id', 23)->first()->value('value');
+            $height = ProductOption::query()->where('id', 24)->first()->value('value');
+            $weight = ProductOption::query()->where('id', 44)->first()->value('value');
 
             $parcelArrayInfo[] = $weight;
             $parcelArrayInfo[] = $width;
