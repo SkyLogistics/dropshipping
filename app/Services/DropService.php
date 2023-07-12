@@ -176,6 +176,13 @@ class DropService
             $parcelArrayInfo[] = $height;
             $parcelArrayInfo[] = $width;
             $parcelArrayInfo[] = '1';
+            $parcelArrayInfo[] = '2';
+            $parcelArrayInfo[] = '3';
+            $parcelArrayInfo[] = '4';
+            $parcelArrayInfo[] = '5';
+            $parcelArrayInfo[] = '6';
+            $parcelArrayInfo[] = '7';
+            $parcelArrayInfo[] = '8';
             $parcelArrayInfo[] = 'Київ/Дніпро';
 
             $options = $this->getProductOptions($row->id);
