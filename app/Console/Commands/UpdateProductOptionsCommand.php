@@ -44,6 +44,7 @@ class UpdateProductOptionsCommand extends Command
             ->whereNotNull('options')
             ->get();
 
+        $i =1;
         foreach ($products as $product) {
             $optionRu = json_decode($product->options, true);
             $optionUa = json_decode($product->options_ua, true);
@@ -70,7 +71,7 @@ class UpdateProductOptionsCommand extends Command
                                  ]);
                 }
 
-                $this->line('findOptId = '.$findOpt->id.' -> ' . $findOpt->title);
+                $this->line($i.') '.'findOptId = '.$findOpt->id.' -> ' . $findOpt->title);
 
                 //$product->options()->attach($findOpt->id);
 
@@ -94,6 +95,7 @@ class UpdateProductOptionsCommand extends Command
                 }
             }
             //dd($findOptForProduct);
+            $i++;
         }
     }
 }
