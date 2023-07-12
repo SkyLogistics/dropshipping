@@ -36,7 +36,7 @@ class ExportPromCommand extends Command
 
     public function handle(): void
     {
-        $template = 'export-origami.xls';
+        $template = 'export-origami.xlsx';
         $this->extracted($template);
     }
 
