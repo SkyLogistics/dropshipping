@@ -178,16 +178,16 @@ class DropService
             $parcelArrayInfo[] = $width;
             $parcelArrayInfo[] = $height;
             $parcelArrayInfo[] = $length;
-            $parcelArrayInfo[] = 'Київ/Дніпро';
+            $parcelArrayInfo[] = 'Київ';
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
             $optionsUa = $options->filter(function ($option) {
                 return $option->lang == 'ua';
             });
 
             foreach ($optionsUa as $optionUa) {
-                $parcelArrayInfo[] = $optionUa->title;
+                $parcelArrayInfo[] = $optionUa['title'];
                 $parcelArrayInfo[] = '';
-                $parcelArrayInfo[] = $optionUa->value;
+                $parcelArrayInfo[] = $optionUa['value'];
             }
 
             $excelData[] = $parcelArrayInfo;
