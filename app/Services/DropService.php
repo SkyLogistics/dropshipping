@@ -29,7 +29,7 @@ class DropService
     {
         if (str_contains($name, 'номерам')) {
             $category = "Картины по номерам";
-        } elseif (str_contains($name, 'Алмазная')) {
+        } elseif (str_contains($name, 'Алмазна')) {
             $category = "Алмазная мозаика";
         } else {
             $category = "Творчество";
