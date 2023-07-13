@@ -201,10 +201,10 @@ class DropService
                 $we = $weight->value;
             }
 
-            $parcelArrayInfo[] = $we;
-            $parcelArrayInfo[] = $wi;
-            $parcelArrayInfo[] = $he;
-            $parcelArrayInfo[] = $le;
+            $parcelArrayInfo[] = floatval($we);
+            $parcelArrayInfo[] = floatval($wi);
+            $parcelArrayInfo[] = floatval($he);
+            $parcelArrayInfo[] = floatval($le);
             $parcelArrayInfo[] = 'Київ';
             $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
             $optionsUa = $options->filter(function ($option) {
