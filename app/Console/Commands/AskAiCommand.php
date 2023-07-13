@@ -119,7 +119,6 @@ class AskAiCommand extends Command
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
             ->where('name', '!=', '')
-            ->whereNull('keywords')
             ->get();
 
         if ($prompts) {
@@ -128,13 +127,15 @@ class AskAiCommand extends Command
                 //$copyright = $prompt->promt . " Каждый абзац твоего текста обрамить в тег <p> добавить тег <ul><li> если нужно";
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
                 //$translateUa = 'Перекласти на українську мову текст - "' . $resultRu . '"';
-                $translateUa = 'Написати ключові SEO слова з роздільником "," для тексту - "' . $prompt->nameUa . '" і такими умовами - цифр не повинно бути, без коду товару на кшталт CH114, без сантиметрів, без ширини без висоти, без штук, без шт';
 
-                $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
+
+                //$translateUa = 'Написати ключові SEO слова з роздільником "," для тексту - "' . $prompt->nameUa . '" і такими умовами - цифр не повинно бути, без коду товару на кшталт CH114, без сантиметрів, без ширини без висоти, без штук, без шт';
+
+                //$resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
                 $this->info($prompt->id . ') ' . $this->removeQuotes($resultRu));
-                $this->info($prompt->id . ') ' . $this->removeQuotes($resultUa));
+                //$this->info($prompt->id . ') ' . $this->removeQuotes($resultUa));
                 $prompt->keywords = $this->removeQuotes($resultRu);
-                $prompt->keywordsUa = $this->removeQuotes($resultUa);
+                //$prompt->keywordsUa = $this->removeQuotes($resultUa);
                 $prompt->save();
                 //sleep(2);
             }
