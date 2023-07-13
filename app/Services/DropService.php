@@ -90,11 +90,11 @@ class DropService
             if ($row->provider == 'royal') {
                 $percent = 35;
                 $multiplier = 1 + ($percent / 100);
-                $recommendedPrice = $row->price * $multiplier;
-                $row->recommendedPrice = ceil($recommendedPrice);
+                $recommendedPrice = ceil($row->price * $multiplier);
+                $row->recommendedPrice = $recommendedPrice;
             }
 
-            $parcelArrayInfo[] = ceil($recommendedPrice);
+            $parcelArrayInfo[] = $recommendedPrice;
             $parcelArrayInfo[] = 'UAH';
             $parcelArrayInfo[] = 'шт.';
             $parcelArrayInfo[] = '';
