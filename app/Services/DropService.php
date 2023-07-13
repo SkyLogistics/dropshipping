@@ -27,7 +27,7 @@ class DropService
 
     private function getCategory($name): string
     {
-        if (str_contains($name, 'Картина')) {
+        if (str_contains($name, 'номерам')) {
             $category = "Картины по номерам";
         } elseif (str_contains($name, 'Алмазная')) {
             $category = "Алмазеная мозаика";
