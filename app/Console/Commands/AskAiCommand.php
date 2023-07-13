@@ -119,7 +119,7 @@ class AskAiCommand extends Command
         $prompts = OrigamiProducts::query()
             ->where('provider', 'royal')
             ->where('name', '!=', '')
-            ->where('id','>', 32015)
+            ->where('id','>', 32075)
             ->get();
 
         if ($prompts) {
