@@ -156,7 +156,6 @@ class DropService
             $parcelArrayInfo[] = 'Картина по номерах, ' . mb_strtolower($row->keywordsUa);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
-            $size = explode('*', $row->size);
 
             $length = ProductOption::find(22);
             $width = ProductOption::find(23);
