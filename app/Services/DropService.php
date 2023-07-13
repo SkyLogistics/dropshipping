@@ -110,9 +110,16 @@ class DropService
             }
 
             $parcelArrayInfo[] = $quantityInStock;
-            $parcelArrayInfo[] = '';
+            $categoryName = $this->getCategory($row->name);
+            $groupId = '';
+            if ($categoryName == 'Картины по номерам') {
+                $groupId = 118820562;
+            } elseif ($categoryName == 'Алмазная мозаика') {
+                $groupId = 118981497;
+            }
+            $parcelArrayInfo[] = $groupId;
             //dd($row->id.') '.$row->name.' -> '.$this->getCategory($row->name));
-            $parcelArrayInfo[] = $this->getCategory($row->name);
+            $parcelArrayInfo[] = $categoryName;
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
@@ -153,8 +160,8 @@ class DropService
                 $row->save();
             }
 
-            $parcelArrayInfo[] = $this->getCategory($row->name).',' . mb_strtolower($row->keywords);
-            $parcelArrayInfo[] = $this->getCategory($row->name).',' . mb_strtolower($row->keywordsUa);
+            $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywords);
+            $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywordsUa);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
 
