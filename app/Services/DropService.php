@@ -111,7 +111,7 @@ class DropService
 
             $parcelArrayInfo[] = $quantityInStock;
             $parcelArrayInfo[] = '';
-            dd($row->id.') '.$row->name.' -> '.$this->getCategory($row->name));
+            //dd($row->id.') '.$row->name.' -> '.$this->getCategory($row->name));
             $parcelArrayInfo[] = $this->getCategory($row->name);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
