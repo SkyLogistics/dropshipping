@@ -147,7 +147,7 @@ class DropService
             if ($row->keywordsUa != '') {
                 $targetLanguage = 'ru';
                 $translatedText = '';//$this->translate($targetLanguage, $row->keywordsUa);
-                $row->keywords = str_replace("&quot;", '"', $row->keywordsUa);
+                $row->keywords = str_replace("&quot;", '"', $row->keywords);
                 $row->keywords = str_replace("  ", ' ', $row->keywords);
             }
 
