@@ -153,8 +153,8 @@ class DropService
                 $row->save();
             }
 
-            $parcelArrayInfo[] = 'Картина по номерам,' . mb_strtolower($row->keywords);
-            $parcelArrayInfo[] = 'Картина по номерах, ' . mb_strtolower($row->keywordsUa);
+            $parcelArrayInfo[] = $this->getCategory($row->name).',' . mb_strtolower($row->keywords);
+            $parcelArrayInfo[] = $this->getCategory($row->name).',' . mb_strtolower($row->keywordsUa);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
 
