@@ -94,7 +94,7 @@ class DropService
                 $row->recommendedPrice = ceil($recommendedPrice);
             }
 
-            $parcelArrayInfo[] = $recommendedPrice;
+            $parcelArrayInfo[] = ceil($recommendedPrice);
             $parcelArrayInfo[] = 'UAH';
             $parcelArrayInfo[] = 'шт.';
             $parcelArrayInfo[] = '';
