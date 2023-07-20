@@ -9,9 +9,11 @@ class Product extends Model
 {
     protected $fillable = [
         'title',
+        'title_ua',
         'slug',
         'summary',
         'description',
+        'description_us',
         'cat_id',
         'child_cat_id',
         'price',
@@ -23,6 +25,9 @@ class Product extends Model
         'stock',
         'is_featured',
         'condition'
+
+
+
     ];
 
     public function cat_info()
