@@ -2,15 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
 use App\Models\OrigamiProducts;
 use App\Models\Product;
 use App\Services\DropService;
 use App\Services\ProductService;
 use Behat\Transliterator\Transliterator;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ImportRoyalCommand extends Command
 {
