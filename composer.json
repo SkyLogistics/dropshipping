@@ -11,6 +11,7 @@
         "ext-libxml": "*",
         "ext-zip": "*",
         "barryvdh/laravel-dompdf": "^2.0",
+        "behat/transliterator": "^1.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

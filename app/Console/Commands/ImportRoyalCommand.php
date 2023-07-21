@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\Category;
 use App\Models\OrigamiProducts;
+use App\Models\Product;
 use App\Services\DropService;
 use App\Services\ProductService;
+use Behat\Transliterator\Transliterator;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -50,6 +52,9 @@ class ImportRoyalCommand extends Command
         $pathFiles = $this->dropService->getImportFiles($dir);
         $data = [];
         foreach ($pathFiles as $pathFile) {
+            if (str_contains($pathFile, 'kartiny-po-nomeram')) {
+                continue;
+            }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
             dump($data);
         }
@@ -59,7 +64,7 @@ class ImportRoyalCommand extends Command
 
         foreach ($data as $apiProduct) {
             $vendor = $apiProduct['vendor'];
-            $oneProduct = OrigamiProducts::query()
+            $oneProduct = Product::query()
                 ->where(
                     'vendorCode',
                     trim($apiProduct['vendorCode'])
@@ -86,15 +91,15 @@ class ImportRoyalCommand extends Command
                 $oneProduct->recommendedPrice = $recommendedPrice;
                 $oneProduct->vendor = $vendor;
                 $oneProduct->productType = $productType;
-                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->nameUa);
-                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->nameUa);
+                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->title);
+                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->title_ua);
 
-                $oneProduct->name = str_replace("&quot;", '"', $apiProduct['name']);
-                $oneProduct->name = str_replace("  ", ' ', $oneProduct->name);
+                $oneProduct->name = str_replace("&quot;", '"', $apiProduct['title']);
+                $oneProduct->name = str_replace("  ", ' ', $oneProduct->title);
 
                 $oneProduct->vendorCode = trim($apiProduct['vendorCode']);
                 $oneProduct->productUrl = $apiProduct['productUrl'];
-                if ($oneProduct->nameUa != '' || $oneProduct->name != '') {
+                if ($oneProduct->title_ua != '' || $oneProduct->title != '') {
                     $oneProduct->active = 1;
                 }
                 $oneProduct->save();
@@ -106,11 +111,24 @@ class ImportRoyalCommand extends Command
                 OrigamiProducts::query()
                     ->create(
                         [
+                            'title' => str_replace(PHP_EOL, '', $apiProduct['title']),
+                            'slug' => $this->transliterateRussianToLatin($apiProduct['title']),
+                            'summary' => '',
+                            'cat_id' => $apiProduct['cat_id'],
+                            'child_cat_id' => '',
+                            'brand_id' => null,
+                            'discount' => 0,
+                            'status' => '',
+                            'photo' => '',
+                            'stock' => null,
+                            'is_featured' => 0,
+                            'condition' => '',
+                            'options' => '',
+                            'active',
                             'vendorCode' => trim($apiProduct['vendorCode']),
                             'vendor' => trim($vendor),
                             'imageUrl' => $apiProduct['imageUrl'],
-                            'name_ua' => '',
-                            'name' => str_replace(PHP_EOL, '', $apiProduct['title']),
+                            'title_ua' => '',
                             'promID' => $promId,
                             'description' => '',
                             'description_ua' => '',
@@ -127,5 +145,10 @@ class ImportRoyalCommand extends Command
                     );
             }
         }
+    }
+
+    function transliterateRussianToLatin($input)
+    {
+        return Transliterator::transliterate($input);
     }
 }

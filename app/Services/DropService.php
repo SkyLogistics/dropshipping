@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
@@ -293,6 +294,7 @@ class DropService
             $findCatId = Category::query()->create(
                 [
                     'title' => $categoryTitle,
+                    'title_ua' => '',
                     'slug' => $slug,
                     'summary' => '',
                     'photo' => '',
@@ -303,6 +305,29 @@ class DropService
             );
         } else {
             $findCatId = $category->id;
+        }
+
+        return $findCatId;
+    }
+
+    public function getBrandIdBySlug($slug)
+    {
+        $brand = Brand::query()->where('slug', $slug)->first();
+        if (!$brand) {
+            $findCatId = Brand::query()->create(
+                [
+                    'title' => $slug,
+                    'title_ua' => $slug,
+                    'slug' => $slug,
+                    'summary' => '',
+                    'photo' => '',
+                    'status' => 'active',
+                    'is_parent' => 0,
+                    'parent_id' => null,
+                ]
+            );
+        } else {
+            $findCatId = $brand->id;
         }
 
         return $findCatId;
