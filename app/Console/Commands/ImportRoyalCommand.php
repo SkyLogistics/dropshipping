@@ -112,7 +112,7 @@ class ImportRoyalCommand extends Command
                             'slug' => $this->transliterateRussianToLatin($apiProduct['title']),
                             'summary' => '',
                             'cat_id' => $apiProduct['cat_id'],
-                            'child_cat_id' => '',
+                            'child_cat_id' => null,
                             'brand_id' => null,
                             'discount' => 0,
                             'status' => '',
