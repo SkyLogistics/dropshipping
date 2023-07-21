@@ -108,7 +108,7 @@ class ImportRoyalCommand extends Command
                 Product::query()
                     ->create(
                         [
-                            'title' => str_replace(PHP_EOL, '', $apiProduct['title']),
+                            'title' => time().'-'.str_replace(PHP_EOL, '', $apiProduct['title']),
                             'slug' => time() . '-' . $this->transliterateRussianToLatin($apiProduct['title']),
                             'summary' => '',
                             'cat_id' => $apiProduct['cat_id'],
