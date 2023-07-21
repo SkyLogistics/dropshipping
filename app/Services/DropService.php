@@ -19,9 +19,11 @@ class DropService
      * @var Client
      */
     private $guzzle;
+    private $productService;
 
     public function __construct()
     {
+        $this->productService = new ProductService();
         $this->guzzle = new Client();
     }
 
@@ -264,22 +266,21 @@ class DropService
         return '';
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    public function getRemoteData(string $url, $provider): array
+    public function getImportFiles(string $directoryPath): ?array
     {
+        if (!is_dir($directoryPath)) {
+            return null;
+        }
+        return array_diff(scandir($directoryPath), array('.', '..'));
+    }
+
+    public function getRemoteData($provider, $file): array
+    {
+
         $data = [];
-        if ($provider == 'origami') {
-            $data = json_decode(
-                $this->guzzle->get(
-                    $url, []
-                )->getBody()->getContents(),
-                true
-            );
-        } elseif ($provider == 'royal') {
+        if ($provider == 'royal') {
             $filePath = storage_path() . '/app/public/royal/';
-            $localFilePath = $filePath . 'kartiny-po-nomeram.xlsx';
+            $localFilePath = $filePath . $file;
             $spreadsheet = IOFactory::load($localFilePath);
             $worksheet = $spreadsheet->getActiveSheet();
             $highestRow = $worksheet->getHighestRow();
@@ -308,52 +309,29 @@ class DropService
                 continue;
             }
 
-            $name = '';
-            $productUrl = '';
-            if ($provider == 'origami') {
-                $vendor = $item['vendor'];
-                $vendorCode = trim($item['vendorCode']);
-                $imageUrl = $item['imageUrl'];
-                $nameUa = $item['nameUa'];
-                $productType = $item['productType'];
-                $size = $item['productType'];
-                $price = $item['price'];
-                $recommendedPrice = $item['recommendedPrice'];
-                $quantityInStock = $item['quantityInStock'];
-            } elseif ($provider == 'royal') {
-                dump($item);
-                //echo $item . PHP_EOL;
-                if (!is_numeric($item[7])) {
-                    continue;
-                }
-                $vendor = $item[1];
-                $vendorCode = $item[2];
-                $imageUrl = $item[9];
-                $productUrl = $item[10];
-                $nameUa = '';
-                $name = $item[4];
-                $productType = '';
-                $size = '';
-                $price = $item[7];
-                $increasePercentage = 20;
-                $recommendedPrice = ceil($price * (1 + ($increasePercentage / 100)));
-                $quantityInStock = 100;
-                if (is_numeric($item[5])) {
-                    $quantityInStock = $item[5];
-                }
-            } else {
+            if (!is_numeric($item[7])) {
                 continue;
+            }
+            $vendor = $item[1];
+            $vendorCode = $item[2];
+            $imageUrl = $item[9];
+            $productUrl = $item[10];
+            $nameUa = '';
+            $name = $item[4];
+            $productType = '';
+            $size = '';
+            $price = $item[7];
+            $increasePercentage = 20;
+            $recommendedPrice = ceil($price * (1 + ($increasePercentage / 100)));
+            $quantityInStock = 100;
+            if (is_numeric($item[5])) {
+                $quantityInStock = $item[5];
             }
 
             $dataResult[] = [
                 'vendorCode' => trim($vendorCode),
                 'vendor' => trim($vendor),
                 'imageUrl' => $imageUrl,
-                'nameUa' => $nameUa,
-                'name' => $name,
-                'promID' => '',
-                'description' => '',
-                'description_ua' => '',
                 'productType' => $productType,
                 'size' => $size,
                 'price' => $price,
@@ -363,6 +341,20 @@ class DropService
                 'active' => 0,
                 'provider' => $provider,
                 'productUrl' => $productUrl,
+                'title' => $name,
+                'title_ua' => $nameUa,
+                'summary' => '',
+                'description' => '',
+                'description_ua' => '',
+                'photo' => $imageUrl,
+                'stock' => 0,
+                'cat_id' => null,
+                'brand_id' => null,
+                'child_cat_id' => null,
+                'is_featured' => null,
+                'status' => 'active,inactive',
+                'condition' => 'default',
+                'discount' => 0,
             ];
         }
 

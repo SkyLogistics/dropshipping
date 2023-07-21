@@ -21,6 +21,7 @@
         "srmklive/paypal": "^3.0",
         "unisharp/laravel-filemanager": "^2.6",
         "ext-dom": "*",
+        "ext-zip": "*",
         "ext-libxml": "*"
     },
     "require-dev": {

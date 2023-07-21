@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProductService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
+
+    /**
+     * @var ProductService
+     */
+    private $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -25,8 +38,6 @@ class ProductController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -39,12 +50,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        // return $request->all();
         $this->validate($request, [
             'title' => 'string|required',
             'summary' => 'string|required',
@@ -62,28 +73,13 @@ class ProductController extends Controller
             'discount' => 'nullable|numeric'
         ]);
 
-        $data = $request->all();
-        $slug = Str::slug($request->title);
-        $count = Product::where('slug', $slug)->count();
-        if ($count > 0) {
-            $slug = $slug . '-' . date('ymdis') . '-' . rand(0, 999);
-        }
-        $data['slug'] = $slug;
-        $data['is_featured'] = $request->input('is_featured', 0);
-        $size = $request->input('size');
-        if ($size) {
-            $data['size'] = implode(',', $size);
-        } else {
-            $data['size'] = '';
-        }
-        // return $size;
-        // return $data;
-        $status = Product::create($data);
+        $status = $this->productService->createProduct($request);
         if ($status) {
             request()->session()->flash('success', 'Product Successfully added');
         } else {
             request()->session()->flash('error', 'Please try again!!');
         }
+
         return redirect()->route('product.index');
     }
 
@@ -102,7 +98,6 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -119,7 +114,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
