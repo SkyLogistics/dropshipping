@@ -105,7 +105,7 @@ class ImportRoyalCommand extends Command
                 if (isset($apiProduct['promID'])) {
                     $promId = $apiProduct['promID'];
                 }
-                OrigamiProducts::query()
+                Product::query()
                     ->create(
                         [
                             'title' => str_replace(PHP_EOL, '', $apiProduct['title']),
