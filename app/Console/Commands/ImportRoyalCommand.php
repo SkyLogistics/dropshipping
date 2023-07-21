@@ -53,9 +53,9 @@ class ImportRoyalCommand extends Command
         $pathFiles = $this->dropService->getImportFiles($dir);
         $data = [];
         foreach ($pathFiles as $pathFile) {
-            if (str_contains($pathFile, 'kartiny-po-nomeram')) {
-                continue;
-            }
+//            if (str_contains($pathFile, 'kartiny-po-nomeram')) {
+//                continue;
+//            }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
             dd($data);
             $data = $this->productService->createProduct($data);
