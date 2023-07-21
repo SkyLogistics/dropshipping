@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -13,10 +16,11 @@ class Product extends Model
         'slug',
         'summary',
         'description',
-        'description_us',
+        'description_ua',
         'cat_id',
         'child_cat_id',
         'price',
+        'recommendedPrice',
         'brand_id',
         'discount',
         'status',
@@ -24,28 +28,33 @@ class Product extends Model
         'size',
         'stock',
         'is_featured',
-        'condition'
-
-
-
+        'condition',
+        'vendor',
+        'vendorCode',
+        'options',
+        'imageUrl',
+        'quantityInStock',
+        'keywords',
+        'keywords_ua',
+        'active',
     ];
 
-    public function cat_info()
+    public function catInfo(): HasOne
     {
         return $this->hasOne('App\Models\Category', 'id', 'cat_id');
     }
 
-    public function sub_cat_info()
+    public function subCatInfo(): HasOne
     {
         return $this->hasOne('App\Models\Category', 'id', 'child_cat_id');
     }
 
-    public static function getAllProduct()
+    public static function getAllProduct(): LengthAwarePaginator
     {
-        return Product::with(['cat_info', 'sub_cat_info'])->orderBy('id', 'desc')->paginate(10);
+        return Product::with(['catInfo', 'subCatInfo'])->orderBy('id', 'desc')->paginate(10);
     }
 
-    public function rel_prods()
+    public function relProducts(): HasMany
     {
         return $this->hasMany('App\Models\Product', 'cat_id', 'cat_id')->where('status', 'active')->orderBy(
             'id',
@@ -53,7 +62,7 @@ class Product extends Model
         )->limit(8);
     }
 
-    public function getReview()
+    public function getReview(): HasMany
     {
         return $this->hasMany('App\Models\ProductReview', 'product_id', 'id')->with('user_info')->where(
             'status',
@@ -61,31 +70,31 @@ class Product extends Model
         )->orderBy('id', 'DESC');
     }
 
-    public static function getProductBySlug($slug)
+    public static function getProductBySlug($slug): \Illuminate\Database\Eloquent\Builder|null
     {
-        return Product::with(['cat_info', 'rel_prods', 'getReview'])->where('slug', $slug)->first();
+        return Product::with(['catInfo', 'relProducts', 'getReview'])->where('slug', $slug)->first();
     }
 
-    public static function countActiveProduct()
+    public static function countActiveProduct(): int
     {
-        $data = Product::where('status', 'active')->count();
+        $data = Product::query()->where('status', 'active')->count();
         if ($data) {
             return $data;
         }
         return 0;
     }
 
-    public function carts()
+    public function carts(): HasMany
     {
         return $this->hasMany(Cart::class)->whereNotNull('order_id');
     }
 
-    public function wishlists()
+    public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class)->whereNotNull('cart_id');
     }
 
-    public function brand()
+    public function brand(): HasOne
     {
         return $this->hasOne(Brand::class, 'id', 'brand_id');
     }

@@ -21,7 +21,7 @@ class Post extends Model
     ];
 
 
-    public function cat_info()
+    public function catInfo()
     {
         return $this->hasOne('App\Models\PostCategory', 'id', 'post_cat_id');
     }
@@ -38,7 +38,7 @@ class Post extends Model
 
     public static function getAllPost()
     {
-        return Post::with(['cat_info', 'author_info'])->orderBy('id', 'DESC')->paginate(10);
+        return Post::with(['catInfo', 'author_info'])->orderBy('id', 'DESC')->paginate(10);
     }
     // public function get_comments(){
     //     return $this->hasMany('App\Models\PostComment','post_id','id');

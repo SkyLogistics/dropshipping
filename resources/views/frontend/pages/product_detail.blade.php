@@ -144,9 +144,9 @@
 													</div>
 												</form>
 
-												<p class="cat">Category :<a href="{{route('product-cat',$product_detail->cat_info['slug'])}}">{{$product_detail->cat_info['title']}}</a></p>
-												@if($product_detail->sub_cat_info)
-												<p class="cat mt-1">Sub Category :<a href="{{route('product-sub-cat',[$product_detail->cat_info['slug'],$product_detail->sub_cat_info['slug']])}}">{{$product_detail->sub_cat_info['title']}}</a></p>
+												<p class="cat">Category :<a href="{{route('product-cat',$product_detail->catInfo['slug'])}}">{{$product_detail->catInfo['title']}}</a></p>
+												@if($product_detail->subCatInfo)
+												<p class="cat mt-1">Sub Category :<a href="{{route('product-sub-cat',[$product_detail->catInfo['slug'],$product_detail->subCatInfo['slug']])}}">{{$product_detail->subCatInfo['title']}}</a></p>
 												@endif
 												<p class="availability">Stock : @if($product_detail->stock>0)<span class="badge badge-success">{{$product_detail->stock}}</span>@else <span class="badge badge-danger">{{$product_detail->stock}}</span>  @endif</p>
 											</div>
@@ -313,10 +313,10 @@
 				</div>
             </div>
             <div class="row">
-                {{-- {{$product_detail->rel_prods}} --}}
+                {{-- {{$product_detail->relProducts}} --}}
                 <div class="col-12">
                     <div class="owl-carousel popular-slider">
-                        @foreach($product_detail->rel_prods as $data)
+                        @foreach($product_detail->relProducts as $data)
                             @if($data->id !==$product_detail->id)
                                 <!-- Start Single Product -->
                                 <div class="single-product">
