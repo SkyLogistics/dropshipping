@@ -275,24 +275,34 @@ class DropService
         return array_diff(scandir($directoryPath), array('.', '..'));
     }
 
+    const CATEGORIES = [
+        'doski-dlja-risovanija' => 'Доски для рисования',
+        'golovolomki' => 'Головоломки',
+        'kartiny-po-nomeram' => 'Картины по номерам',
+        'konstruktory' => 'Конструкторы',
+        'nabory-dlja-tvorchestva' => 'Наборы для творчества',
+        'razvivajuschie-igrushki' => 'Развивающие игрушки',
+        'shkolnaya-i-detskaya-kantselyariya' => 'Школа',
+    ];
+
     public function getCategoryIdBySlug($slug)
     {
-        $findCat = Category::query()->where('slug', $slug)->first();
-        if (!$findCat) {
+        $category = Category::query()->where('slug', $slug)->first();
+        if (!$category) {
+            $categoryTitle = self::CATEGORIES[$slug];
             $findCatId = Category::query()->create(
                 [
-                    'title' => $findCat,
-                    'slug' => $findCat,
+                    'title' => $categoryTitle,
+                    'slug' => $slug,
                     'summary' => '',
                     'photo' => '',
                     'status' => 'active',
                     'is_parent' => 0,
-                    'parent_id' => 0,
-                    'added_by' => 'console'
+                    'parent_id' => null,
                 ]
             );
         } else {
-            $findCatId = $findCat->id;
+            $findCatId = $category->id;
         }
 
         return $findCatId;
