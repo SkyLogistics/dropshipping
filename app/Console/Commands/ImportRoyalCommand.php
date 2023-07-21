@@ -43,9 +43,6 @@ class ImportRoyalCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @throws GuzzleException
-     */
     public function handle(): void
     {
         $inputKey = $this->argument('provider');
@@ -53,16 +50,12 @@ class ImportRoyalCommand extends Command
         $pathFiles = $this->dropService->getImportFiles($dir);
         $data = [];
         foreach ($pathFiles as $pathFile) {
-//            if (str_contains($pathFile, 'kartiny-po-nomeram')) {
-//                continue;
-//            }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
-            //dd($data);
-            //$data = $this->productService->createProduct($data);
+            dump($data);
         }
 
-        dd($data);
-        $template = 'export-origami.xls';
+//        dd($data);
+//        $template = 'export-origami.xls';
 
         foreach ($data as $apiProduct) {
             $vendor = $apiProduct['vendor'];
