@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Cart;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -70,7 +70,7 @@ class Product extends Model
         )->orderBy('id', 'DESC');
     }
 
-    public static function getProductBySlug($slug): \Illuminate\Database\Eloquent\Builder|null
+    public static function getProductBySlug($slug): Builder|null
     {
         return Product::with(['catInfo', 'relProducts', 'getReview'])->where('slug', $slug)->first();
     }
@@ -98,5 +98,4 @@ class Product extends Model
     {
         return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
-
 }

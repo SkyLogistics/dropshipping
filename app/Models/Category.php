@@ -2,40 +2,44 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 class Category extends Model
 {
     protected $fillable = ['title', 'slug', 'summary', 'photo', 'status', 'is_parent', 'parent_id', 'added_by'];
 
-    public function parent_info()
+    public function parentInfo(): HasOne
     {
         return $this->hasOne('App\Models\Category', 'id', 'parent_id');
     }
 
-    public static function getAllCategory()
+    public static function getAllCategory(): LengthAwarePaginator
     {
-        return Category::orderBy('id', 'DESC')->with('parent_info')->paginate(10);
+        return Category::query()->orderBy('id', 'DESC')->with('parentInfo')->paginate(10);
     }
 
-    public static function shiftChild($cat_id)
+    public static function shiftChild($cat_id): int
     {
-        return Category::whereIn('id', $cat_id)->update(['is_parent' => 1]);
+        return Category::query()->whereIn('id', $cat_id)->update(['is_parent' => 1]);
     }
 
-    public static function getChildByParentID($id)
+    public static function getChildByParentID($id): Collection
     {
-        return Category::where('parent_id', $id)->orderBy('id', 'ASC')->pluck('title', 'id');
+        return Category::query()->where('parent_id', $id)->orderBy('id', 'ASC')->pluck('title', 'id');
     }
 
-    public function child_cat()
+    public function childCat(): HasMany
     {
         return $this->hasMany('App\Models\Category', 'parent_id', 'id')->where('status', 'active');
     }
 
-    public static function getAllParentWithChild()
+    public static function getAllParentWithChild(): \Illuminate\Database\Eloquent\Collection|array
     {
-        return Category::with('child_cat')->where('is_parent', 1)->where('status', 'active')->orderBy(
+        return Category::with('childCat')->where('is_parent', 1)->where('status', 'active')->orderBy(
             'title',
             'ASC'
         )->get();
@@ -46,30 +50,23 @@ class Category extends Model
         return $this->hasMany('App\Models\Product', 'cat_id', 'id')->where('status', 'active');
     }
 
-    public function sub_products()
+    public function subProducts(): HasMany
     {
         return $this->hasMany('App\Models\Product', 'child_cat_id', 'id')->where('status', 'active');
     }
 
     public static function getProductByCat($slug)
     {
-        // dd($slug);
         return Category::with('products')->where('slug', $slug)->first();
-        // return Product::where('cat_id',$id)->where('child_cat_id',null)->paginate(10);
     }
 
     public static function getProductBySubCat($slug)
     {
-        // return $slug;
-        return Category::with('sub_products')->where('slug', $slug)->first();
+        return Category::with('subProducts')->where('slug', $slug)->first();
     }
 
-    public static function countActiveCategory()
+    public static function countActiveCategory(): int
     {
-        $data = Category::where('status', 'active')->count();
-        if ($data) {
-            return $data;
-        }
-        return 0;
+        return intval(Category::query()->where('status', 'active')->count());
     }
 }

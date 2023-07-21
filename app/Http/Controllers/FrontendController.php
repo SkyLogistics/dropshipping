@@ -274,12 +274,12 @@ class FrontendController extends Controller
         $recent_products = Product::where('status', 'active')->orderBy('id', 'DESC')->limit(3)->get();
 
         if (request()->is('e-shop.loc/product-grids')) {
-            return view('frontend.pages.product-grids')->with('products', $products->sub_products)->with(
+            return view('frontend.pages.product-grids')->with('products', $products->subProducts)->with(
                 'recent_products',
                 $recent_products
             );
         } else {
-            return view('frontend.pages.product-lists')->with('products', $products->sub_products)->with(
+            return view('frontend.pages.product-lists')->with('products', $products->subProducts)->with(
                 'recent_products',
                 $recent_products
             );
