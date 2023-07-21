@@ -57,8 +57,8 @@ class ImportRoyalCommand extends Command
 //                continue;
 //            }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
-            dd($data);
-            $data = $this->productService->createProduct($data);
+            //dd($data);
+            //$data = $this->productService->createProduct($data);
         }
         $template = 'export-origami.xls';
 
