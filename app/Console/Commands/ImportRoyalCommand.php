@@ -119,7 +119,7 @@ class ImportRoyalCommand extends Command
                             'stock' => 1,
                             'status' => 'active',
                             'is_featured' => 0,
-                            'condition' => '',
+                            'condition' => 'default',
                             'options' => '',
                             'active',
                             'vendorCode' => trim($apiProduct['vendorCode']),
