@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\OrigamiProducts;
 use App\Services\DropService;
 use App\Services\ProductService;
@@ -50,12 +51,9 @@ class ImportRoyalCommand extends Command
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey");
         $pathFiles = $this->dropService->getImportFiles($dir);
-
         $data = [];
         foreach ($pathFiles as $pathFile) {
-
-
-            $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
+            $data = $this->dropService->getRemoteData($inputKey, $pathFile);
             dd($data);
             $data = $this->productService->createProduct($data);
         }

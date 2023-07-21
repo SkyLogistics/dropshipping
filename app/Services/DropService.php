@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Category;
 use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
 use App\Models\ProductOption;
@@ -274,10 +275,34 @@ class DropService
         return array_diff(scandir($directoryPath), array('.', '..'));
     }
 
+    public function getCategoryIdBySlug($slug)
+    {
+        $findCat = Category::query()->where('slug', $slug)->first();
+        if (!$findCat) {
+            $findCatId = Category::query()->create(
+                [
+                    'title' => $findCat,
+                    'slug' => $findCat,
+                    'summary' => '',
+                    'photo' => '',
+                    'status' => 'active',
+                    'is_parent' => 0,
+                    'parent_id' => 0,
+                    'added_by' => 'console'
+                ]
+            );
+        } else {
+            $findCatId = $findCat->id;
+        }
+
+        return $findCatId;
+    }
+
     public function getRemoteData($provider, $file): array
     {
-
         $data = [];
+        $categoryId = $this->getCategoryIdBySlug(pathinfo($file, PATHINFO_FILENAME));
+
         if ($provider == 'royal') {
             $filePath = storage_path() . '/app/public/royal/';
             $localFilePath = $filePath . $file;
@@ -288,7 +313,6 @@ class DropService
 
             for ($row = 1; $row <= $highestRow; ++$row) {
                 $newRow = [];
-
                 for ($col = 'A'; $col <= $highestColumn; ++$col) {
                     $cellValue = $worksheet->getCell($col . $row)->getValue();
                     echo $cellValue . ' ';
@@ -348,7 +372,7 @@ class DropService
                 'description_ua' => '',
                 'photo' => $imageUrl,
                 'stock' => 0,
-                'cat_id' => null,
+                'cat_id' => $categoryId,
                 'brand_id' => null,
                 'child_cat_id' => null,
                 'is_featured' => null,
