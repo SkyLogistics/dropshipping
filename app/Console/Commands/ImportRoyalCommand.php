@@ -60,6 +60,8 @@ class ImportRoyalCommand extends Command
             //dd($data);
             //$data = $this->productService->createProduct($data);
         }
+
+        dd($data);
         $template = 'export-origami.xls';
 
         foreach ($data as $apiProduct) {
@@ -73,12 +75,6 @@ class ImportRoyalCommand extends Command
                 ->first();
 
             if ($oneProduct) {
-                if ($apiProduct['vendor'] == "Рів'єра") {
-                    $vendor = 'Riviera';
-                } elseif ($apiProduct['vendor'] == "Орігамі") {
-                    $vendor = 'Origami';
-                }
-
                 if ($apiProduct['vendorCode'] == 'AL001') {
                     $productType = 'Акриловий лак';
                 } else {
@@ -120,12 +116,12 @@ class ImportRoyalCommand extends Command
                             'vendorCode' => trim($apiProduct['vendorCode']),
                             'vendor' => trim($vendor),
                             'imageUrl' => $apiProduct['imageUrl'],
-                            'nameUa' => str_replace(PHP_EOL, '', $apiProduct['nameUa']),
-                            'name' => str_replace(PHP_EOL, '', $apiProduct['name']),
+                            'name_ua' => '',
+                            'name' => str_replace(PHP_EOL, '', $apiProduct['title']),
                             'promID' => $promId,
                             'description' => '',
                             'description_ua' => '',
-                            'productType' => $apiProduct['productType'],
+                            'productType' => '',
                             'size' => $apiProduct['size'],
                             'price' => $apiProduct['price'],
                             'recommendedPrice' => $apiProduct['recommendedPrice'],
