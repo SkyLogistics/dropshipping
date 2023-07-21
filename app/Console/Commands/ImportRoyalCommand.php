@@ -116,7 +116,7 @@ class ImportRoyalCommand extends Command
                             'brand_id' => null,
                             'discount' => 0,
                             'photo' => '',
-                            'stock' => null,
+                            'stock' => 1,
                             'status' => 'active',
                             'is_featured' => 0,
                             'condition' => '',
