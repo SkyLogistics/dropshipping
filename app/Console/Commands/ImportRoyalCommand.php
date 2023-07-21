@@ -109,7 +109,7 @@ class ImportRoyalCommand extends Command
                     ->create(
                         [
                             'title' => str_replace(PHP_EOL, '', $apiProduct['title']),
-                            'slug' => $this->transliterateRussianToLatin($apiProduct['title']),
+                            'slug' => time() . '-' . $this->transliterateRussianToLatin($apiProduct['title']),
                             'summary' => '',
                             'cat_id' => $apiProduct['cat_id'],
                             'child_cat_id' => null,
