@@ -45,13 +45,6 @@ class UpdatePromFileCommand extends Command
         //OrigamiProducts::query()->update(['active' => 0]);
 
         $url = '';
-        if ($inputKey == 'origami') {
-            $url = 'https://origami.bycof.com/drop-api/products';
-        }
-        if ($inputKey == 'royal') {
-            $url = 'https://royaltoys.com.ua/mprices/download/108/';
-        }
-
         $data = $this->dropService->getRemoteData($url, $inputKey);
         //$data = $this->dropService->getRemoteData($url, $inputKey);
         $template = 'export-origami.xls';

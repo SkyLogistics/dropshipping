@@ -37,6 +37,8 @@ class Product extends Model
         'keywords',
         'keywords_ua',
         'active',
+        'provider',
+        'productUrl',
     ];
 
     public function catInfo(): HasOne

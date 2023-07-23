@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\OrigamiProducts;
 use App\Models\Product;
 use App\Services\DropService;
 use App\Services\ProductService;
@@ -48,16 +47,13 @@ class ImportRoyalCommand extends Command
         $dir = storage_path("app/public/$inputKey");
         $pathFiles = $this->dropService->getImportFiles($dir);
         $data = [];
+        Product::query()->where('id', '>',20)->delete();
         foreach ($pathFiles as $pathFile) {
             if (str_contains($pathFile, 'kartiny-po-nomeram')) {
                 continue;
             }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
-            dump($data);
         }
-
-//        dd($data);
-//        $template = 'export-origami.xls';
 
         foreach ($data as $apiProduct) {
             $vendor = $apiProduct['vendor'];
@@ -68,31 +64,20 @@ class ImportRoyalCommand extends Command
                 )
                 ->where('provider', $inputKey)
                 ->first();
-
+            $brandId = $this->dropService->getBrandIdBySlug(trim($vendor));
             if ($oneProduct) {
-                if ($apiProduct['vendorCode'] == 'AL001') {
-                    $productType = 'Акриловий лак';
-                } else {
-                    if ($apiProduct['productType'] == 'Інше') {
-                        $productType = 'Розмальовка  для дітей';
-                    } else {
-                        $productType = $apiProduct['productType'];
-                    }
-                }
                 $recommendedPrice = $apiProduct['recommendedPrice'];
                 if ($apiProduct['price'] > $apiProduct['recommendedPrice']) {
                     $recommendedPrice = $apiProduct['price'];
                 }
                 $oneProduct->provider = $inputKey;
+                dump($oneProduct->provider);
                 $oneProduct->price = $apiProduct['price'];
+                $oneProduct->brand_id = $brandId;
                 $oneProduct->recommendedPrice = $recommendedPrice;
                 $oneProduct->vendor = $vendor;
-                $oneProduct->productType = $productType;
-                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->title);
-                $oneProduct->nameUa = str_replace("  ", ' ', $oneProduct->title_ua);
-
-                $oneProduct->name = str_replace("&quot;", '"', $apiProduct['title']);
-                $oneProduct->name = str_replace("  ", ' ', $oneProduct->title);
+                $oneProduct->title = str_replace("&quot;", '"', $apiProduct['title']);
+                $oneProduct->title = str_replace("  ", ' ', $oneProduct->title);
 
                 $oneProduct->vendorCode = trim($apiProduct['vendorCode']);
                 $oneProduct->productUrl = $apiProduct['productUrl'];
@@ -100,20 +85,21 @@ class ImportRoyalCommand extends Command
                     $oneProduct->active = 1;
                 }
                 $oneProduct->save();
+                //dd($oneProduct);
             } else {
                 $promId = 0;
                 if (isset($apiProduct['promID'])) {
                     $promId = $apiProduct['promID'];
                 }
-                Product::query()
+                $product = Product::query()
                     ->create(
                         [
-                            'title' => time().'-'.str_replace(PHP_EOL, '', $apiProduct['title']),
-                            'slug' => time() . '-' . $this->transliterateRussianToLatin($apiProduct['title']),
+                            'title' => str_replace(PHP_EOL, '', $apiProduct['title']),
+                            'slug' => $this->transliterateRussianToLatin($apiProduct['title']),
                             'summary' => '',
                             'cat_id' => $apiProduct['cat_id'],
                             'child_cat_id' => null,
-                            'brand_id' => null,
+                            'brand_id' => $brandId,
                             'discount' => 0,
                             'photo' => '',
                             'stock' => 1,
@@ -140,6 +126,7 @@ class ImportRoyalCommand extends Command
                             'productUrl' => $apiProduct['productUrl'],
                         ]
                     );
+                //dd($product->id);
             }
         }
     }

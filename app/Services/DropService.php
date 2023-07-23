@@ -314,7 +314,7 @@ class DropService
     {
         $brand = Brand::query()->where('slug', $slug)->first();
         if (!$brand) {
-            $findCatId = Brand::query()->create(
+            $brandId = Brand::query()->create(
                 [
                     'title' => $slug,
                     'title_ua' => $slug,
@@ -327,10 +327,10 @@ class DropService
                 ]
             );
         } else {
-            $findCatId = $brand->id;
+            $brandId = $brand->id;
         }
 
-        return $findCatId;
+        return $brandId;
     }
 
     public function getRemoteData($provider, $file): array
@@ -387,6 +387,8 @@ class DropService
                 $quantityInStock = $item[5];
             }
 
+            $brandId = $this->getBrandIdBySlug(trim($vendor));
+
             $dataResult[] = [
                 'vendorCode' => trim($vendorCode),
                 'vendor' => trim($vendor),
@@ -408,7 +410,7 @@ class DropService
                 'photo' => $imageUrl,
                 'stock' => 0,
                 'cat_id' => $categoryId,
-                'brand_id' => null,
+                'brand_id' => $brandId,
                 'child_cat_id' => null,
                 'is_featured' => null,
                 'status' => 'active,inactive',
