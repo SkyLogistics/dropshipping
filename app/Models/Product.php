@@ -72,7 +72,7 @@ class Product extends Model
         )->orderBy('id', 'DESC');
     }
 
-    public static function getProductBySlug($slug): Builder|null
+    public static function getProductBySlug($slug)
     {
         return Product::with(['catInfo', 'relProducts', 'getReview'])->where('slug', $slug)->first();
     }

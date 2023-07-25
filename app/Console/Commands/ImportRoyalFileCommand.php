@@ -8,7 +8,7 @@ use App\Services\ProductService;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Console\Command;
 
-class ImportRoyalCommand extends Command
+class ImportRoyalFileCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -25,10 +25,6 @@ class ImportRoyalCommand extends Command
     protected $description = 'Import royal xls file';
 
     private DropService $dropService;
-    /**
-     * @var ProductService
-     */
-    private $productService;
 
     /**
      * Create a new command instance.
@@ -53,6 +49,7 @@ class ImportRoyalCommand extends Command
                 continue;
             }
             $data = array_merge($data, $this->dropService->getRemoteData($inputKey, $pathFile));
+            dump($data);
         }
 
         foreach ($data as $apiProduct) {
@@ -126,7 +123,7 @@ class ImportRoyalCommand extends Command
                             'productUrl' => $apiProduct['productUrl'],
                         ]
                     );
-                //dd($product->id);
+                dump($product->id);
             }
         }
     }
