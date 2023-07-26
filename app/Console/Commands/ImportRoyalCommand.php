@@ -141,7 +141,7 @@ class ImportRoyalCommand extends Command
                     'provider' => 'royal',
                     'productUrl' => (string)$offer->url,
                     'summary' => '',
-                    'photo' => '',
+                    'photo' => (string)$offer->picture[0],
                     'stock' => ($quantityInStock > 0) ? 1 : 0,
                     'cat_id' => $myCat->id,
                     'brand_id' => null,
