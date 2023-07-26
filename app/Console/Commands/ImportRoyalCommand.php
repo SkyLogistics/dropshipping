@@ -128,7 +128,7 @@ class ImportRoyalCommand extends Command
                     'vendorCode' => $vendorCode,
                     'vendor' => (string)$offer->vendor,
                     'slug' => $this->transliterateRussianToLatin((string)$offer->name),
-                    'imageUrl' => json_encode((array)$offer->picture),
+                    'imageUrl' => (array)$offer->picture,
                     'title' => (string)$offer->name,
                     'description' => (string)$offer->description,
                     'productType' => '',
