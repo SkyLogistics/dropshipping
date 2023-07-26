@@ -119,14 +119,14 @@ class ImportRoyalCommand extends Command
                         $myCat->save();
                     }
                 }
-                dd($offer);
+                //dd($offer);
 
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
                     'vendorCode' => $vendorCode,
                     'vendor' => (string)$offer->vendor,
                     'slug' => $this->transliterateRussianToLatin((string)$offer->name),
-                    'imageUrl' => $offer->picture,
+                    'imageUrl' => (array)$offer->picture,
                     'title' => (string)$offer->name,
                     'description' => (string)$offer->description,
                     'productType' => '',
