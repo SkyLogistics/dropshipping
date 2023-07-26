@@ -121,14 +121,14 @@ class ImportRoyalCommand extends Command
                 }
                 //dd($offer);
 
-                dd((array)$offer->picture);
+                //dd((array)$offer->picture);
 
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
                     'vendorCode' => $vendorCode,
                     'vendor' => (string)$offer->vendor,
                     'slug' => $this->transliterateRussianToLatin((string)$offer->name),
-                    'imageUrl' => (array)$offer->picture,
+                    'imageUrl' => json_encode((array)$offer->picture),
                     'title' => (string)$offer->name,
                     'description' => (string)$offer->description,
                     'productType' => '',
