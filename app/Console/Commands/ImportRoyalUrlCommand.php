@@ -101,7 +101,7 @@ class ImportRoyalUrlCommand extends Command
 
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
-                $catId = (integer)$offer->categoryId;
+                $catId = (string)$offer->categoryId;
                 $categoryByCatId = Product::query()
                     ->where('cat_id', $catId)
                     ->first();
