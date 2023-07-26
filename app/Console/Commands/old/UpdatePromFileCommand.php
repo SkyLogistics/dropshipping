@@ -36,9 +36,6 @@ class UpdatePromFileCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @throws GuzzleException
-     */
     public function handle(): void
     {
         $inputKey = $this->argument('provider');

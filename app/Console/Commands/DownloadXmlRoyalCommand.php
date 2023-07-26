@@ -37,7 +37,7 @@ class DownloadXmlRoyalCommand extends Command
         if ($result === false) {
             die('Error: Unable to save the XML content to the local file.');
         }
-        echo 'XML file downloaded and saved successfully.';
+        echo 'XML file downloaded and saved successfully.'.PHP_EOL;
     }
 
     #[NoReturn] public function handle(): void

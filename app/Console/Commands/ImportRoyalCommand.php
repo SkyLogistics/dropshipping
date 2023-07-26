@@ -9,7 +9,7 @@ use App\Services\ProductService;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Console\Command;
 
-class ImportRoyalUrlCommand extends Command
+class ImportRoyalCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -53,7 +53,6 @@ class ImportRoyalUrlCommand extends Command
             $xmlObject = simplexml_load_file($file);
             $categories = $xmlObject->shop->categories->category;
             $offers = $xmlObject->shop->offers->offer;
-            //$cat = [];
             foreach ($categories as $category) {
                 $categoryId = json_decode(json_encode($category['id']), true)[0];
                 $parentCategoryId = isset($category['parentId']) ? json_decode(
@@ -119,8 +118,6 @@ class ImportRoyalUrlCommand extends Command
                         $myCat->status = 'active';
                         $myCat->save();
                     }
-
-                    dump($myCat->toArray());
                 }
 
                 $myOffer = [
