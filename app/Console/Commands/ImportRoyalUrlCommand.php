@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\DropService;
 use App\Services\ProductService;
@@ -39,11 +40,119 @@ class ImportRoyalUrlCommand extends Command
     public function handle(): void
     {
         $inputKey = $this->argument('provider');
+        $dir = storage_path("app/public/$inputKey/xml");
+        Product::query()->where('id', '>', 20)->delete();
+        Category::query()->where('id', '>', 20)->delete();
+
+        $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
-        $url = $this->dropService->getImportFiles($dir);
-        $data = [];
-        Product::query()->where('id', '>',20)->delete();
-        $url = '';
+
+        foreach ($pathFiles as $pathFile) {
+            $lang = substr($pathFile, 0, 2);
+            $file = $dir . '/xml/' . $pathFile;
+            $xmlObject = simplexml_load_file($file);
+            $categories = $xmlObject->shop->categories->category;
+            $offers = $xmlObject->shop->offers->offer;
+            $cat = [];
+            foreach ($categories as $category) {
+                $categoryId = json_decode(json_encode($category['id']), true)[0];
+                $parentCategoryId = isset($category['parentId']) ? json_decode(
+                    json_encode($category['parentId']),
+                    true
+                )[0] : null;
+                $categoryName = (string)$category;
+                $title = 'title';
+                if ($lang != 'ru') {
+                    $title = 'title_ua';
+                }
+                $create = [
+                    'cat_id' => $categoryId,
+                    'parent_id' => is_null($parentCategoryId) ? null : $parentCategoryId,
+                    'is_parent' => is_null($parentCategoryId) ? 1 : 0,
+                    $title => $categoryName,
+                    'status' => 'active',
+                ];
+
+                $findCat = Category::query()
+                    ->where('cat_id', $categoryId)
+                    ->first();
+
+                if ($findCat) {
+                    if ($lang == 'ua') {
+                        $findCat->title_ua = $categoryName;
+                    }
+                    $findCat->save();
+                } else {
+                    if (!is_null($parentCategoryId)) {
+                        $catParent = Category::query()
+                            ->where('cat_id', $parentCategoryId)->first();
+                        $create['parent_id'] = $catParent->id;
+                    }
+                    $create['slug'] = $this->transliterateRussianToLatin($categoryName);
+                    $findCat = Category::query()->create($create);
+
+                }
+                dump($findCat->title);
+                $cat[] = $create;
+            }
+
+            foreach ($offers as $offer) {
+                $percent = 70;
+                $multiplier = 1 + ($percent / 100);
+                $recommendedPrice = ceil((double)$offer->price * $multiplier);
+
+                $quantityInStock = (integer)$offer->stock_quantity;
+                $vendorCode = (string)$offer->vendorCode;
+                $cats = Category::query()->where('cat_id', (integer)$offer->categoryId)->first();
+                $myOffer = [
+                    'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
+                    'vendorCode' => $vendorCode,
+                    'vendor' => (string)$offer->vendor,
+                    'slug' => $this->transliterateRussianToLatin((string)$offer->name),
+                    'imageUrl' => (string)$offer->picture[0],
+                    'title' => (string)$offer->name,
+                    'description' => (string)$offer->description,
+                    'productType' => '',
+                    'size' => '',
+                    'price' => (double)$offer->price,
+                    'recommendedPrice' => $recommendedPrice,
+                    'quantityInStock' => $quantityInStock,
+                    'hasHigherPrice' => '',
+                    'active' => 1,
+                    'provider' => 'royal',
+                    'productUrl' => (string)$offer->url,
+                    'summary' => '',
+                    'photo' => '',
+                    'stock' => ($quantityInStock > 0) ? 1 : 0,
+                    'cat_id' => $cats->id,
+                    'brand_id' => null,
+                    'child_cat_id' => null,
+                    'is_featured' => 0,
+                    'status' => 'active',
+                    'condition' => 'default',
+                    'discount' => 0,
+                ];
+
+                //dd($offer);
+                //dd($myOffer);
+
+                $product = Product::query()->where('vendorCode', $vendorCode)->first();
+                if ($product) {
+                    $product->title_ua = (string)$offer->name;
+                    $product->description_ua = (string)$offer->description;
+                    $product->save();
+                } else {
+                    $product = Product::query()
+                        ->create($myOffer);
+                }
+                //dd($product);
+            }
+        }
+
+
+//        for ($i = 0; $i < 20; $i++) {
+//            dump($array[$i]);
+//        }
 //        foreach ($pathFiles as $pathFile) {
 //            if (str_contains($pathFile, 'kartiny-po-nomeram')) {
 //                continue;

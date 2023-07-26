@@ -170,6 +170,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Orchestra\Parser\XmlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -239,6 +240,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
 
     ],
 

@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82846d562f06d15df5e5d181a71502aa",
+    "content-hash": "77726bb9dd3050fbaf9c13ac2c562e46",
     "packages": [
+        {
+            "name": "alex.oleshkevich/fast-xml-parser",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alex-oleshkevich/php-fast-xml-parser.git",
+                "reference": "56edc81e78f84122670d42eb825b04d5cd0cd677"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alex-oleshkevich/php-fast-xml-parser/zipball/56edc81e78f84122670d42eb825b04d5cd0cd677",
+                "reference": "56edc81e78f84122670d42eb825b04d5cd0cd677",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FastXml": "src",
+                    "FastXmlTest": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Oleshkevich",
+                    "email": "alex.oleshkevich@gmail.com",
+                    "homepage": "http://github.com/alex-oleshkevich"
+                }
+            ],
+            "description": "Fast SAX XML parser for PHP",
+            "homepage": "https://github.com/alex-oleshkevich/php-fast-xml-parser",
+            "support": {
+                "issues": "https://github.com/alex-oleshkevich/php-fast-xml-parser/issues",
+                "source": "https://github.com/alex-oleshkevich/php-fast-xml-parser/tree/1.0"
+            },
+            "time": "2017-12-19T22:57:59+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v2.0.1",
@@ -815,6 +861,55 @@
             "time": "2023-02-25T20:23:15+00:00"
         },
         {
+            "name": "greencape/xml-converter",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GreenCape/xml-converter.git",
+                "reference": "41ed51c5a12f964745af2c7e1dc81d869e307d68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GreenCape/xml-converter/zipball/41ed51c5a12f964745af2c7e1dc81d869e307d68",
+                "reference": "41ed51c5a12f964745af2c7e1dc81d869e307d68",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Niels Braczek",
+                    "email": "nbraczek@bsds.de",
+                    "role": "lead"
+                },
+                {
+                    "name": "Marat A. Denenberg"
+                }
+            ],
+            "description": "A PHP XML parser and compiler that provides an easy way to convert XML into native PHP arrays and back again. No dependencies on external libraries or extensions.",
+            "homepage": "https://github.com/GreenCape/xml-converter",
+            "support": {
+                "issues": "https://github.com/GreenCape/xml-converter/issues",
+                "source": "https://github.com/GreenCape/xml-converter/tree/2.1.0"
+            },
+            "time": "2021-09-10T12:28:49+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "7.7.0",
             "source": {
@@ -1222,6 +1317,58 @@
                 }
             ],
             "time": "2021-10-07T12:57:01+00:00"
+        },
+        {
+            "name": "ilios/mesh-parser",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ilios/mesh-parser.git",
+                "reference": "b72149c11b050a7d77d5f62f8ffd90cac76cdc88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ilios/mesh-parser/zipball/b72149c11b050a7d77d5f62f8ffd90cac76cdc88",
+                "reference": "b72149c11b050a7d77d5f62f8ffd90cac76cdc88",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "fakerphp/faker": "@stable",
+                "mockery/mockery": "@stable",
+                "phpunit/phpunit": "@stable",
+                "squizlabs/php_codesniffer": "@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Topfstedt",
+                    "email": "stefan.topfstedt@ucsf.edu",
+                    "role": "developer"
+                }
+            ],
+            "description": "PHP library for extracting MeSH descriptors from XML.",
+            "homepage": "http://iliosproject.org/",
+            "keywords": [
+                "Ilios",
+                "mesh"
+            ],
+            "support": {
+                "issues": "https://github.com/ilios/mesh-parser/issues",
+                "source": "https://github.com/ilios/mesh-parser/tree/v2.0.2"
+            },
+            "time": "2021-02-25T19:33:04+00:00"
         },
         {
             "name": "intervention/image",
@@ -1832,6 +1979,75 @@
                 "source": "https://github.com/laravel/ui/tree/v4.2.2"
             },
             "time": "2023-05-09T19:47:28+00:00"
+        },
+        {
+            "name": "laravie/parser",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravie/parser.git",
+                "reference": "11bcf705da402527c49b9bebdf68dec3e04d057f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravie/parser/zipball/11bcf705da402527c49b9bebdf68dec3e04d057f",
+                "reference": "11bcf705da402527c49b9bebdf68dec3e04d057f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "illuminate/collections": "^8.0 || ^9.0 || ^10.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.2",
+                "phpstan/phpstan": "^1.9.14",
+                "phpunit/phpunit": "^9.5.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Laravie\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "XML Document Parser for PHP",
+            "keywords": [
+                "parser",
+                "xml"
+            ],
+            "support": {
+                "source": "https://github.com/laravie/parser/tree/v2.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://liberapay.com/crynobone",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2023-02-14T10:32:44+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3143,6 +3359,81 @@
             "time": "2023-07-18T22:59:43+00:00"
         },
         {
+            "name": "orchestra/parser",
+            "version": "v8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/parser.git",
+                "reference": "148b905cdcee0e81e87ecf214442634f103f08b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/parser/zipball/148b905cdcee0e81e87ecf214442634f103f08b7",
+                "reference": "148b905cdcee0e81e87ecf214442634f103f08b7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "^10.0",
+                "laravie/parser": "^2.3",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.4",
+                "orchestra/testbench": "^8.0",
+                "phpstan/phpstan": "^1.9.14",
+                "phpunit/phpunit": "^10.0.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Orchestra\\Parser\\XmlServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orchestra\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "XML Document Parser for Laravel and PHP",
+            "keywords": [
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "parser",
+                "xml"
+            ],
+            "support": {
+                "source": "https://github.com/orchestral/parser/tree/v8.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://liberapay.com/crynobone",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2023-02-15T01:13:52+00:00"
+        },
+        {
             "name": "orhanerday/open-ai",
             "version": "2.3",
             "source": {
@@ -3336,6 +3627,58 @@
                 "source": "https://github.com/paragonie/sodium_compat/tree/v1.20.0"
             },
             "time": "2023-04-30T00:54:53+00:00"
+        },
+        {
+            "name": "pastuhov/php-xml2object",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pastuhov/php-xml2object.git",
+                "reference": "e4b3a2bcf2c1e4d4ebd072c80e08f454ac200f6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pastuhov/php-xml2object/zipball/e4b3a2bcf2c1e4d4ebd072c80e08f454ac200f6c",
+                "reference": "e4b3a2bcf2c1e4d4ebd072c80e08f454ac200f6c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "pastuhov\\xml2object\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Pastukhov",
+                    "email": "kirill@pastukhov.su",
+                    "homepage": "https://github.com/pastuhov/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Parse xml to object.",
+            "homepage": "https://github.com/pastuhov/php-xml2object",
+            "support": {
+                "issues": "https://github.com/pastuhov/php-xml2object/issues",
+                "source": "https://github.com/pastuhov/php-xml2object/tree/v1.0.0"
+            },
+            "time": "2017-08-07T14:56:30+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -7023,6 +7366,53 @@
             "time": "2023-01-03T09:29:04+00:00"
         },
         {
+            "name": "tmitry/xmlreader-extension",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tmitry/xmlreader-extension.git",
+                "reference": "607490c67ed6a273c6a6890b585be445e042cf81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tmitry/xmlreader-extension/zipball/607490c67ed6a273c6a6890b585be445e042cf81",
+                "reference": "607490c67ed6a273c6a6890b585be445e042cf81",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "tmitry\\XMLReaderExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Timofei Dushkevich",
+                    "email": "tmitry@gmail.com"
+                }
+            ],
+            "description": "XMLReader for PHP extension.",
+            "keywords": [
+                "XMLReader",
+                "parser",
+                "reader",
+                "xml",
+                "xmlparser"
+            ],
+            "support": {
+                "issues": "https://github.com/tmitry/xmlreader-extension/issues",
+                "source": "https://github.com/tmitry/xmlreader-extension/tree/master"
+            },
+            "time": "2020-03-24T15:37:00+00:00"
+        },
+        {
             "name": "unisharp/laravel-filemanager",
             "version": "v2.6.0",
             "source": {
@@ -9762,6 +10152,8 @@
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-xml": "*",
         "ext-zip": "*"
     },
     "platform-dev": [],

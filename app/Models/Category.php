@@ -10,7 +10,17 @@ use Illuminate\Support\Collection;
 
 class Category extends Model
 {
-    protected $fillable = ['title', 'title_ua', 'slug', 'summary', 'photo', 'status', 'is_parent', 'parent_id', 'added_by'];
+    protected $fillable = [
+        'title',
+        'title_ua',
+        'slug',
+        'summary',
+        'photo',
+        'status',
+        'is_parent',
+        'parent_id',
+        'added_by',
+        'cat_id'];
 
     public function parentInfo(): HasOne
     {

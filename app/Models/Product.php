@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Product extends Model
 {
     protected $fillable = [
+        'art_id',
         'title',
         'title_ua',
         'slug',
