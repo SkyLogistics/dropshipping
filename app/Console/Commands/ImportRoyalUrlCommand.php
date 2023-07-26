@@ -112,6 +112,7 @@ class ImportRoyalUrlCommand extends Command
                 if ($categoryByCatId) {
                     $myCat->status = 'active';
                     $myCat->save();
+                    dump($myCat->toArray());
                 }
 
                 $myOffer = [
