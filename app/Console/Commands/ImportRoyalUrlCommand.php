@@ -53,7 +53,7 @@ class ImportRoyalUrlCommand extends Command
             $xmlObject = simplexml_load_file($file);
             $categories = $xmlObject->shop->categories->category;
             $offers = $xmlObject->shop->offers->offer;
-            $cat = [];
+            //$cat = [];
             foreach ($categories as $category) {
                 $categoryId = json_decode(json_encode($category['id']), true)[0];
                 $parentCategoryId = isset($category['parentId']) ? json_decode(
@@ -70,7 +70,7 @@ class ImportRoyalUrlCommand extends Command
                     'parent_id' => is_null($parentCategoryId) ? null : $parentCategoryId,
                     'is_parent' => is_null($parentCategoryId) ? 1 : 0,
                     $title => $categoryName,
-                    'status' => 'active',
+                    'status' => 'inactive',
                 ];
 
                 $findCat = Category::query()
@@ -90,10 +90,8 @@ class ImportRoyalUrlCommand extends Command
                     }
                     $create['slug'] = $this->transliterateRussianToLatin($categoryName);
                     $findCat = Category::query()->create($create);
-
                 }
                 dump($findCat->title);
-                $cat[] = $create;
             }
 
             foreach ($offers as $offer) {
@@ -103,7 +101,16 @@ class ImportRoyalUrlCommand extends Command
 
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
-                $cats = Category::query()->where('cat_id', (integer)$offer->categoryId)->first();
+                $catId = (integer)$offer->categoryId;
+                $cats = Category::query()->where('cat_id', $catId)->first();
+                if ($cats) {
+                    $categoryProduct = Product::query()
+                        ->where('cat_id', $catId)->first();
+                    if ($categoryProduct) {
+                        $cats->status = 'active';
+                        $cats->save();
+                    }
+                }
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
                     'vendorCode' => $vendorCode,
@@ -132,9 +139,6 @@ class ImportRoyalUrlCommand extends Command
                     'condition' => 'default',
                     'discount' => 0,
                 ];
-
-                //dd($offer);
-                //dd($myOffer);
 
                 $product = Product::query()->where('vendorCode', $vendorCode)->first();
                 if ($product) {
