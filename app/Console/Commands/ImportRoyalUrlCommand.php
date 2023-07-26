@@ -98,15 +98,14 @@ class ImportRoyalUrlCommand extends Command
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = ceil((double)$offer->price * $multiplier);
-
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
                 $catId = (string)$offer->categoryId;
                 $categoryByCatId = Product::query()
                     ->where('cat_id', $catId)
                     ->first();
-                dump($categoryByCatId);
-//                dd($categoryByCatId);
+                $myCat = Category::query()
+                    ->where('cat_id', $catId)->first();
 
                 if ($categoryByCatId) {
                     $cat = Category::query()
@@ -141,7 +140,7 @@ class ImportRoyalUrlCommand extends Command
                     'summary' => '',
                     'photo' => '',
                     'stock' => ($quantityInStock > 0) ? 1 : 0,
-                    'cat_id' => $catsId->id,
+                    'cat_id' => $myCat->id,
                     'brand_id' => null,
                     'child_cat_id' => null,
                     'is_featured' => 0,
