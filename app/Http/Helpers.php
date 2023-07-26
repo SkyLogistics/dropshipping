@@ -38,7 +38,6 @@ class Helper
                 <ul class="dropdown border-0 shadow">
                     <?php
                     foreach ($menu as $cat_info) {
-                        dd($cat_info);
                         if ($cat_info->childCat->count() > 0) {
                             ?>
                             <li><a href="<?php
