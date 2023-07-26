@@ -42,14 +42,14 @@ class Helper
                             ?>
                             <li><a href="<?php
                                 echo route('product-cat', $cat_info->slug); ?>"><?php
-                                    echo $cat_info->title; ?></a>
+                                    echo $cat_info->title_ua; ?></a>
                                 <ul class="dropdown sub-dropdown border-0 shadow">
                                     <?php
                                     foreach ($cat_info->childCat as $sub_menu) {
                                         ?>
                                         <li><a href="<?php
                                             echo route('product-sub-cat', [$cat_info->slug, $sub_menu->slug]); ?>"><?php
-                                                echo $sub_menu->title; ?></a></li>
+                                                echo $sub_menu->title_ua; ?></a></li>
                                         <?php
                                     }
                                     ?>
