@@ -42,7 +42,7 @@ class ImportRoyalCommand extends Command
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
         Product::query()->where('id', '>', 20)->delete();
-        Category::query()->where('id', '>', 20)->delete();
+        //Category::query()->where('id', '>', 20)->delete();
 
         $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
@@ -119,6 +119,7 @@ class ImportRoyalCommand extends Command
                         $myCat->save();
                     }
                 }
+                dd($offer);
 
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],

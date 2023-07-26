@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
+use App\Models\Product;
 use App\Models\ProductOption;
 use App\Models\TmpAvizationScanned;
 use App\Models\TmpAvizationSelected;
@@ -232,7 +233,7 @@ class DropService
 
     public function getExcelData(): array
     {
-        $products = OrigamiProducts::query()
+        $products = Product::query()
             ->where('active', 1);
 
         $productsRoyal = $products
