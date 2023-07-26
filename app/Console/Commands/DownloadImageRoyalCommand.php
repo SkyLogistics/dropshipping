@@ -34,21 +34,22 @@ class DownloadImageRoyalCommand extends Command
             ->orwhere('photo', '')
             ->get();
         foreach ($products as $product) {
-            $localFilePath = $dir . $locale . '_' . $product->id . '.jpg';
+            $localFilePath = $dir . $product->id . '.jpg';
             if ($product->imageUrl) {
 //                foreach ($product->imageUrl as $image) {
                 $imageFile = file_get_contents($product->imageUrl[0]);
                 if ($imageFile === false) {
                     die('Error: Unable to fetch the XML content from the URL.');
                 }
-                $path = public_path('storage/royal/images/' . $product->id . '.jpg');
+//                $path = public_path('storage/royal/images/' . $product->id . '.jpg');
                 $result = file_put_contents($localFilePath, $imageFile);
                 if ($result === false) {
                     die('Error: Unable to save the XML content to the local file.');
                 }
-                $product->photo = '/storage/royal/images/' . $product->id . '.jpg';
+                $to = '/storage/royal/images/' . $product->id . '.jpg';
+                $product->photo = $to;
                 $product->save();
-                echo 'Image - .' . '/storage/royal/images/' . $product->id . '.jpg' . PHP_EOL;
+                echo 'Image - .' . $to . PHP_EOL;
 //                }
             }
         }
