@@ -341,7 +341,7 @@ Version:1.0
 	color: #666;
 	display: block;
 	font-weight: 400;
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	background: transparent;
 }
 .header .nav li .dropdown li:hover .dropdown.sub-dropdown li a{
@@ -829,7 +829,7 @@ Version:1.0
 	visibility:visible;
 }
 .header.shop .main-category li a{
-	text-transform:capitalize;
+	/*text-transform :capitalize;*/
 	font-weight:400;
 }
 .header.shop .main-category li a:hover{
@@ -945,7 +945,7 @@ Version:1.0
 }
 .header.shop .nav li a {
 	color: #fff;
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	font-size: 15px;
 	padding: 20px 15px;
 	font-weight: 500;
