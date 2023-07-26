@@ -115,9 +115,11 @@ class ImportRoyalUrlCommand extends Command
                         ->where('cat_id', $catId)
                         ->orwhere('parent_id', $catsId->id)
                         ->orwhere('id', $catsId->parent_id)
-                        ->orWhere('id', $catsId->id);
+                        ->orWhere('id', $catsId->id)
+                        ->get();
                 }
-                $catsArray = $catsArray->get();
+                dump($catsArray);
+                //$catsArray = $catsArray->get();
                 foreach ($catsArray as $cat) {
                     $cat->status = 'active';
                     $cat->save();
