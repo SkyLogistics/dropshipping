@@ -102,11 +102,20 @@ class ImportRoyalUrlCommand extends Command
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
                 $catId = (integer)$offer->categoryId;
-                $cats = Category::query()->where('cat_id', $catId)->first();
+                $cats = Category::query()
+                    ->where('cat_id', $catId)
+                    ->first();
                 if ($cats) {
                     $categoryProduct = Product::query()
                         ->where('cat_id', $cats->id)->first();
                     if ($categoryProduct) {
+                        if (!is_null($categoryProduct->parent_id)) {
+                            $parentCategory = Category::find($categoryProduct->parent_id);
+                            if ($parentCategory) {
+                                $parentCategory->status = 'active';
+                                $parentCategory->save();
+                            }
+                        }
                         dump($categoryProduct->toArray());
                         $cats->status = 'active';
                         $cats->save();
@@ -117,7 +126,7 @@ class ImportRoyalUrlCommand extends Command
                     'vendorCode' => $vendorCode,
                     'vendor' => (string)$offer->vendor,
                     'slug' => $this->transliterateRussianToLatin((string)$offer->name),
-                    'imageUrl' => (string)$offer->picture[0],
+                    'imageUrl' => $offer->picture,
                     'title' => (string)$offer->name,
                     'description' => (string)$offer->description,
                     'productType' => '',

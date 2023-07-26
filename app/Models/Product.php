@@ -41,6 +41,10 @@ class Product extends Model
         'productUrl',
     ];
 
+    protected $casts = [
+        'imageUrl' => 'array'
+    ];
+
     public function catInfo(): HasOne
     {
         return $this->hasOne('App\Models\Category', 'id', 'cat_id');
