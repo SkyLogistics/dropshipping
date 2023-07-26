@@ -50,7 +50,7 @@ class Category extends Model
     public static function getAllParentWithChild(): \Illuminate\Database\Eloquent\Collection|array
     {
         return Category::with('childCat')->where('is_parent', 1)->where('status', 'active')->orderBy(
-            'title_ua',
+            'title',
             'ASC'
         )->get();
     }
