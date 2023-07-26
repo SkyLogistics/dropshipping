@@ -42,7 +42,7 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'picture' => 'array'
+        'imageUrl' => 'array'
     ];
 
     public function catInfo(): HasOne
