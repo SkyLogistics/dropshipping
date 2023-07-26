@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('app:download_royal')->cron('*/22 * * * *');
+        $schedule->command('app:download_image_royal')->cron('1 1 * * *');
 //        $schedule->command('app:export origami')->cron('*/5 * * * *');
 //        $schedule->command('app:export royal')->cron('*/5 * * * *');
 //        $schedule->command('app:auto-ask')->cron('* * * * *');
