@@ -105,7 +105,7 @@ class ImportRoyalUrlCommand extends Command
                 $cats = Category::query()->where('cat_id', $catId)->first();
                 if ($cats) {
                     $categoryProduct = Product::query()
-                        ->where('cat_id', $catId)->first();
+                        ->where('cat_id', $cats->id)->first();
                     if ($categoryProduct) {
                         dd($categoryProduct);
                         $cats->status = 'active';
