@@ -8,7 +8,6 @@
             @foreach($banners as $key=>$banner)
         <li data-target="#Gslider" data-slide-to="{{$key}}" class="{{(($key==0)? 'active' : '')}}"></li>
             @endforeach
-
         </ol>
         <div class="carousel-inner" role="listbox">
                 @foreach($banners as $key=>$banner)
