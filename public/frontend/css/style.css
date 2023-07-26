@@ -257,7 +257,7 @@ Version:1.0
 /* Dropdown Menu */
 .header .nav li .dropdown {
 	background: #fff;
-	width: 220px;
+	width: 260px;
 	position: absolute;
 	top: 100%;
 	z-index: 999;
