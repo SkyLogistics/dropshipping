@@ -49,7 +49,7 @@ class Helper
                                         ?>
                                         <li><a href="<?php
                                             echo route('product-sub-cat', [$cat_info->slug, $sub_menu->slug]); ?>"><?php
-                                                echo $sub_menu->title; ?></a></li>
+                                                echo $sub_menu->title_ua; ?></a></li>
                                         <?php
                                     }
                                     ?>
