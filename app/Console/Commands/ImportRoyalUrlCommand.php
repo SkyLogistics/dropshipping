@@ -101,23 +101,17 @@ class ImportRoyalUrlCommand extends Command
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
                 $catId = (string)$offer->categoryId;
-                $categoryByCatId = Product::query()
-                    ->where('cat_id', $catId)
-                    ->first();
+
                 $myCat = Category::query()
                     ->where('cat_id', $catId)->first();
 
+                $categoryByCatId = Product::query()
+                    ->where('cat_id', $myCat->id)
+                    ->first();
+
                 if ($categoryByCatId) {
-                    $cat = Category::query()
-                        ->where('id', $categoryByCatId->cat_id)
-                        ->first();
-                    if ($cat) {
-                        $cat->status = 'active';
-                        $cat->save();
-                        $cats = Category::query()
-                            ->where('id', $cat->parent_id)->first();
-                        $cats?->save();
-                    }
+                    $myCat->status = 'active';
+                    $myCat->save();
                 }
 
                 $myOffer = [
