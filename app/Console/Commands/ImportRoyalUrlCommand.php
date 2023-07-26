@@ -108,21 +108,17 @@ class ImportRoyalUrlCommand extends Command
 //                dump($catId);
 //                dd($categoryByCatId);
 
-                $catsArray = Category::query();
-                $catsId = $catsArray->where('cat_id', $catId)->first();
                 if ($categoryByCatId) {
-                    $catsArray = $catsArray
-                        ->where('cat_id', $catId)
-                        ->orwhere('parent_id', $catsId->id)
-                        ->orwhere('id', $catsId->parent_id)
-                        ->orWhere('id', $catsId->id)
-                        ->get();
-                }
-                dump($catsArray);
-                //$catsArray = $catsArray->get();
-                foreach ($catsArray as $cat) {
-                    $cat->status = 'active';
-                    $cat->save();
+                    $cat = Category::query()
+                        ->where('id', $categoryByCatId->cat_id)
+                        ->first();
+                    if ($cat) {
+                        $cat->status = 'active';
+                        $cat->save();
+                        $cats = Category::query()
+                            ->where('id', $cat->parent_id)->first();
+                        $cats?->save();
+                    }
                 }
 
                 $myOffer = [
