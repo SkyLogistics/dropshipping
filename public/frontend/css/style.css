@@ -289,7 +289,7 @@ Version:1.0
 	color: #666;
 	display: block;
 	font-weight: 400;
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	background: transparent;
 }
 .header .nav li .dropdown li a:before{
