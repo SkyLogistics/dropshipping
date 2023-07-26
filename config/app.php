@@ -170,7 +170,6 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        Orchestra\Parser\XmlServiceProvider::class,
         /*
          * Package Service Providers...
          */
