@@ -106,7 +106,8 @@ class ImportRoyalUrlCommand extends Command
                     ->where('cat_id', $catId)
                     ->first();
 
-                dump($categoryByCatId->id);
+                dump($catId);
+                dump($categoryByCatId);
 
                 $cats = Category::find($categoryByCatId->id);
                 $catsArray = Category::query();
