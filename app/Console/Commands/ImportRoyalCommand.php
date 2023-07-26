@@ -119,7 +119,7 @@ class ImportRoyalCommand extends Command
                         $myCat->save();
                     }
                 }
-                //dd($offer);
+                dd($offer);
 
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
