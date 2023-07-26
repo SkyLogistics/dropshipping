@@ -255,7 +255,7 @@ class FrontendController extends Controller
     public function productCat(Request $request)
     {
         $products = Category::getProductByCat($request->slug);
-        // return $request->slug;
+
         $recent_products = Product::where('status', 'active')->orderBy('id', 'DESC')->limit(3)->get();
 
         if (request()->is('e-shop.loc/product-grids')) {
