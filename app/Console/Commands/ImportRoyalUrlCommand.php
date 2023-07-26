@@ -112,6 +112,14 @@ class ImportRoyalUrlCommand extends Command
                 if ($categoryByCatId) {
                     $myCat->status = 'active';
                     $myCat->save();
+
+                    $myCat = Category::query()
+                        ->where('id', $myCat->parent_id)->first();
+                    if ($myCat) {
+                        $myCat->status = 'active';
+                        $myCat->save();
+                    }
+
                     dump($myCat->toArray());
                 }
 
