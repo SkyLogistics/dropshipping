@@ -121,6 +121,8 @@ class ImportRoyalCommand extends Command
                 }
                 //dd($offer);
 
+                dd((array)$offer->picture);
+
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
                     'vendorCode' => $vendorCode,
