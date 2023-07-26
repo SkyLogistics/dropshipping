@@ -106,9 +106,10 @@ class ImportRoyalUrlCommand extends Command
                     ->where('cat_id', $catId)
                     ->first();
 
+                $catsArray = Category::query();
                 if ($categoryByCatId) {
                     $cats = Category::fing($categoryByCatId->id);
-                    $catsArray = Category::query()
+                    $catsArray = $catsArray
                         ->where('cat_id', $catId)
                         ->orwhere('parent_id', $categoryByCatId->cat_id)
                         ->orWhere('id', $categoryByCatId->cat_id);
