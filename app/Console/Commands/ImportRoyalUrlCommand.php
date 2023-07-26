@@ -105,7 +105,7 @@ class ImportRoyalUrlCommand extends Command
 
                 $cats = Category::query()
                     ->where('parent_id', $catId)
-                    ->where('cat_id', $catId)
+                    ->orwhere('cat_id', $catId)
                     ->get();
                 foreach ($cats as $cat) {
                     $cat->status = 'active';
