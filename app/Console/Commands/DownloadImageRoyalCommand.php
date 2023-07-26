@@ -42,14 +42,17 @@ class DownloadImageRoyalCommand extends Command
                     die('Error: Unable to fetch the XML content from the URL.');
                 }
 //                $path = public_path('storage/royal/images/' . $product->id . '.jpg');
-                $result = file_put_contents($localFilePath, $imageFile);
-                if ($result === false) {
-                    die('Error: Unable to save the XML content to the local file.');
+                if (!file_exists($localFilePath)) {
+                    $result = file_put_contents($localFilePath, $imageFile);
+
+                    if ($result === false) {
+                        die('Error: Unable to save the XML content to the local file.');
+                    }
+                    $to = '/storage/royal/images/' . $product->id . '.jpg';
+                    $product->photo = $to;
+                    $product->save();
+                    echo 'Image - .' . $to . PHP_EOL;
                 }
-                $to = '/storage/royal/images/' . $product->id . '.jpg';
-                $product->photo = $to;
-                $product->save();
-                echo 'Image - .' . $to . PHP_EOL;
 //                }
             }
         }
