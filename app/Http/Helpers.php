@@ -46,6 +46,7 @@ class Helper
                                 <ul class="dropdown sub-dropdown border-0 shadow">
                                     <?php
                                     foreach ($cat_info->childCat as $sub_menu) {
+                                        dd($sub_menu);
                                         ?>
                                         <li><a href="<?php
                                             echo route('product-sub-cat', [$cat_info->slug, $sub_menu->slug]); ?>"><?php
