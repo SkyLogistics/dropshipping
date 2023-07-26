@@ -110,13 +110,15 @@ class ImportRoyalUrlCommand extends Command
                         ->where('cat_id', $cats->id)->first();
                     if ($categoryProduct) {
                         if (!is_null($categoryProduct->parent_id)) {
+
                             $parentCategory = Category::find($categoryProduct->parent_id);
                             if ($parentCategory) {
+                                dump($categoryProduct->parent_id. ' - '.$parentCategory->status);
                                 $parentCategory->status = 'active';
                                 $parentCategory->save();
                             }
                         }
-                        dump($categoryProduct->toArray());
+                        //dump($categoryProduct->toArray());
                         $cats->status = 'active';
                         $cats->save();
                     }
