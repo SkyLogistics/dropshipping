@@ -105,17 +105,17 @@ class ImportRoyalUrlCommand extends Command
                 $categoryByCatId = Product::query()
                     ->where('cat_id', $catId)
                     ->first();
+//                dump($catId);
+//                dd($categoryByCatId);
 
-                dump($catId);
-                dump($categoryByCatId);
-
-                $cats = Category::find($categoryByCatId->id);
                 $catsArray = Category::query();
+                $catsId = $catsArray->where('cat_id', $catId)->first();
                 if ($categoryByCatId) {
                     $catsArray = $catsArray
                         ->where('cat_id', $catId)
-                        ->orwhere('parent_id', $categoryByCatId->cat_id)
-                        ->orWhere('id', $categoryByCatId->cat_id);
+                        ->orwhere('parent_id', $catsId->id)
+                        ->orwhere('id', $catsId->parent_id)
+                        ->orWhere('id', $catsId->id);
                 }
                 $catsArray = $catsArray->get();
                 foreach ($catsArray as $cat) {
@@ -143,7 +143,7 @@ class ImportRoyalUrlCommand extends Command
                     'summary' => '',
                     'photo' => '',
                     'stock' => ($quantityInStock > 0) ? 1 : 0,
-                    'cat_id' => $cats->id,
+                    'cat_id' => $catsId->id,
                     'brand_id' => null,
                     'child_cat_id' => null,
                     'is_featured' => 0,
