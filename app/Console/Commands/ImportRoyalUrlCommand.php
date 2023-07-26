@@ -109,10 +109,13 @@ class ImportRoyalUrlCommand extends Command
                 $cats = Category::fing($categoryByCatId->id);
 
                 $catsArray = Category::query()
-                    ->where('cat_id', $catId)
-                    ->orwhere('parent_id', $categoryByCatId->cat_id)
-                    ->orWhere('id', $categoryByCatId->cat_id)
-                    ->get();
+                    ->where('cat_id', $catId);
+                if ($categoryByCatId) {
+                    $catsArray = $catsArray
+                        ->orwhere('parent_id', $categoryByCatId->cat_id)
+                        ->orWhere('id', $categoryByCatId->cat_id);
+                }
+                $catsArray = $catsArray->get();
                 foreach ($catsArray as $cat) {
                     $cat->status = 'active';
                     $cat->save();
