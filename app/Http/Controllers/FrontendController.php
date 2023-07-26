@@ -21,6 +21,10 @@ use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
+    public function __construct()
+    {
+        app()->setLocale('ua');
+    }
 
     public function index(Request $request)
     {
