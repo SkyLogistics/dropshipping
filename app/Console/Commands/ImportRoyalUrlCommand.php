@@ -107,14 +107,13 @@ class ImportRoyalUrlCommand extends Command
                     ->first();
                 $cats = Category::query()
                     ->where('parent_id', $catId)
-                    ->orwhere('id', $categoryByCatId->cat_id)
+                    ->orWhere('id', $categoryByCatId->cat_id)
                     ->get();
-                if ($cats) {
-                    foreach ($cats as $cat) {
-                        $cat->status = 'active';
-                        $cat->save();
-                    }
+                foreach ($cats as $cat) {
+                    $cat->status = 'active';
+                    $cat->save();
                 }
+
                 $myOffer = [
                     'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
                     'vendorCode' => $vendorCode,
