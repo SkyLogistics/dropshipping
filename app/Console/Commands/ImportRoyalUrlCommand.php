@@ -105,7 +105,7 @@ class ImportRoyalUrlCommand extends Command
                 $categoryByCatId = Product::query()
                     ->where('cat_id', $catId)
                     ->first();
-//                dump($catId);
+                dump($categoryByCatId);
 //                dd($categoryByCatId);
 
                 if ($categoryByCatId) {
@@ -156,7 +156,7 @@ class ImportRoyalUrlCommand extends Command
                     $product->description_ua = (string)$offer->description;
                     $product->save();
                 } else {
-                    $product = Product::query()
+                    Product::query()
                         ->create($myOffer);
                 }
                 //dd($product);
