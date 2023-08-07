@@ -266,6 +266,7 @@
                                                                             @endif
 																		</div>
 																		<div class="rating-des">
+                                                                            @if($data->user_info)
 																			<h6>{{$data->user_info['name']}}</h6>
 																			<div class="ratings">
 
@@ -280,6 +281,7 @@
 																				</ul>
 																				<div class="rate-count">(<span>{{$data->rate}}</span>)</div>
 																			</div>
+                                                                            @endif
 																			<p>{{$data->review}}</p>
 																		</div>
 																	</div>
