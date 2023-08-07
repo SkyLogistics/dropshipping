@@ -257,11 +257,13 @@
 																	<!-- Single Rating -->
 																	<div class="single-rating">
 																		<div class="rating-author">
+                                                                            @if($data->user_info)
 																			@if($data->user_info['photo'])
 																			<img src="{{$data->user_info['photo']}}" alt="{{$data->user_info['photo']}}">
 																			@else
 																			<img src="{{asset('backend/img/avatar.png')}}" alt="Profile.jpg">
 																			@endif
+                                                                            @endif
 																		</div>
 																		<div class="rating-des">
 																			<h6>{{$data->user_info['name']}}</h6>
