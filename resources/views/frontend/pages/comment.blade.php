@@ -13,10 +13,12 @@
                 @endif
                 <div class="content">
                     {{-- {{$post}} --}}
+                    @if($comment->user_info)
                     <h4>{{$comment->user_info['name']}}
                         <span>At {{$comment->created_at->format('g: i a')}} On {{$comment->created_at->format('M d Y')}}</span>
                     </h4>
                     <p>{{$comment->comment}}</p>
+                    @endif
                     @if($dep)
                         <div class="button">
                             <a href="#" class="btn btn-reply reply" data-id="{{$comment->id}}"><i class="fa fa-reply"
