@@ -67,14 +67,14 @@ class DownloadImageRoyalCommand extends Command
         $this->downloadFile($xmlUaUrl, 'ua');
 
 
-        $handle = curl_init('https://en3jud4gtbvqi.x.pipedream.net/');
-        $data = [
-            'url' => $xmlRuUrl
-        ];
-        $encodedData = json_encode($data);
-        curl_setopt($handle, CURLOPT_POST, 1);
-        curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $result = curl_exec($handle);
+//        $handle = curl_init('https://en3jud4gtbvqi.x.pipedream.net/');
+//        $data = [
+//            'url' => $xmlRuUrl
+//        ];
+//        $encodedData = json_encode($data);
+//        curl_setopt($handle, CURLOPT_POST, 1);
+//        curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
+//        curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+//        $result = curl_exec($handle);
     }
 }
