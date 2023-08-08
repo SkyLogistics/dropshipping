@@ -41,8 +41,9 @@ class ImportRoyalCommand extends Command
     {
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
-        Product::query()->where('id', '>', 20)->delete();
-        Category::query()->where('id', '>', 3)->delete();
+        //Product::query()->where('id', '>', 20)->delete();
+        Product::query()->where('id', '>', 20)->update(['status', 'inactive']);
+        //Category::query()->where('id', '>', 3)->delete();
 
         $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
