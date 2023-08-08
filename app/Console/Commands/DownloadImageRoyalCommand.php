@@ -34,26 +34,28 @@ class DownloadImageRoyalCommand extends Command
             ->orwhere('photo', '')
             ->get();
         foreach ($products as $product) {
-            $localFilePath = $dir . $product->id . '.jpg';
             if ($product->imageUrl) {
-//                foreach ($product->imageUrl as $image) {
-                $imageFile = file_get_contents($product->imageUrl[0]);
-                if ($imageFile === false) {
-                    die('Error: Unable to fetch the XML content from the URL.');
-                }
-//                $path = public_path('storage/royal/images/' . $product->id . '.jpg');
-                if (!file_exists($localFilePath)) {
-                    $result = file_put_contents($localFilePath, $imageFile);
-
-                    if ($result === false) {
-                        die('Error: Unable to save the XML content to the local file.');
+                $to = [];
+                foreach ($product->imageUrl as $image) {
+                    $f = time() . '_' . $product->id;
+                    $localFilePath = $dir . $f . '.jpg';
+                    $imageFile = file_get_contents($image);
+                    if ($imageFile === false) {
+                        die('Error: Unable to fetch the XML content from the URL.');
                     }
-                    $to = '/storage/royal/images/' . $product->id . '.jpg';
-                    $product->photo = $to;
-                    $product->save();
-                    echo 'Image - .' . $to . PHP_EOL;
+                    if (!file_exists($localFilePath)) {
+                        $result = file_put_contents($localFilePath, $imageFile);
+                        if ($result === false) {
+                            die('Error: Unable to save the XML content to the local file.');
+                        }
+                        $s = '/storage/royal/images/' . $f . '.jpg';
+                        $to[] = $s;
+                        echo 'Image - .' . $s . PHP_EOL;
+                    }
                 }
-//                }
+
+                $product->photo = implode(',', $to);
+                $product->save();
             }
         }
     }
