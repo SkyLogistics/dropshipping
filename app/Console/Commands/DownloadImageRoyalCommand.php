@@ -24,9 +24,9 @@ class DownloadImageRoyalCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Download image';
+    protected $description = 'Download images';
 
-    private function downloadFile($xmlUrl, $locale)
+    private function downloadImageFiles()
     {
         $dir = storage_path("app/public/royal/images/");
         $products = Product::query()
@@ -60,11 +60,7 @@ class DownloadImageRoyalCommand extends Command
 
     #[NoReturn] public function handle(): void
     {
-        $xmlRuUrl = 'http://dwn.royaltoys.com.ua/my/export/0e03a56a-b310-4b66-9549-e99c9dedecd1.xml';
-        $this->downloadFile($xmlRuUrl, 'ru');
-
-        $xmlUaUrl = 'http://dwn.royaltoys.com.ua/my/export/8bb6951a-0d4f-41aa-8108-b5e4b6d688c0.xml';
-        $this->downloadFile($xmlUaUrl, 'ua');
+        $this->downloadImageFiles();
 
 
 //        $handle = curl_init('https://en3jud4gtbvqi.x.pipedream.net/');

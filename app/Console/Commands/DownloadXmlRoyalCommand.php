@@ -23,7 +23,7 @@ class DownloadXmlRoyalCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Update description';
+    protected $description = 'Download xml file';
 
     private function downloadFile($xmlUrl, $locale)
     {
@@ -37,7 +37,7 @@ class DownloadXmlRoyalCommand extends Command
         if ($result === false) {
             die('Error: Unable to save the XML content to the local file.');
         }
-        echo 'XML file downloaded and saved successfully.' . PHP_EOL;
+        echo $locale.' XML file downloaded and saved successfully.' . PHP_EOL;
     }
 
     #[NoReturn] public function handle(): void
@@ -47,16 +47,5 @@ class DownloadXmlRoyalCommand extends Command
 
         $xmlUaUrl = 'http://dwn.royaltoys.com.ua/my/export/8bb6951a-0d4f-41aa-8108-b5e4b6d688c0.xml';
         $this->downloadFile($xmlUaUrl, 'ua');
-
-
-        $handle = curl_init('https://en3jud4gtbvqi.x.pipedream.net/');
-        $data = [
-            'url' => $xmlRuUrl
-        ];
-        $encodedData = json_encode($data);
-        curl_setopt($handle, CURLOPT_POST, 1);
-        curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $result = curl_exec($handle);
     }
 }

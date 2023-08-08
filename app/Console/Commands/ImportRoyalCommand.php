@@ -42,7 +42,7 @@ class ImportRoyalCommand extends Command
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
         Product::query()->where('id', '>', 20)->delete();
-        //Category::query()->where('id', '>', 20)->delete();
+        Category::query()->where('id', '>', 3)->delete();
 
         $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
@@ -64,6 +64,9 @@ class ImportRoyalCommand extends Command
                 if ($lang != 'ru') {
                     $title = 'title_ua';
                 }
+//                if ($categoryId == 23945100) {
+//                    continue;
+//                }
                 $create = [
                     'cat_id' => $categoryId,
                     'parent_id' => is_null($parentCategoryId) ? null : $parentCategoryId,
@@ -72,8 +75,7 @@ class ImportRoyalCommand extends Command
                     'status' => 'inactive',
                 ];
 
-                $findCat = Category::query()
-                    ->where('cat_id', $categoryId)
+                $findCat = Category::where('cat_id', $categoryId)
                     ->first();
 
                 if ($findCat) {
@@ -94,74 +96,97 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
+                //dd($offer);
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = ceil((double)$offer->price * $multiplier);
                 $quantityInStock = (integer)$offer->stock_quantity;
                 $vendorCode = (string)$offer->vendorCode;
                 $catId = (string)$offer->categoryId;
-
-                $myCat = Category::query()
-                    ->where('cat_id', $catId)->first();
+                if ($catId == 23945100) {
+                    continue;
+                }
+                $myCat = Category::where('cat_id', $catId)->first();
 
                 $categoryByCatId = Product::query()
                     ->where('cat_id', $myCat->id)
                     ->first();
-
+                $isParent = null;
                 if ($categoryByCatId) {
                     $myCat->status = 'active';
                     $myCat->save();
-
-                    $myCat = Category::query()
-                        ->where('id', $myCat->parent_id)->first();
-                    if ($myCat) {
-                        $myCat->status = 'active';
-                        $myCat->save();
+                    $isParent = $myCat->parent_id;
+                    $myCats = Category::where('id', $myCat->parent_id)->first();
+                    if ($myCats) {
+                        $myCats->status = 'active';
+                        $myCats->save();
                     }
                 }
-                //dd($offer);
 
-                //dd((array)$offer->picture);
+                try {
+                    $myOffer = [
+                        'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
+                        'vendorCode' => $vendorCode,
+                        'vendor' => (string)$offer->vendor,
+                        'slug' => $this->transliterateRussianToLatin((string)$offer->name),
+                        'imageUrl' => (array)$offer->picture,
+                        'title' => (string)$offer->name,
+                        'description' => (string)$offer->description,
+                        'productType' => '',
+                        'size' => '',
+                        'price' => (double)$offer->price,
+                        'recommendedPrice' => $recommendedPrice,
+                        'quantityInStock' => $quantityInStock,
+                        'hasHigherPrice' => '',
+                        'active' => 1,
+                        'provider' => 'royal',
+                        'productUrl' => (string)$offer->url,
+                        'summary' => '',
+                        'photo' => implode(',', (array)$offer->picture),
+                        'stock' => ($quantityInStock > 0) ? $quantityInStock : 0,
+                        'cat_id' => $myCat->id,
+                        'child_cat_id' => $isParent,
+                        'brand_id' => null,
+                        'is_featured' => 0,
+                        'status' => 'active',
+                        'condition' => 'default',
+                        'discount' => 0,
+                    ];
 
-                $myOffer = [
-                    'art_id' => (string)json_decode(json_encode($offer['id']), true)[0],
-                    'vendorCode' => $vendorCode,
-                    'vendor' => (string)$offer->vendor,
-                    'slug' => $this->transliterateRussianToLatin((string)$offer->name),
-                    'imageUrl' => (array)$offer->picture,
-                    'title' => (string)$offer->name,
-                    'description' => (string)$offer->description,
-                    'productType' => '',
-                    'size' => '',
-                    'price' => (double)$offer->price,
-                    'recommendedPrice' => $recommendedPrice,
-                    'quantityInStock' => $quantityInStock,
-                    'hasHigherPrice' => '',
-                    'active' => 1,
-                    'provider' => 'royal',
-                    'productUrl' => (string)$offer->url,
-                    'summary' => '',
-                    'photo' => '',
-                    'stock' => ($quantityInStock > 0) ? 1 : 0,
-                    'cat_id' => $myCat->id,
-                    'brand_id' => null,
-                    'child_cat_id' => null,
-                    'is_featured' => 0,
-                    'status' => 'active',
-                    'condition' => 'default',
-                    'discount' => 0,
-                ];
+                    $product = Product::where('vendorCode', $vendorCode)->first();
+                    if ($product) {
+                        if ($pathFile === 'ua_xmlFile.xml') {
+//                            dump($pathFile);
+                            dump((string)$offer->name);
+                            $product->update(
+                                [
+                                    'title_ua' => (string)$offer->name,
+                                    'description_ua' => (string)$offer->description
+                                ]
+                            );
+                            try {
+                                $product->save();
+                            } catch (\Exception $exception) {
+                                dd($exception->getMessage());
+                            }
+                        }
 
-                $product = Product::query()->where('vendorCode', $vendorCode)->first();
-                if ($product) {
-                    $product->title_ua = (string)$offer->name;
-                    $product->description_ua = (string)$offer->description;
-                    $product->save();
-                } else {
-                    Product::query()
-                        ->create($myOffer);
+                        if ($pathFile === 'ru_xmlFile.xml') {
+                            $product->update(
+                                [
+                                    'title' => (string)$offer->name,
+                                    'description' => (string)$offer->description
+                                ]
+                            );
+                        }
+                    } else {
+                        Product::query()
+                            ->create($myOffer);
+                    }
+                } catch (\Exception $exception) {
+                    dump($exception->getMessage());
+                    dump($offer);
                 }
-                //dd($product);
             }
         }
 
