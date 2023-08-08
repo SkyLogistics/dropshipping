@@ -42,7 +42,7 @@ class ImportRoyalCommand extends Command
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
         //Product::query()->where('id', '>', 20)->delete();
-        Product::query()->where('id', '>', 20)->update(['status', 'inactive']);
+        Product::query()->where('id', '>', 20)->update(['active', 0]);
         //Category::query()->where('id', '>', 3)->delete();
 
         $pathFiles = $this->dropService->getImportFiles($dir);
@@ -139,18 +139,17 @@ class ImportRoyalCommand extends Command
                         'recommendedPrice' => $recommendedPrice,
                         'quantityInStock' => $quantityInStock,
                         'hasHigherPrice' => '',
-                        'active' => 1,
+                        'active' => 'active',
                         'provider' => 'royal',
                         'productUrl' => (string)$offer->url,
                         'summary' => '',
-//                        'photo' => implode(',', (array)$offer->picture),
                         'photo' => '',
                         'stock' => ($quantityInStock > 0) ? $quantityInStock : 0,
                         'cat_id' => $myCat->id,
                         'child_cat_id' => $isParent,
                         'brand_id' => null,
                         'is_featured' => 0,
-                        'status' => 'active',
+                        'status' => 1,
                         'condition' => 'default',
                         'discount' => 0,
                     ];
@@ -160,6 +159,14 @@ class ImportRoyalCommand extends Command
                         if ($pathFile === 'ua_xmlFile.xml') {
 //                            dump($pathFile);
                             dump((string)$offer->name);
+
+                            $product->update(
+                                [
+                                    'status' => 'active',
+                                    'active' => 1
+                                ]
+                            );
+
                             $product->update(
                                 [
                                     'title_ua' => (string)$offer->name,
