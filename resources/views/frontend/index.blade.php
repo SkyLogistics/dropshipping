@@ -110,7 +110,7 @@
                                         <div class="product-img">
                                             <a href="{{route('product-detail',$product->slug)}}">
                                                 @php
-                                                    $photo=explode(',',$product->photo);
+                                                    $photo=explode(',', $product->photo);
                                                 // dd($photo);
                                                 @endphp
                                                 <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">

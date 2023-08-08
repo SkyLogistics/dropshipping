@@ -327,7 +327,7 @@
                                     <div class="product-img">
 										<a href="{{route('product-detail',$data->slug)}}">
 											@php
-												$photo=explode(',',$data->photo);
+												$photo=explode(',', $data->photo);
 											@endphp
                                             <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                             <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
