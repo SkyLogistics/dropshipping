@@ -40,6 +40,8 @@ class Product extends Model
         'active',
         'provider',
         'productUrl',
+        'keywords',
+        'keywordsUa',
     ];
 
     protected $casts = [
