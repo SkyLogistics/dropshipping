@@ -37,7 +37,7 @@ class DownloadImageRoyalCommand extends Command
             if ($product->imageUrl) {
                 $to = [];
                 foreach ($product->imageUrl as $image) {
-                    $f = time() . '_' . $product->id;
+                    $f = $product->id;
                     $localFilePath = $dir . $f . '.jpg';
                     $imageFile = file_get_contents($image);
                     if ($imageFile === false) {
