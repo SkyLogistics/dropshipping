@@ -41,9 +41,7 @@ class ImportRoyalCommand extends Command
     {
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
-        //Product::query()->where('id', '>', 20)->delete();
         Product::query()->where('id', '>', 20)->update(['active' => 0]);
-        //Category::query()->where('id', '>', 3)->delete();
 
         $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
@@ -98,7 +96,7 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
-                //dd($offer);
+                dd($offer);
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = ceil((double)$offer->price * $multiplier);
