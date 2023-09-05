@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\DropService;
@@ -67,6 +68,7 @@ class ImportRoyalCommand extends Command
 //                if ($categoryId == 23945100) {
 //                    continue;
 //                }
+
                 $create = [
                     'cat_id' => $categoryId,
                     'parent_id' => is_null($parentCategoryId) ? null : $parentCategoryId,
@@ -96,7 +98,23 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
-                dd($offer);
+                //dd($offer);
+                $brandId = null;
+                $brand = Brand::query()->where('title', (string)$offer->brend)->first();
+
+                if ($brand) {
+                    $brandId = $brand->id;
+                } else {
+                    $brand = Brand::query()->create(
+                        [
+                            'title' => (string)$offer->brend,
+                            'slug' => (string)$offer->brend,
+                            'status' => 'active',
+                        ]
+                    );
+                    $brandId = $brand->id;
+                }
+
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
                 $recommendedPrice = ceil((double)$offer->price * $multiplier);
@@ -146,7 +164,7 @@ class ImportRoyalCommand extends Command
                         'stock' => ($quantityInStock > 0) ? $quantityInStock : 0,
                         'cat_id' => $myCat->id,
                         'child_cat_id' => $isParent,
-                        'brand_id' => null,
+                        'brand_id' => $brandId,
                         'is_featured' => 0,
                         'status' => 1,
                         'condition' => 'default',
@@ -162,12 +180,8 @@ class ImportRoyalCommand extends Command
                             $product->update(
                                 [
                                     'status' => 'active',
-                                    'active' => 1
-                                ]
-                            );
-
-                            $product->update(
-                                [
+                                    'active' => 1,
+                                    'brand_id' => $brandId,
                                     'title_ua' => (string)$offer->name,
                                     'description_ua' => (string)$offer->description
                                 ]
