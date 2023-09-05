@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Services\DropService;
 use Illuminate\Console\Command;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 class ExportPromCommand extends Command
 {
@@ -42,6 +43,7 @@ class ExportPromCommand extends Command
 
     /**
      * @param string $template
+     * @throws Exception
      */
     public function extracted(string $template): void
     {

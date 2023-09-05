@@ -75,17 +75,7 @@ class DropService
             $parcelArrayInfo[] = $row->description;
             $parcelArrayInfo[] = $row->description_ua;
 
-            if ($row['vendorCode'] == 'ART_AL001') {
-                $productType = 'Акриловий лак';
-            } else {
-                if ($row['productType'] == 'Інше') {
-                    $productType = 'Розмальовка  для дітей';
-                } else {
-                    $productType = $row->productType;
-                }
-            }
-
-            $parcelArrayInfo[] = $productType;
+            $parcelArrayInfo[] = '';
             $recommendedPrice = $row->recommendedPrice;
 
             if ($row->price > $row->recommendedPrice) {
