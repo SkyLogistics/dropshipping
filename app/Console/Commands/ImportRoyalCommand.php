@@ -183,7 +183,9 @@ class ImportRoyalCommand extends Command
                                     'active' => 1,
                                     'brand_id' => $brandId,
                                     'title_ua' => (string)$offer->name,
-                                    'description_ua' => (string)$offer->description
+                                    'description_ua' => (string)$offer->description,
+                                    'quantityInStock' => $quantityInStock,
+                                    'stock' => ($quantityInStock > 0) ? $quantityInStock : 0,
                                 ]
                             );
                             try {
