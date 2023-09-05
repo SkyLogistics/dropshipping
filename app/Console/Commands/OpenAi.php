@@ -114,8 +114,8 @@ class OpenAi extends Command
     {
         $prompts = Product::query()
             ->where('provider', 'royal')
-            ->where('title', '!=', '')
-            ->where('keywords', '==', '')
+            ->where('title', '<>', '')
+            ->where('keywords', '')
             ->get();
 
         dd($prompts);
