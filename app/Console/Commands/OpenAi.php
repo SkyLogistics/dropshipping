@@ -126,8 +126,8 @@ class OpenAi extends Command
 
                 $resultRu = $this->getKeywords($translateRu)['choices'][0]['message']['content'];
                 $resultUa = $this->getKeywords($translateUa)['choices'][0]['message']['content'];
-                $this->info($prompt->id . ') RU ' . $this->removeQuotes($resultRu));
-                $this->info($prompt->id . ') UA' . $this->removeQuotes($resultUa));
+                $this->info($prompt->id . ') RU - ' . $this->removeQuotes($resultRu));
+                $this->info($prompt->id . ') UA - ' . $this->removeQuotes($resultUa));
                 $prompt->keywords = $this->removeQuotes($resultRu);
                 $prompt->keywordsUa = $this->removeQuotes($resultUa);
                 $prompt->save();
