@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\OrigamiProducts;
 use App\Models\Product;
 use App\Services\DropService;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -120,6 +118,8 @@ class OpenAi extends Command
             ->where('keywords', '!=', '')
             ->orwhere('keywordsUa', '!=', '')
             ->get();
+
+        dd($prompts);
 
         if ($prompts) {
             foreach ($prompts as $prompt) {
