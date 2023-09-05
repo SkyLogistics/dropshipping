@@ -54,6 +54,7 @@ class ImportRoyalCommand extends Command
             $xmlObject = simplexml_load_file($file);
             $categories = $xmlObject->shop->categories->category;
             $offers = $xmlObject->shop->offers->offer;
+            dd($offers);
             foreach ($categories as $category) {
                 $categoryId = json_decode(json_encode($category['id']), true)[0];
                 $parentCategoryId = isset($category['parentId']) ? json_decode(
