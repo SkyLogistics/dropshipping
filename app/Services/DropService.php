@@ -95,7 +95,7 @@ class DropService
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
-            $parcelArrayInfo[] = $row->imageUrl;
+            $parcelArrayInfo[] = config('app.domain').$row->photo;
             $quantityInStock = 0;
             if ($row->quantityInStock > 0) {
                 $quantityInStock = $row->quantityInStock;
