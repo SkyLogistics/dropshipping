@@ -68,18 +68,10 @@ class DropService
             $parcelArrayInfo[] = $row->description_ua;
 
             $parcelArrayInfo[] = '';
-            $recommendedPrice = $row->recommendedPrice;
-
-            if ($row->price > $row->recommendedPrice) {
-                $recommendedPrice = $row->price;
-            }
-
-            if ($row->provider == 'royal') {
-                $percent = 70;
-                $multiplier = 1 + ($percent / 100);
-                $recommendedPrice = ceil($row->price * $multiplier);
-                $row->recommendedPrice = $recommendedPrice;
-            }
+            $percent = 70;
+            $multiplier = 1 + ($percent / 100);
+            $recommendedPrice = ceil($row->price * $multiplier);
+            $row->recommendedPrice = $recommendedPrice;
 
             $parcelArrayInfo[] = $recommendedPrice;
             $parcelArrayInfo[] = 'UAH';
@@ -87,7 +79,10 @@ class DropService
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
-            $parcelArrayInfo[] = config('app.domain').$row->photo;
+
+            $photos = [];
+
+            $parcelArrayInfo[] = config('app.domain') . $row->photo;
             $quantityInStock = 0;
             if ($row->quantityInStock > 0) {
                 $quantityInStock = $row->quantityInStock;

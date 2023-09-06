@@ -30,14 +30,16 @@ class DownloadImageRoyalCommand extends Command
     {
         $dir = storage_path("app/public/royal/images/");
         $products = Product::query()
-            ->where('photo', null)
-            ->orwhere('photo', '')
+//            ->where('photo', null)
+//            ->orwhere('photo', '')
             ->get();
         foreach ($products as $product) {
+            dump($product->imageUrl);
             if ($product->imageUrl) {
                 $to = [];
+                $i = 0;
                 foreach ($product->imageUrl as $image) {
-                    $f = $product->id;
+                    $f = $product->id . '_' . $i;
                     $localFilePath = $dir . $f . '.jpg';
                     $imageFile = file_get_contents($image);
                     if ($imageFile === false) {
