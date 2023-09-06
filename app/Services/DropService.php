@@ -8,21 +8,13 @@ use App\Models\OptionForProduct;
 use App\Models\OrigamiProducts;
 use App\Models\Product;
 use App\Models\ProductOption;
-use App\Models\TmpAvizationScanned;
-use App\Models\TmpAvizationSelected;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class DropService
 {
-    /**
-     * @var Client
-     */
-    private $guzzle;
-    private $productService;
 
     public function __construct()
     {
@@ -46,7 +38,6 @@ class DropService
     #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
     private function getProducts($products): array
     {
-        dd(count($products));
         $royalProductsIds = [];
         $excelData = [];
         foreach ($products as $row) {
