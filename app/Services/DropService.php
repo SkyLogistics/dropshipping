@@ -138,8 +138,8 @@ class DropService
             }
             $categoryName = '';
 
-            $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywords);
-            $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywordsUa);
+            $parcelArrayInfo[] = mb_strtolower($row->keywords);
+            $parcelArrayInfo[] = mb_strtolower($row->keywordsUa);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
 
