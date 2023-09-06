@@ -209,7 +209,7 @@ class DropService
             $excelData[] = $parcelArrayInfo;
         }
 
-        return ['vendorCodes' => $royalProductsIds, 'excelData' => $excelData];
+        return $excelData;
     }
 
     public function getExcelData(): array
@@ -220,15 +220,8 @@ class DropService
         $productsRoyal = $products
             ->where('provider', 'royal')
             ->get();
-        $royalProductsExcelData = $this->getProducts($productsRoyal);
 
-//        $productsOrigami = $products
-//            ->whereNotIn('vendorCode', $royalProductsExcelData['vendorCodes'])
-//            ->get();
-//        $origamiProductsExcelData = $this->getProducts($productsOrigami);
-
-
-        return array_merge($royalProductsExcelData['excelData'], []);
+        return $this->getProducts($productsRoyal);
     }
 
     private function translate($toLang, $text)
