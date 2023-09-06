@@ -46,6 +46,7 @@ class DropService
     #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
     private function getProducts($products): array
     {
+        dd(count($products));
         $royalProductsIds = [];
         $excelData = [];
         foreach ($products as $row) {
