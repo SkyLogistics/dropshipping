@@ -50,7 +50,7 @@ class DropService
         $excelData = [];
         foreach ($products as $row) {
             $royalProductsVendorCode[] = $row->vendorCode;
-            if ($row->nameUa == '' && $row->name == '') {
+            if ($row->title == '' && $row->title_ua == '') {
                 continue;
             }
             $parcelArrayInfo = [];
