@@ -38,6 +38,7 @@ class DownloadImageRoyalCommand extends Command
                 $to = [];
                 $i = 0;
                 foreach ($product->imageUrl as $image) {
+                    $this->info($image);
                     $f = $product->id . '_' . $i;
                     $localFilePath = $dir . $f . '.jpg';
                     $imageFile = file_get_contents($image);
