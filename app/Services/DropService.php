@@ -36,7 +36,6 @@ class DropService
 
     private function getProducts($products): array
     {
-        $royalProductsIds = [];
         $excelData = [];
         foreach ($products as $row) {
             $royalProductsVendorCode[] = $row->vendorCode;
