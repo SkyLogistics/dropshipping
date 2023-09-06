@@ -209,13 +209,12 @@ class DropService
     public function getExcelData(): array
     {
         $products = Product::query()
-            ->where('active', 1);
-
-        $productsRoyal = $products
+            ->where('active', 1)
             ->where('provider', 'royal')
             ->get();
+        dd(count($products));
 
-        return $this->getProducts($productsRoyal);
+        return $this->getProducts($products);
     }
 
     private function translate($toLang, $text)
