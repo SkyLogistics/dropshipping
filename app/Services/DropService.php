@@ -215,7 +215,6 @@ class DropService
                 $parcelArrayInfo[] = $optionUa['value'];
             }
 
-            dd($parcelArrayInfo);
             $excelData[] = $parcelArrayInfo;
         }
 
