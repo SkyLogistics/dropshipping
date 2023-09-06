@@ -49,6 +49,7 @@ class ExportPromCommand extends Command
     {
         $excelData = $this->dropService->getExcelData();
 
+        dd($excelData);
         $spreadsheet = IOFactory::load(resource_path() . '/templates/' . $template);
         $spreadsheet->getActiveSheet()->fromArray(
             $excelData,
