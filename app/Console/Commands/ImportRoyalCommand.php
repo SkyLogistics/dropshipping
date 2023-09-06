@@ -156,7 +156,7 @@ class ImportRoyalCommand extends Command
                         'recommendedPrice' => $recommendedPrice,
                         'quantityInStock' => $quantityInStock,
                         'hasHigherPrice' => '',
-                        'active' => 'active',
+                        'active' => 1,
                         'provider' => 'royal',
                         'productUrl' => (string)$offer->url,
                         'summary' => '',

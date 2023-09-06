@@ -53,6 +53,9 @@ class DropService
             $row->keywordsUa = str_replace("&quot;", '"', $row->keywordsUa);
             $row->keywordsUa = str_replace("  ", ' ', $row->keywordsUa);
 
+            $row->keywords = str_replace("&quot;", '"', $row->keywords);
+            $row->keywords = str_replace("  ", ' ', $row->keywords);
+
             $parcelArrayInfo[] = $row->keywordsUa;
             //dd($row->description . '<p>' . $row->properties . '</p>');
             $parcelArrayInfo[] = $row->description;
