@@ -75,7 +75,7 @@ class DropService
 
             $photoUrls = [];
             foreach ($row->imageUrl as $photo) {
-                $photoUrls[] = config('app.domain') . $photo;
+                $photoUrls[] = $photo;
             }
 
             $parcelArrayInfo[] = implode(',', $photoUrls);
