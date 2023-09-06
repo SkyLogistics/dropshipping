@@ -210,7 +210,7 @@ class DropService
             ->where('active', 1)
             ->where('provider', 'royal')
             ->get();
-        dd($products);
+
         return $this->getProducts(
             $products
         );
