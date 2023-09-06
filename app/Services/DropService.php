@@ -49,7 +49,6 @@ class DropService
         $royalProductsIds = [];
         $excelData = [];
         foreach ($products as $row) {
-            dd($row);
             $royalProductsVendorCode[] = $row->vendorCode;
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
@@ -64,8 +63,8 @@ class DropService
                 $row->name = str_replace("  ", ' ', $row->name);
             }
 
-            $parcelArrayInfo[] = $row->name;
-            $parcelArrayInfo[] = $row->nameUa;
+            $parcelArrayInfo[] = $row->title;
+            $parcelArrayInfo[] = $row->title_ua;
             $parcelArrayInfo[] = $row->keywords;
 
             $row->keywordsUa = str_replace("&quot;", '"', $row->keywordsUa);
@@ -216,6 +215,7 @@ class DropService
                 $parcelArrayInfo[] = $optionUa['value'];
             }
 
+            dd($parcelArrayInfo);
             $excelData[] = $parcelArrayInfo;
         }
 
