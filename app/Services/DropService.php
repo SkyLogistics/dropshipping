@@ -35,7 +35,6 @@ class DropService
         return $category;
     }
 
-    #[ArrayShape(['vendorCodes' => "array", 'excelData' => "array"])]
     private function getProducts($products): array
     {
         $royalProductsIds = [];
@@ -47,14 +46,6 @@ class DropService
             }
             $parcelArrayInfo = [];
             $parcelArrayInfo[] = $row->vendorCode;
-            if ($row->name == '' && $row->nameUa != '') {
-                $text = $row->nameUa;
-//                $targetLanguage = 'ru';
-//                $translatedText = '';//$this->translate($targetLanguage, $text);
-                $row->name = str_replace("&quot;", '"', $text);
-                $row->name = str_replace("  ", ' ', $row->name);
-            }
-
             $parcelArrayInfo[] = $row->title;
             $parcelArrayInfo[] = $row->title_ua;
             $parcelArrayInfo[] = $row->keywords;
