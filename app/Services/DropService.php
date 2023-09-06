@@ -206,11 +206,13 @@ class DropService
 
     public function getExcelData(): array
     {
+        $products = Product::query()
+            ->where('active', 1)
+            ->where('provider', 'royal')
+            ->get();
+        dd($products);
         return $this->getProducts(
-            Product::query()
-                ->where('active', 1)
-                ->where('provider', 'royal')
-                ->get()
+            $products
         );
     }
 
