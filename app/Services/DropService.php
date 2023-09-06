@@ -10,7 +10,6 @@ use App\Models\Product;
 use App\Models\ProductOption;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
-use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class DropService
@@ -208,13 +207,12 @@ class DropService
 
     public function getExcelData(): array
     {
-        $products = Product::query()
-            ->where('active', 1)
-            ->where('provider', 'royal')
-            ->get();
-        dd(count($products));
-
-        return $this->getProducts($products);
+        return $this->getProducts(
+            Product::query()
+                ->where('active', 1)
+                ->where('provider', 'royal')
+                ->get()
+        );
     }
 
     private function translate($toLang, $text)
