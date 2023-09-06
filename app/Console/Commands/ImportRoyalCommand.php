@@ -98,7 +98,11 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
-                dd($offer->param);
+                $params = [];
+                foreach ($offer->param as $param){
+                    $params[] = $param;
+                }
+                dd($params);
                 $brandId = null;
                 $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
