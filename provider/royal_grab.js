@@ -66,7 +66,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
                     console.log(JSON.stringify(propertiesParsed));
                     console.log(JSON.stringify(propertiesParsedUa));
 
-                    const updateQuery = 'UPDATE origami_product SET ' +
+                    const updateQuery = 'UPDATE product SET ' +
                         "options = " + `?,` +
                         "options_ua = " + `?,` +
                         "properties = " + `?,` +
