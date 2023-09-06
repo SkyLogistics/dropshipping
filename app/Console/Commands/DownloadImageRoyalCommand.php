@@ -34,7 +34,6 @@ class DownloadImageRoyalCommand extends Command
 //            ->orwhere('photo', '')
             ->get();
         foreach ($products as $product) {
-            dump($product->imageUrl);
             if ($product->imageUrl) {
                 $to = [];
                 $i = 0;
@@ -55,6 +54,8 @@ class DownloadImageRoyalCommand extends Command
                         echo 'Image - .' . $s . PHP_EOL;
                     }
                 }
+
+                dump($to);
 
                 $product->photo = implode(',', $to);
                 $product->save();
