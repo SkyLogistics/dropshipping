@@ -46,7 +46,7 @@ async function getUrl() { // Добавлено ключевое слово asyn
         console.log('Успешное подключение к базе данных MySQL');
 
         // Чтение данных из таблицы
-        const selectQuery = "SELECT * FROM origami_product where provider='royal' and options is null ";
+        const selectQuery = "SELECT * FROM products where provider='royal' and options is null ";
         connection.query(selectQuery, async (err, rows) => { // Добавлено ключевое слово async
             if (err) {
                 console.error('Ошибка чтения данных: ', err);
@@ -71,9 +71,8 @@ async function getUrl() { // Добавлено ключевое слово asyn
                         "options_ua = " + `?,` +
                         "properties = " + `?,` +
                         "properties_ua = " + `?,` +
-                        "description = " + `?,` +
-                        "description_ua = ? WHERE id = ?";
-                    const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], divContent[0], divContent[1], id];
+                        " WHERE id = ?";
+                    const values = [propertiesParsed, propertiesParsedUa, divContent[2], divContent[3], id];
                     connection.query(updateQuery, values, (err, result) => {
                         if (err) {
                             console.error(`Ошибка обновления поля для записи с ID ${id}: `, err);
