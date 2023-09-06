@@ -52,6 +52,7 @@ class DownloadXmlRoyalCommand extends Command
         curl_setopt($handle, CURLOPT_POST, 1);
         curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
         curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_exec($handle);
 
         $xmlRuUrl = 'http://dwn.royaltoys.com.ua/my/export/0e03a56a-b310-4b66-9549-e99c9dedecd1.xml';
         $this->downloadFile($xmlRuUrl, 'ru');
