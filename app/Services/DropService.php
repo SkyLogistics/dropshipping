@@ -49,6 +49,7 @@ class DropService
         $royalProductsIds = [];
         $excelData = [];
         foreach ($products as $row) {
+            dd($row);
             $royalProductsVendorCode[] = $row->vendorCode;
             if ($row->nameUa == '' && $row->name == '') {
                 continue;
