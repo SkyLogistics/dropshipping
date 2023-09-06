@@ -42,18 +42,6 @@ class DownloadXmlRoyalCommand extends Command
 
     #[NoReturn] public function handle(): void
     {
-
-        $handle = curl_init('https://envbggtgmbzfl.x.pipedream.net/');
-        $data = [
-            'key' => 'XML file downloaded and saved successfully'
-        ];
-        $encodedData = json_encode($data);
-
-        curl_setopt($handle, CURLOPT_POST, 1);
-        curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_exec($handle);
-
         $xmlRuUrl = 'http://dwn.royaltoys.com.ua/my/export/0e03a56a-b310-4b66-9549-e99c9dedecd1.xml';
         $this->downloadFile($xmlRuUrl, 'ru');
 
