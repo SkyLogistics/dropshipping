@@ -144,6 +144,7 @@ class DropService
             if ($row->isDirty()) {
                 $row->save();
             }
+            $categoryName = '';
 
             $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywords);
             $parcelArrayInfo[] = $categoryName . ',' . mb_strtolower($row->keywordsUa);
