@@ -37,6 +37,7 @@ class DownloadImageRoyalCommand extends Command
             if ($product->imageUrl) {
                 $to = [];
                 $i = 0;
+                dd($product->imageUrl);
                 foreach ($product->imageUrl as $image) {
                     $this->info('My image -> ' . $image);
                     $f = $product->id . '_' . $i;
