@@ -166,7 +166,7 @@ class ImportRoyalCommand extends Command
                         'child_cat_id' => $isParent,
                         'brand_id' => $brandId,
                         'is_featured' => 0,
-                        'status' => 1,
+                        'status' => 'active',
                         'condition' => 'default',
                         'discount' => 0,
                     ];
