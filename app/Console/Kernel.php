@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:download_royal')->cron('*/30 * * * *');
         $schedule->command('app:download_image_royal')->cron('1 */1 * * *');
         $schedule->command('app:import_url royal')->cron('*/45 * * * *');
-        $schedule->command('app:export_prom')->cron('2 */2 * * *');
+        $schedule->command('app:export_prom')->cron('2 */3 * * *');
         //$schedule->command('app:auto-ask')->cron('* * * * *');
     }
 
