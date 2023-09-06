@@ -98,11 +98,6 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
-                $params = [];
-                foreach ($offer->param as $param){
-                    $params[] = $param;
-                }
-                dd($params);
                 $brandId = null;
                 $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
@@ -208,9 +203,17 @@ class ImportRoyalCommand extends Command
                             );
                         }
                     } else {
-                        Product::query()
+                        $product = Product::query()
                             ->create($myOffer);
                     }
+
+//                    $params = [];
+//                    foreach ($offer->param as $param){
+//                        $params[] = $param;
+//                    }
+//                    dd($params);
+
+                    //TODO: add params
                 } catch (\Exception $exception) {
                     dump($exception->getMessage());
                     dump($offer);
