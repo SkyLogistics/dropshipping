@@ -53,7 +53,6 @@ class ImportRoyalCommand extends Command
             $xmlObject = simplexml_load_file($file);
             $categories = $xmlObject->shop->categories->category;
             $offers = $xmlObject->shop->offers->offer;
-            dd($xmlObject->shop->offers);
 
             foreach ($categories as $category) {
                 $categoryId = json_decode(json_encode($category['id']), true)[0];
@@ -99,7 +98,7 @@ class ImportRoyalCommand extends Command
             }
 
             foreach ($offers as $offer) {
-//                dd($offer);
+                dd((string)$offer['name']);
                 $brandId = null;
                 $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
