@@ -42,7 +42,7 @@ class ImportRoyalCommand extends Command
     {
         $inputKey = $this->argument('provider');
         $dir = storage_path("app/public/$inputKey/xml");
-        Product::query()->where('id', '>', 20)->update(['active' => 0]);
+        //Product::query()->where('id', '>', 20)->update(['active' => 0]);
 
         $pathFiles = $this->dropService->getImportFiles($dir);
         $dir = storage_path("app/public/$inputKey");
