@@ -209,7 +209,6 @@ class ImportRoyalCommand extends Command
                             ->create($myOffer);
                     }
 
-                    $params = [];
                     foreach ($offer->param as $param) {
                         $paramOption = (string)$param->attributes()['name'];
                         $paramValue = $param[0];
@@ -237,7 +236,7 @@ class ImportRoyalCommand extends Command
                                 ]
                             );
                     }
-                    dd($params);
+                    //dd($params);
                     //TODO: add params
                 } catch (\Exception $exception) {
                     dump($exception->getMessage());
