@@ -99,9 +99,9 @@ class ImportRoyalCommand extends Command
 
             foreach ($offers as $offer) {
                 $brandId = null;
-                $brand = Brand::query()->where('title', (string)$offer->brend);
+                $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
-                if (!$brand->exists()) {
+                if ($brand->exists()) {
                     $brand = Brand::query()->create(
                         [
                             'title' => (string)$offer->brend,
@@ -110,8 +110,8 @@ class ImportRoyalCommand extends Command
                         ]
                     );
                 }
-
                 $brandId = $brand->id;
+
 
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
@@ -218,7 +218,6 @@ class ImportRoyalCommand extends Command
                     dump($exception->getMessage());
                     dump($offer);
                 }
-
                 //dd(1);
             }
         }
