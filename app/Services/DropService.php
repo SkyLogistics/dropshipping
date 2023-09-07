@@ -398,14 +398,14 @@ class DropService
     public function getProductOptions($productId, $notOption): Collection|array
     {
         return Product::query()
-            ->join('option_for_product', 'product.id', '=', 'option_for_product.product_id')
+            ->join('option_for_product', 'products.id', '=', 'option_for_product.product_id')
             ->join('product_option', 'product_option.id', '=', 'option_for_product.option_id')
             ->select(
-                'product.id as productId',
+                'products.id as productId',
                 'product_option.title as title',
                 'option_for_product.value as value',
                 'product_option.lang as lang'
-            )->where('product.id', $productId)
+            )->where('products.id', $productId)
             ->whereNotIn('product_option.id', $notOption)
             ->get();
     }
