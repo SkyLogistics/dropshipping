@@ -210,7 +210,7 @@ class ImportRoyalCommand extends Command
                     $params = [];
                     foreach ($offer->param as $param){
                         $params[] = $param;
-                        dump((string)$param);
+                        dump((string)$param[0]);
                         dd((string)$param->name);
                     }
                     dd($params);
