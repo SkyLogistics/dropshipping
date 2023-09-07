@@ -219,7 +219,7 @@ class ImportRoyalCommand extends Command
                     dump($offer);
                 }
 
-                dd(1);
+                //dd(1);
             }
         }
 
