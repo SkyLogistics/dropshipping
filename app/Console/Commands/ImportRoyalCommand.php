@@ -232,7 +232,6 @@ class ImportRoyalCommand extends Command
                                 [
                                     'product_id' => $product->id,
                                     'option_id' => $productOption->id,
-                                    'value' => $paramValue
                                 ]
                             )->first();
                         if (!$findOptionForProduct) {
