@@ -207,11 +207,11 @@ class ImportRoyalCommand extends Command
                             ->create($myOffer);
                     }
 
-//                    $params = [];
-//                    foreach ($offer->param as $param){
-//                        $params[] = $param;
-//                    }
-//                    dd($params);
+                    $params = [];
+                    foreach ($offer->param as $param){
+                        $params[] = $param;
+                    }
+                    dd($params);
 
                     //TODO: add params
                 } catch (\Exception $exception) {
