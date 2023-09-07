@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\OptionForProduct;
 use App\Models\Product;
+use App\Models\ProductOption;
 use App\Services\DropService;
 use App\Services\ProductService;
 use Behat\Transliterator\Transliterator;
@@ -208,13 +210,34 @@ class ImportRoyalCommand extends Command
                     }
 
                     $params = [];
-                    foreach ($offer->param as $param){
-                        //$params[] = $param;
-                        dump((string)$param[0]);
-                        dd((string)$param->attributes()['name']);
+                    foreach ($offer->param as $param) {
+                        $paramOption = (string)$param->attributes()['name'];
+                        $paramValue = $param[0];
+
+                        $productOption = ProductOption::query()->where('title', $paramOption)->first();
+                        if (!$productOption) {
+                            $lang = 'ua';
+                            if (str_contains($pathFile, 'ru')) {
+                                $lang = 'ru';
+                            }
+                            $productOption = ProductOption::query()->create(
+                                [
+                                    'title' => $paramOption,
+                                    'lang' => $lang,
+                                ]
+                            );
+                        }
+
+                        OptionForProduct::query()
+                            ->create(
+                                [
+                                    'product_id' => $product->id,
+                                    'option_id' => $productOption->id,
+                                    'value' => $paramValue
+                                ]
+                            );
                     }
                     dd($params);
-
                     //TODO: add params
                 } catch (\Exception $exception) {
                     dump($exception->getMessage());
