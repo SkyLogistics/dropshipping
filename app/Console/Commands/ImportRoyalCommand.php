@@ -245,8 +245,7 @@ class ImportRoyalCommand extends Command
                                 );
                         }
                     }
-                    //dd($params);
-                    //TODO: add params
+
                 } catch (\Exception $exception) {
                     dump($exception->getMessage());
                     dump($offer);
