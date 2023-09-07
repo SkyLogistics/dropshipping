@@ -227,14 +227,24 @@ class ImportRoyalCommand extends Command
                             );
                         }
 
-                        OptionForProduct::query()
-                            ->create(
+                        $findOptionForProduct = OptionForProduct::query()
+                            ->where(
                                 [
                                     'product_id' => $product->id,
                                     'option_id' => $productOption->id,
                                     'value' => $paramValue
                                 ]
-                            );
+                            )->first();
+                        if (!$findOptionForProduct) {
+                            OptionForProduct::query()
+                                ->create(
+                                    [
+                                        'product_id' => $product->id,
+                                        'option_id' => $productOption->id,
+                                        'value' => $paramValue
+                                    ]
+                                );
+                        }
                     }
                     //dd($params);
                     //TODO: add params
