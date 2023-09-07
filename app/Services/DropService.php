@@ -74,8 +74,12 @@ class DropService
             $parcelArrayInfo[] = '';
 
             $photoUrls = [];
+            $j = 0;
             foreach ($row->imageUrl as $photo) {
-                $photoUrls[] = $photo;
+                if ($j <= 9) {
+                    $photoUrls[] = $photo;
+                }
+                $j++;
             }
 
             $parcelArrayInfo[] = implode(',', $photoUrls);
