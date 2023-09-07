@@ -101,7 +101,7 @@ class ImportRoyalCommand extends Command
                 $brandId = null;
                 $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
-                if ($brand->exists()) {
+                if (!$brand->exists()) {
                     $brand = Brand::query()->create(
                         [
                             'title' => (string)$offer->brend,
