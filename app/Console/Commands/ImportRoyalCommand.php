@@ -102,8 +102,6 @@ class ImportRoyalCommand extends Command
                 $brand = Brand::query()->where('title', (string)$offer->brend)->first();
 
                 if ($brand) {
-                    $brandId = $brand->id;
-                } else {
                     $brand = Brand::query()->create(
                         [
                             'title' => (string)$offer->brend,
@@ -111,8 +109,9 @@ class ImportRoyalCommand extends Command
                             'status' => 'active',
                         ]
                     );
-                    $brandId = $brand->id;
                 }
+
+                $brandId = $brand->id;
 
                 $percent = 70;
                 $multiplier = 1 + ($percent / 100);
@@ -197,6 +196,7 @@ class ImportRoyalCommand extends Command
                         if ($pathFile === 'ru_xmlFile.xml') {
                             $product->update(
                                 [
+                                    'active' => 1,
                                     'title' => (string)$offer->name,
                                     'description' => (string)$offer->description
                                 ]
