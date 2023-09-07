@@ -141,17 +141,16 @@ class DropService
             if ($row->isDirty()) {
                 $row->save();
             }
-            $categoryName = '';
 
             $parcelArrayInfo[] = mb_strtolower($row->keywords);
             $parcelArrayInfo[] = mb_strtolower($row->keywordsUa);
             $parcelArrayInfo[] = '';
             $parcelArrayInfo[] = '';
 
-            $length = ProductOption::find(22);
-            $width = ProductOption::find(23);
-            $height = ProductOption::find(24);
-            $weight = ProductOption::find(44);
+            $length = ProductOption::find(2);
+            $width = ProductOption::find(3);
+            $height = ProductOption::find(4);
+            $weight = ProductOption::find(1);
 
             $length = OptionForProduct::query()
                 ->where('option_id', $length->id)
@@ -192,15 +191,15 @@ class DropService
             $parcelArrayInfo[] = floatval($he);
             $parcelArrayInfo[] = floatval($le);
             $parcelArrayInfo[] = 'Київ';
-            $options = $this->getProductOptions($row->id, [22, 23, 24, 44]);
-            $optionsUa = $options->filter(function ($option) {
-                return $option->lang == 'ua';
+            $options = $this->getProductOptions($row->id, [2, 3, 4, 1]);
+            $optionsRu = $options->filter(function ($option) {
+                return $option->lang == 'ru';
             });
 
-            foreach ($optionsUa as $optionUa) {
-                $parcelArrayInfo[] = $optionUa['title'];
+            foreach ($optionsRu as $optionRu) {
+                $parcelArrayInfo[] = $optionRu['title'];
                 $parcelArrayInfo[] = '';
-                $parcelArrayInfo[] = $optionUa['value'];
+                $parcelArrayInfo[] = $optionRu['value'];
             }
 
             $excelData[] = $parcelArrayInfo;
@@ -398,15 +397,15 @@ class DropService
 
     public function getProductOptions($productId, $notOption): Collection|array
     {
-        return OrigamiProducts::query()
-            ->join('option_for_product', 'origami_product.id', '=', 'option_for_product.product_id')
+        return Product::query()
+            ->join('option_for_product', 'product.id', '=', 'option_for_product.product_id')
             ->join('product_option', 'product_option.id', '=', 'option_for_product.option_id')
             ->select(
-                'origami_product.id as productId',
+                'product.id as productId',
                 'product_option.title as title',
                 'option_for_product.value as value',
                 'product_option.lang as lang'
-            )->where('origami_product.id', $productId)
+            )->where('product.id', $productId)
             ->whereNotIn('product_option.id', $notOption)
             ->get();
     }
